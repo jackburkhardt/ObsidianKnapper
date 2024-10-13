@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 
-namespace OEI_Nutcracker;
+namespace OEIKnapper;
 
 public static class JsonFieldValidate
 {

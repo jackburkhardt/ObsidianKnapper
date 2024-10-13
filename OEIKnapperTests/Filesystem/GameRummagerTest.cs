@@ -1,6 +1,6 @@
-using OEI_Nutcracker.Filesystem;
+using OEIKnapper.Filesystem;
 
-namespace OEI_Tests.Filesystem;
+namespace OEIKnapperTests.Filesystem;
 
 [TestFixture]
 [TestOf(typeof(GameRummager))]

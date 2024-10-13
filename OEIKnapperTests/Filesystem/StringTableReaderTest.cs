@@ -1,8 +1,8 @@
 using Newtonsoft.Json.Linq;
-using OEI_Nutcracker;
-using OEI_Nutcracker.Filesystem;
+using OEIKnapper;
+using OEIKnapper.Filesystem;
 
-namespace OEI_Tests.Filesystem;
+namespace OEIKnapperTests.Filesystem;
 
 [TestFixture]
 [TestOf(typeof(StringTable))]

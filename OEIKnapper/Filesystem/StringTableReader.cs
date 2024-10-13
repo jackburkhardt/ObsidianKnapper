@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace OEI_Nutcracker.Filesystem;
+namespace OEIKnapper.Filesystem;
 
 public class StringTableReader
 {

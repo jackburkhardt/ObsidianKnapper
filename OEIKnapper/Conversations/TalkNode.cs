@@ -1,4 +1,4 @@
-namespace OEI_Nutcracker;
+namespace OEIKnapper;
 
 public class TalkNode : Node
 {

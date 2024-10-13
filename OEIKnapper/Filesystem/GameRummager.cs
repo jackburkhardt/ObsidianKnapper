@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace OEI_Nutcracker.Filesystem;
+namespace OEIKnapper.Filesystem;
 
 public class GameRummager
 {

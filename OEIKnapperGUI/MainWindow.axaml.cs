@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace OEI_Nutcracker_GUI;
+namespace OEIKnapperGUI;
 
 public partial class MainWindow : Window
 {

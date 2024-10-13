@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace OEI_Nutcracker_GUI;
+namespace OEIKnapperGUI;
 
 class Program
 {

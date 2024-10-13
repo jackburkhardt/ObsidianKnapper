@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace OEI_Nutcracker_GUI;
+namespace OEIKnapperGUI;
 
 public partial class App : Application
 {
