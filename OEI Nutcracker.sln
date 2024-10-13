@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OEI Nutcracker", "OEI Nutcracker\OEI Nutcracker.csproj", "{E168E21E-5008-4250-B042-D8E9B0BDFFEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OEI Nutcracker GUI", "OEI Nutcracker GUI\OEI Nutcracker GUI.csproj", "{2B7B820D-1E3A-46AA-8D54-C30DF553C3F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OEI Tests", "OEI Tests\OEI Tests.csproj", "{1CDBE94E-6BA2-4F74-831B-753DDB1C48F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E168E21E-5008-4250-B042-D8E9B0BDFFEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E168E21E-5008-4250-B042-D8E9B0BDFFEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E168E21E-5008-4250-B042-D8E9B0BDFFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E168E21E-5008-4250-B042-D8E9B0BDFFEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B7B820D-1E3A-46AA-8D54-C30DF553C3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B7B820D-1E3A-46AA-8D54-C30DF553C3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B7B820D-1E3A-46AA-8D54-C30DF553C3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B7B820D-1E3A-46AA-8D54-C30DF553C3F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDBE94E-6BA2-4F74-831B-753DDB1C48F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDBE94E-6BA2-4F74-831B-753DDB1C48F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDBE94E-6BA2-4F74-831B-753DDB1C48F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDBE94E-6BA2-4F74-831B-753DDB1C48F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
