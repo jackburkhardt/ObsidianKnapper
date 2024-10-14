@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper;
 
+/// <summary>
+/// Collection of localized strings used in a <see cref="Conversation"/>.
+/// </summary>
 public class StringTable
 {
     public string Name;
@@ -10,7 +13,7 @@ public class StringTable
     
     public static StringTable TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "Name", "Entries"))
+        if (!OEIJsonUtils.ValidateObject(json, "Name", "Entries"))
         {
             throw new ArgumentException("Unable to parse StringTable from: " + json.ToString(Formatting.None));
         }
@@ -23,6 +26,9 @@ public class StringTable
     }
 }
 
+/// <summary>
+/// A localized string. Used as part of a <see cref="StringTable"/>.
+/// </summary>
 public class String
 {
     public int ID;
@@ -30,7 +36,7 @@ public class String
 
     public static String TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "ID", "DefaultText"))
+        if (!OEIJsonUtils.ValidateObject(json, "ID", "DefaultText"))
         {
             throw new ArgumentException("Unable to parse String from: " + json.ToString(Formatting.None));
         }

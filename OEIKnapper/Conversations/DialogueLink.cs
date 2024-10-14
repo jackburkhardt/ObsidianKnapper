@@ -12,7 +12,7 @@ public class DialogueLink
 
     public static DialogueLink TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "FromNodeID", "ToNodeID", "Conditionals"))
+        if (!OEIJsonUtils.ValidateObject(json, "FromNodeID", "ToNodeID", "Conditionals"))
         {
             throw new ArgumentException("Unable to parse DialogueLink from: " + json.ToString(Formatting.None));
         }

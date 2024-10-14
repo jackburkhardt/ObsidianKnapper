@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+
 namespace OEIKnapper;
 
 public class TalkNode : Node
@@ -5,15 +7,8 @@ public class TalkNode : Node
     public Guid SpeakerGuid;
     public Guid ListenerGuid;
     
-    public static TalkNode TryParse(Node baseNode)
+    public static TalkNode TryParse(JToken json)
     {
-        TalkNode newNode = new TalkNode
-        {
-            NodeID = baseNode.NodeID,
-            Links = baseNode.Links,
-            Conditionals = baseNode.Conditionals,
-        };
-
-        return newNode;
+        return new TalkNode();
     }
 }

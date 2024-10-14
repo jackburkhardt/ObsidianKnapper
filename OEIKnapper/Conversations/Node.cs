@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper;
 
-public class Node
+public abstract class Node
 {
     public int NodeID;
     public List<DialogueLink> Links;
@@ -12,36 +12,32 @@ public class Node
 
     public static Node TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "NodeID", "Links"))
+        if (!OEIJsonUtils.ValidateObject(json, "NodeID", "Links"))
         {
             throw new ArgumentException("Unable to parse Node from: " + json.ToString(Formatting.None));
         }
 
-        Node newNode = new Node
-        {
-            NodeID = json["NodeID"].Value<int>(),
-            Links = json["Links"].Select(DialogueLink.TryParse).ToList(),
-            Conditionals = json["Conditionals"]?.Select(ConditionalCall.TryParse).ToList() ?? new List<ConditionalCall>()
-        };
-
-
+        Node newNode;
         switch ((string)json["$type"])
         {
             case "OEIFormats.FlowCharts.Conversations.TalkNode, OEIFormats":
-                newNode = TalkNode.TryParse(newNode);
+                newNode = TalkNode.TryParse(json);
                 break;
             case "OEIFormats.FlowCharts.Conversations.PlayerResponseNode, OEIFormats":
-                newNode = PlayerResponseNode.TryParse(newNode);
+                newNode = PlayerResponseNode.TryParse(json);
                 break;
             case "OEIFormats.FlowCharts.Conversations.ScriptNode, OEIFormats":
-                newNode = ScriptNode.TryParse(newNode);
+                newNode = ScriptNode.TryParse(json);
                 break;
             default:
                 throw new ArgumentException("Unknown node type: " + json["$type"]);
         }
-        
 
-        return newNode;
+        newNode.NodeID = json["NodeID"].Value<int>();
+        newNode.Links = json["Links"].Select(DialogueLink.TryParse).ToList();
+        newNode.Conditionals = json["Conditionals"]?.Select(ConditionalCall.TryParse).ToList() ??
+                               [];
         
+        return newNode;
     }
 }

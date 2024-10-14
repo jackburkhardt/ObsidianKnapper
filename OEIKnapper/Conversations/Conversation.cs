@@ -12,7 +12,7 @@ public class Conversation
     
     public static Conversation TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "ID", "Filename", "CharacterMappings", "Nodes"))
+        if (!OEIJsonUtils.ValidateObject(json, "ID", "Filename", "CharacterMappings", "Nodes"))
         {
             throw new ArgumentException("Unable to parse Conversation from: " + json.ToString(Formatting.None));
         }

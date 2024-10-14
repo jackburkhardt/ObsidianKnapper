@@ -12,7 +12,7 @@ public class Speaker
 
     public static Speaker TryParse(JToken json)
     {
-        if (!JsonFieldValidate.ValidateObject(json, "ID", "DisplayNameStringTableID", "ObjectName"))
+        if (!OEIJsonUtils.ValidateObject(json, "ID", "DisplayNameStringTableID", "ObjectName"))
         {
             throw new ArgumentException("Unable to parse Speaker from: " + json.ToString(Formatting.None));
         }
