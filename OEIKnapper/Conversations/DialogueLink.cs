@@ -10,7 +10,7 @@ public class DialogueLink
     public List<ConditionalCall> Conditionals;
     //todo: Extension properties
 
-    public static DialogueLink TryParse(JObject json)
+    public static DialogueLink TryParse(JToken json)
     {
         if (!JsonFieldValidate.ValidateObject(json, "FromNodeID", "ToNodeID", "Conditionals"))
         {

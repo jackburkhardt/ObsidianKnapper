@@ -8,19 +8,21 @@ public class Speaker
     public Guid ID;
     public int DisplayNameStringTableID;
     public int DisplayNameID;
+    public string ObjectName;
 
-    public static Speaker TryParse(JObject json)
+    public static Speaker TryParse(JToken json)
     {
-        if (json["ID"] == null || json["DisplayNameStringTableID"] == null || json["DisplayNameID"] == null)
+        if (!JsonFieldValidate.ValidateObject(json, "ID", "DisplayNameStringTableID", "ObjectName"))
         {
             throw new ArgumentException("Unable to parse Speaker from: " + json.ToString(Formatting.None));
         }
 
         return new Speaker
         {
-            ID = json["ID"].Value<Guid>(),
+            ID = Guid.Parse(json["ID"].Value<string>()),
             DisplayNameStringTableID = json["DisplayNameStringTableID"].Value<int>(),
-            DisplayNameID = json["DisplayNameID"].Value<int>()
+            DisplayNameID = json["DisplayNameID"]?.Value<int>() ?? -1,
+            ObjectName = json["ObjectName"]?.Value<string>()
         };
     }
 }

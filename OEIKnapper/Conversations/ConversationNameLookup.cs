@@ -9,7 +9,7 @@ public class ConversationNameLookup
     public string Name;
     public string Filename;
     
-    public static ConversationNameLookup TryParse(JObject json)
+    public static ConversationNameLookup TryParse(JToken json)
     {
         try
         {
