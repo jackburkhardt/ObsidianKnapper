@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using OEIKnapper.Conversations;
 
 namespace OEIKnapper.Filesystem;
 

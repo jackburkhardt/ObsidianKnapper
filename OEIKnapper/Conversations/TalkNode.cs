@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 
-namespace OEIKnapper;
+namespace OEIKnapper.Conversations;
 
 public class TalkNode : Node
 {

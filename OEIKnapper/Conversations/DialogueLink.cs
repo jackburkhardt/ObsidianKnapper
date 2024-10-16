@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace OEIKnapper;
+namespace OEIKnapper.Conversations;
 
 public class DialogueLink
 {
@@ -21,7 +21,7 @@ public class DialogueLink
         {
             FromNodeID = json["FromNodeID"]?.Value<int>() ?? -1,
             ToNodeID = json["ToNodeID"].Value<int>(),
-           // Conditionals = json["Conditionals"].Select(ConditionalCall.TryParse).ToList()
+            Conditionals = json["Conditionals"].Select(ConditionalCall.TryParse).ToList()
         };
     }
 }

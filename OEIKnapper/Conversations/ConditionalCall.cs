@@ -1,10 +1,9 @@
 using Newtonsoft.Json.Linq;
 
-namespace OEIKnapper;
+namespace OEIKnapper.Conversations;
 
 public class ConditionalCall
 {
-    
     public static ConditionalCall TryParse(JToken json)
     {
 
