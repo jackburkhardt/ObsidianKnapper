@@ -12,7 +12,7 @@ public abstract class Node
 
     public static Node TryParse(JToken json)
     {
-        if (!OEIJsonUtils.ValidateObject(json, "NodeID", "Links"))
+        if (!OEIJsonUtils.ValidateObject(json, "Links"))
         {
             throw new ArgumentException("Unable to parse Node from: " + json.ToString(Formatting.None));
         }
@@ -33,7 +33,7 @@ public abstract class Node
                 throw new ArgumentException("Unknown node type: " + json["$type"]);
         }
 
-        newNode.NodeID = json["NodeID"].Value<int>();
+        newNode.NodeID = json["NodeID"]?.Value<int>() ?? -1;
         newNode.Links = json["Links"].Select(DialogueLink.TryParse).ToList();
         newNode.Conditionals = json["Conditionals"]?.Select(ConditionalCall.TryParse).ToList() ??
                                [];

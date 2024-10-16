@@ -23,7 +23,7 @@ public class Conversation
         {
             ID = Guid.Parse(json["ID"].Value<string>()),
             Filename = json["Filename"].Value<string>(),
-            CharacterMappings = json["CharacterMappings"].Select(x => Guid.Parse(x.Value<string>())).ToList(),
+            //CharacterMappings = json["CharacterMappings"].Select(x => Guid.Parse(x.Value<string>())).ToList(),
             Nodes = nodes
         };
     }

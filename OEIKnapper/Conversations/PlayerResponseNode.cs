@@ -8,6 +8,9 @@ public class PlayerResponseNode : Node
     
     public static PlayerResponseNode TryParse(JToken json)
     {
-        return new PlayerResponseNode();
+        return new PlayerResponseNode
+        {
+            Persistence = json["Persistence"].Value<int>()
+        };
     }
 }
