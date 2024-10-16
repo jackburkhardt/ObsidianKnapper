@@ -21,7 +21,7 @@ public class DialogueLink
         {
             FromNodeID = json["FromNodeID"]?.Value<int>() ?? -1,
             ToNodeID = json["ToNodeID"].Value<int>(),
-            Conditionals = json["Conditionals"].Select(ConditionalCall.TryParse).ToList()
+            Conditionals = json["Conditionals"]["Components"].Select(ConditionalCall.TryParse).ToList()
         };
     }
 }
