@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
-public class ConditionalCall
+public class ConditionalCall : Conditional
 {
     public string Function;
     public List<string> Parameters;
@@ -14,7 +14,7 @@ public class ConditionalCall
         return new ConditionalCall
         {
             Function = json["Data"]["FullName"].Value<string>(),
-            Parameters = json["Data"]["Parameters"].Value<List<string>>(),
+            Parameters = json["Data"]["Parameters"].ToObject<List<string>>(),
             Not = json["Not"]?.Value<bool>() ?? false
         };
     }
