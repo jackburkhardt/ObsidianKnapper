@@ -21,7 +21,7 @@ public class Conversation
 
         return new Conversation
         {
-            ID = Guid.Parse(json["ID"].Value<string>()),
+            ID = json["ID"].ToObject<Guid>(),
             Filename = json["Filename"].Value<string>(),
             //CharacterMappings = json["CharacterMappings"].Select(x => Guid.Parse(x.Value<string>())).ToList(),
             Nodes = nodes

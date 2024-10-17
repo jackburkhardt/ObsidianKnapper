@@ -19,7 +19,7 @@ public class Speaker
 
         return new Speaker
         {
-            ID = Guid.Parse(json["ID"].Value<string>()),
+            ID = json["ID"].ToObject<Guid>(),
             DisplayNameStringTableID = json["DisplayNameStringTableID"].Value<int>(),
             DisplayNameID = json["DisplayNameID"]?.Value<int>() ?? -1,
             ObjectName = json["ObjectName"]?.Value<string>()

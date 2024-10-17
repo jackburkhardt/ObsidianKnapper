@@ -15,7 +15,7 @@ public class ConversationNameLookup
         {
             return new ConversationNameLookup
             {
-                ID = Guid.Parse(json["ID"].Value<string>()),
+                ID = json["ID"].ToObject<Guid>(),
                 Name = json["Name"].Value<string>(),
                 Filename = json["Filename"].Value<string>()
             };
