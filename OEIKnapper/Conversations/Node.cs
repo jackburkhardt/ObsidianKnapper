@@ -7,7 +7,7 @@ public abstract class Node
 {
     public int NodeID;
     public List<DialogueLink> Links;
-    //todo: ExtendedProperties
+    public List<string> ExtendedProperties;
     public ConditionalExpression Conditionals;
 
     public static Node TryParse(JToken json)
@@ -36,6 +36,7 @@ public abstract class Node
         newNode.NodeID = json["NodeID"]?.Value<int>() ?? -1;
         newNode.Links = json["Links"].Select(DialogueLink.TryParse).ToList();
         newNode.Conditionals = Conditional.TryParse(json["Conditionals"]);
+        newNode.ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>();
         
         return newNode;
     }

@@ -8,7 +8,7 @@ public class DialogueLink
     public int FromNodeID;
     public int ToNodeID;
     public ConditionalExpression Conditionals;
-    //todo: Extension properties
+    public List<string> ExtendedProperties;
 
     public static DialogueLink TryParse(JToken json)
     {
@@ -21,7 +21,8 @@ public class DialogueLink
         {
             FromNodeID = json["FromNodeID"]?.Value<int>() ?? -1,
             ToNodeID = json["ToNodeID"].Value<int>(),
-            Conditionals = Conditional.TryParse(json["Conditionals"])
+            Conditionals = Conditional.TryParse(json["Conditionals"]),
+            ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>()
         };
     }
 }
