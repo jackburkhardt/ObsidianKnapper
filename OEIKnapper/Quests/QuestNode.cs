@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using OEIKnapper.Conversations;
 
 namespace OEIKnapper.Quests;
 
-public abstract class QuestNode
+public class QuestNode : Node
 {
-    public int NodeID;
-
-    public static QuestNode TryParse(JToken json)
-    {
-        
-    }
+    
 }

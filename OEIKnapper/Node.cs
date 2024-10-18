@@ -6,7 +6,7 @@ namespace OEIKnapper.Conversations;
 public abstract class Node
 {
     public int NodeID;
-    public List<DialogueLink> Links;
+    public List<NodeLink> Links;
     public List<string> ExtendedProperties;
     public ConditionalExpression Conditionals;
 
@@ -34,7 +34,7 @@ public abstract class Node
         }
 
         newNode.NodeID = json["NodeID"]?.Value<int>() ?? -1;
-        newNode.Links = json["Links"].Select(DialogueLink.TryParse).ToList();
+        newNode.Links = json["Links"].Select(NodeLink.TryParse).ToList();
         newNode.Conditionals = Conditional.TryParse(json["Conditionals"]);
         newNode.ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>();
         

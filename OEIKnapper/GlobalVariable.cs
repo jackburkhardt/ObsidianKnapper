@@ -6,18 +6,9 @@ namespace OEIKnapper;
 public struct GlobalVariable
 {
     public Guid ID;
-    public string Tag;
-    public VariableType Type;
+    public string Tag; // "b" prefix is bool, otherwise int?
+    public int Type; // todo: what is this? not a datatype it seems
     public string InitialValue;
-    
-    
-    public enum VariableType
-    {
-        String,
-        Integer,
-        Boolean,
-        Float
-    }
     
     public static GlobalVariable TryParse(JToken json)
     {
@@ -30,7 +21,7 @@ public struct GlobalVariable
         {
             ID = json["ID"].ToObject<Guid>(),
             Tag = json["Tag"].Value<string>(),
-            Type = json["VariableType"] != null ? (VariableType)json["VariableType"].Value<int>() : VariableType.Boolean,
+            Type = json["VariableType"].Value<int>(),
             InitialValue = json["InitialValue"]?.Value<string>() ?? ""
         };
     }
