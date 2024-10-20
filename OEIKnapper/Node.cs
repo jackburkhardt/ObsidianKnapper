@@ -36,6 +36,12 @@ public abstract class Node
             case "OEIFormats.FlowCharts.Quests.GlobalVariableObjectiveNode, OEIFormats":
                 newNode = GlobalVariableObjectiveNode.TryParse(json);
                 break;
+            case "OEIFormats.FlowCharts.Quests.QuestNode, OEIFormats":
+                newNode = QuestNode.TryParse(json);
+                break;
+            case "OEIFormats.FlowCharts.Quests.GlobalQuestNode, OEIFormats":
+                newNode = GlobalQuestNode.TryParse(json);
+                break;
             default:
                 throw new ArgumentException("Unknown node type: " + json["$type"]);
         }

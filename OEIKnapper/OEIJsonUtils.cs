@@ -14,8 +14,7 @@ public static class OEIJsonUtils
     
     public static T ParseEnum<T>(JProperty json, T defaultValue) where T : struct
     {
-        // check if is not null and value is int
-        // parse int to enum or return default value as enum
+        // todo: not working
         return json?.Value.Type == JTokenType.Integer
             ? (T) Enum.ToObject(typeof(T), json.Value.Value<int>())
             : defaultValue;

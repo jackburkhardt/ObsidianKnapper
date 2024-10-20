@@ -18,7 +18,7 @@ public class Quest
             ID = json["ID"].ToObject<Guid>(),
             Filename = json["Filename"].Value<string>(),
             TotalExperienceWeight = json["TotalExperienceWeight"].Value<int>(),
-            Nodes = json["Node"].Select(Node.TryParse).ToList(),
+            Nodes = json["Nodes"].Select(Node.TryParse).ToList(),
             ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>()
         };
     }
