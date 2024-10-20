@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OEIKnapper.Quests;
 
 namespace OEIKnapper.Conversations;
 
@@ -28,6 +29,12 @@ public abstract class Node
                 break;
             case "OEIFormats.FlowCharts.Conversations.ScriptNode, OEIFormats":
                 newNode = ScriptNode.TryParse(json);
+                break;
+            case "OEIFormats.FlowCharts.Quests.GlobalQuestEventGlobalVariableNode, OEIFormats":
+                newNode = QuestEventGlobalVariableNode.TryParse(json);
+                break;
+            case "OEIFormats.FlowCharts.Quests.GlobalVariableObjectiveNode, OEIFormats":
+                newNode = GlobalVariableObjectiveNode.TryParse(json);
                 break;
             default:
                 throw new ArgumentException("Unknown node type: " + json["$type"]);

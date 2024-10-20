@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using OEIKnapper.Conversations;
+using ComparisonType = OEIKnapper.Conversations.Conditional.ComparisonType;
 
 namespace OEIKnapper.Quests;
 
@@ -12,13 +13,15 @@ public class QuestEventGlobalVariableNode : Node
     
     public static QuestEventGlobalVariableNode TryParse(JToken json)
     {
+        var condVar = new ConditionalVariable(
+            json["Conditional"]["VariableID"].ToObject<Guid>(),
+            OEIJsonUtils.ParseEnum(json["Conditional"] as JProperty, ComparisonType.EQUAL),
+            json["Conditional"]["VariableValue"].Value<string>()
+        );
+        
         return new QuestEventGlobalVariableNode
         {
-            Conditional = new ConditionalVariable(
-                json["Conditional"]["VariableID"].ToObject<Guid>(),
-                (Conditional.ComparisonType)json["Conditional"]["Operation"]?.Value<int>(),
-                json["Conditional"]["VariableValue"].Value<string>()
-            ),
+            Conditional = condVar,
             ChildFailConditionalValue = json["ChildFailConditionalValue"].Value<string>()
         };
     }
