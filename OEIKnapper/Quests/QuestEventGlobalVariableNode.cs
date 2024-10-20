@@ -6,7 +6,7 @@ namespace OEIKnapper.Quests;
 
 public class QuestEventGlobalVariableNode : Node
 {
-    public record ConditionalVariable(Guid VariableID, Conditional.ComparisonType Operation, string VariableValue);
+    public record ConditionalVariable(Guid VariableID, ComparisonType Operator, string VariableValue);
 
     public ConditionalVariable Conditional;
     public string? ChildFailConditional;
@@ -15,7 +15,7 @@ public class QuestEventGlobalVariableNode : Node
     {
         var condVar = new ConditionalVariable(
             json["Conditional"]["VariableID"].ToObject<Guid>(),
-            OEIJsonUtils.ParseEnum(json["Conditional"]["Operator"] as JProperty, ComparisonType.EQUAL),
+            OEIJsonUtils.ParseEnum(json["Conditional"]["Operator"], ComparisonType.EQUAL),
             json["Conditional"]["VariableValue"]?.Value<string>() ?? ""
         );
         

@@ -21,7 +21,7 @@ public abstract class Conditional
         var cond = new ConditionalExpression
         {
             Conditions = [],
-            Operator = OEIJsonUtils.ParseEnum(json["Operator"] as JProperty, ComparisonType.AND)
+            Operator = OEIJsonUtils.ParseEnum(json["Operator"], ComparisonType.AND)
         };
 
         if (json["Components"] is JArray)

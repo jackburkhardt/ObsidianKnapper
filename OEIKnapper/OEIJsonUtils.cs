@@ -11,12 +11,14 @@ public static class OEIJsonUtils
     {
         return fields.All(field => json[field] != null);
     }
-    
-    public static T ParseEnum<T>(JProperty json, T defaultValue) where T : struct
+
+    public static T ParseEnum<T>(JToken? json, T defaultValue) where T : struct
     {
-        // todo: not working
-        return json?.Value.Type == JTokenType.Integer
-            ? (T) Enum.ToObject(typeof(T), json.Value.Value<int>())
-            : defaultValue;
+        if (json == null || json.Type != JTokenType.Integer)
+        {
+            return defaultValue;
+        }
+
+        return (T) Enum.ToObject(typeof(T), json.Value<int>());
     }
 }
