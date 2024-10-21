@@ -14,9 +14,9 @@ namespace OEIKnapperGUI;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class ProjectSelectWindow : Window
 {
-    public MainWindow()
+    public ProjectSelectWindow()
     {
         InitializeComponent();
     }

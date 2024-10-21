@@ -6,7 +6,7 @@ namespace OEIKnapper;
 public struct GlobalVariable
 {
     public Guid ID;
-    public string Tag; // "b" prefix is bool, otherwise int?
+    public string Tag; // "b" prefix is bool, otherwise int...?
     public int Type; // todo: what is this? not a datatype it seems
     public string InitialValue;
     
