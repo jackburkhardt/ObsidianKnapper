@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OEIKnapperGUI"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Select game" Height="600" Width="450">
     
     <Window.Resources>
-        <DataTemplate x:Key="projectItemTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Image x:Name="gameIcon"></Image>
-                <TextBlock x:Name="gameName"></TextBlock>
-                <TextBlock x:Name="gamePath"></TextBlock>
-            </StackPanel>
-        </DataTemplate>
     </Window.Resources>
-    <Grid>
     
-    </Grid>
+    <StackPanel>
+        <Label>These games were found on your system. Not seeing something? Try manually locating it.</Label>
+        <ListBox SelectionMode="Single" ItemsSource="{Binding Projects}">
+            <ListBox.ItemTemplate>
+                <DataTemplate  DataType="{x:Type local:ProjectData}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="Icon"  Source="{Binding Icon}"></Image>
+                        <TextBlock x:Name="Name" Text="{Binding Name}"></TextBlock>
+                        <TextBlock x:Name="Path" Text="{Binding Path}" TextWrapping="NoWrap"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Name="openProject" Click="OpenProject_OnClick">Open</Button>
+        <Button Name="fileSelect" Click="FileSelect_OnClick">Manually locate...</Button>
+    </StackPanel>
 </Window>
