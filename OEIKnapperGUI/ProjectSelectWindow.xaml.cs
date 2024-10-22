@@ -34,8 +34,6 @@ public struct ProjectData()
 };
 public partial class ProjectSelectWindow : Window
 {
-    
-    private string selectedPath = "";
     public ObservableCollection<ProjectData> Projects { get; set; } = [];
     
     public ProjectSelectWindow()
@@ -46,8 +44,8 @@ public partial class ProjectSelectWindow : Window
     
     private void ProjectSelectWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        string[] searchDirs = [@"C:\Program Files (x86)\Steam\steamapps\common"];
-        string[] searchPaths = [@"\Pentiment\Pentiment.exe"];
+        string[] searchDirs = [@"C:\Program Files (x86)\Steam\steamapps\common", @"C:\Program Files\Epic Games"];
+        string[] searchPaths = [@"\Pentiment\Pentiment.exe", @"\TheOuterWorlds\TheOuterWorlds.exe"];
         
         foreach (var dir in searchDirs)
         {
@@ -74,10 +72,8 @@ public partial class ProjectSelectWindow : Window
         
         if (dialog.ShowDialog() == true)
         {
-            selectedPath = dialog.FileName;
+            LoadProjectData(dialog.FileName);
         }
-
-        LoadProjectData(selectedPath);
     }
 
     void LoadProjectData(string path)
@@ -92,6 +88,11 @@ public partial class ProjectSelectWindow : Window
 
     private void OpenProject_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        if (projectList.SelectedItem == null) return;
+        
+        var project = (ProjectData) projectList.SelectedItem;
+        var mainWindow = new MainWindow();
+        mainWindow.Show();
+        this.Close();
     }
 }

@@ -6,25 +6,30 @@
         xmlns:local="clr-namespace:OEIKnapperGUI"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Select game" Height="600" Width="450">
+        Title="Select game" Height="300" Width="500">
     
     <Window.Resources>
     </Window.Resources>
     
     <StackPanel>
-        <Label>These games were found on your system. Not seeing something? Try manually locating it.</Label>
-        <ListBox SelectionMode="Single" ItemsSource="{Binding Projects}">
+        <Label FontWeight="Bold" HorizontalAlignment="Center">These games were found on your system.</Label>
+        <Label HorizontalAlignment="Center">Not seeing something? Try manually locating it.</Label>
+        <ListBox x:Name="projectList" SelectionMode="Single" ItemsSource="{Binding Projects}">
             <ListBox.ItemTemplate>
                 <DataTemplate  DataType="{x:Type local:ProjectData}">
                     <StackPanel Orientation="Horizontal">
                         <Image x:Name="Icon"  Source="{Binding Icon}"></Image>
-                        <TextBlock x:Name="Name" Text="{Binding Name}"></TextBlock>
-                        <TextBlock x:Name="Path" Text="{Binding Path}" TextWrapping="NoWrap"></TextBlock>
+                        <StackPanel>
+                            <TextBlock x:Name="Name" Text="{Binding Name}"></TextBlock>
+                            <TextBlock x:Name="Path" Text="{Binding Path}" TextWrapping="NoWrap"></TextBlock>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Name="openProject" Click="OpenProject_OnClick">Open</Button>
-        <Button Name="fileSelect" Click="FileSelect_OnClick">Manually locate...</Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Width="150" Name="fileSelect" Click="FileSelect_OnClick">Manually locate...</Button>
+            <Button IsDefault="True" Width="150" Name="openProject" Click="OpenProject_OnClick" FontWeight="Bold">Open</Button>
+        </StackPanel>
     </StackPanel>
 </Window>
