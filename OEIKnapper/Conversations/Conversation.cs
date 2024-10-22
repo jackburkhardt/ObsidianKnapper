@@ -3,10 +3,10 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
-public class Conversation
+public class Conversation : IBundleItem
 {
-    public Guid ID;
-    public string Filename;
+    public Guid ID { get; set; }
+    public string Filename { get; set; }
     public List<Guid> CharacterMappings;
     public List<Node> Nodes;
     

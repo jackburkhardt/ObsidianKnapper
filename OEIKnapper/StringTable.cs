@@ -25,6 +25,13 @@ public class StringTable
             Strings = json["Entries"].Select(String.TryParse).ToList()
         };
     }
+
+    // opting to use this instead of a dictionary for better serialized schema compatibility
+    public string this[int i]
+    {
+        get => Strings.First(s => s.ID == i).DefaultText;
+        set => Strings.First(s => s.ID == i).DefaultText = value;
+    }
 }
 
 /// <summary>

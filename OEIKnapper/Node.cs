@@ -9,6 +9,7 @@ public abstract class Node
     public int NodeID;
     public List<NodeLink> Links;
     public List<string> ExtendedProperties;
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ConditionalExpression Conditionals;
 
     public static Node TryParse(JToken json)

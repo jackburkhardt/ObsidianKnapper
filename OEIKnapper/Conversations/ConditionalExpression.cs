@@ -1,10 +1,13 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
 public class ConditionalExpression : Conditional
 {
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ComparisonType Operator;
+    [JsonProperty(PropertyName = "Components")]
     public List<Conditional> Conditions;
     
     public static ConditionalExpression TryParse(JToken json)

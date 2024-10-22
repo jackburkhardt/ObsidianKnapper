@@ -5,10 +5,11 @@ namespace OEIKnapper.Conversations;
 
 public class Speaker
 {
-    public Guid ID;
+    public Guid ID { get; set; }
     public int DisplayNameStringTableID;
     public int DisplayNameID;
-    public string ObjectName;
+    [JsonProperty(PropertyName = "ObjectName")]
+    public string ObjectName { get; set; }
 
     public static Speaker TryParse(JToken json)
     {

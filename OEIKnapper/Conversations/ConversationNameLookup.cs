@@ -3,11 +3,11 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
-public class ConversationNameLookup
+public class ConversationNameLookup : IBundleItem
 {
-    public Guid ID;
+    public Guid ID { get; set; }
     public string Name;
-    public string Filename;
+    public string Filename { get; set; }
     
     public static ConversationNameLookup TryParse(JToken json)
     {

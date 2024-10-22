@@ -17,6 +17,7 @@ public class GameRummager
         ConversationExt,
         GlobalVariableExt
     };
+    public delegate void ReadComplete();
     
     public static IEnumerable<string> RummageForGameFiles(string gamePath)
     {
@@ -25,9 +26,8 @@ public class GameRummager
         return foundFiles;
     }
 
-    public static async Task AssignFilesToReaders(IEnumerable<string> paths)
+    public static void AssignFilesToReaders(IEnumerable<string> paths)
     {
-        List<Task> tasks = new();
         
         foreach (var path in paths)
         {
@@ -35,27 +35,25 @@ public class GameRummager
             {
                 case StringTableExt:
                     var stringTableReader = new StringTableReader(path);
-                    tasks.Add(stringTableReader.Read());
+                   // tasks.Add(stringTableReader.Read());
                     break;
                 case ConversationBundleExt:
                     var convoReader = new ConvoBundleReader(path);
-                    tasks.Add(convoReader.Read());
+                   // tasks.Add(convoReader.Read());
                     break;
                 case QuestExt:
                     var questReader = new QuestBundleReader(path);
-                    tasks.Add(questReader.Read());
+                    Task.Run(() => questReader.Read());
                     break;
                 case GlobalVariableExt:
                     var globalVarReader = new GlobalVariableReader(path);
-                    tasks.Add(globalVarReader.Read());
+                    globalVarReader.Read();
                     break;
                 default:
                     Console.WriteLine($"File not assigned to a reader: {path}");
                     break; 
             }
         }
-        
-        await Task.WhenAll(tasks);
         
     }
 }
