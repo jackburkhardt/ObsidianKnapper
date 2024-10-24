@@ -7,7 +7,8 @@ public class ConversationNameLookup : IBundleItem
 {
     public Guid ID { get; set; }
     public string Name;
-    public string Filename { get; set; }
+    [JsonProperty(PropertyName = "Filename")]
+    public string Tag { get; set; }
     
     public static ConversationNameLookup TryParse(JToken json)
     {
@@ -17,7 +18,7 @@ public class ConversationNameLookup : IBundleItem
             {
                 ID = json["ID"].ToObject<Guid>(),
                 Name = json["Name"].Value<string>(),
-                Filename = json["Filename"].Value<string>()
+                Tag = json["Filename"].Value<string>()
             };
         }
         catch (Exception)

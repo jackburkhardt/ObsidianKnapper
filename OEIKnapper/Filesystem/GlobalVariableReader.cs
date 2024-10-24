@@ -3,16 +3,15 @@ using OEIKnapper.Conversations;
 
 namespace OEIKnapper.Filesystem;
 
-public class GlobalVariableReader
+public class GlobalVariableReader : FileReader
 {
-    string _path;
-    
+
     public GlobalVariableReader(string path)
     {
         _path = path;
     }
 
-    public async Task<List<GlobalVariable>> Read()
+    public async Task Read()
     {
         var fileText = await File.ReadAllTextAsync(_path);
         var json = JObject.Parse(fileText);
@@ -23,6 +22,6 @@ public class GlobalVariableReader
             variables.AddRange(varSet["GlobalVariables"].Select(GlobalVariable.TryParse));
         }
         
-        return variables;
+        RaiseFileParsedEvent(variables, variables.GetType(), _path);
     }
 }

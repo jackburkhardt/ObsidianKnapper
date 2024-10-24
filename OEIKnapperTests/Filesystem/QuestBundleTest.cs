@@ -18,7 +18,7 @@ public class QuestBundleTest
 
             foreach (var quest in quests)
             {
-                Console.WriteLine("Quest: " + quest.Filename);
+                Console.WriteLine("Quest: " + quest.Tag);
                 Console.WriteLine("  ID: " + quest.ID);
                 Console.WriteLine("  ExperienceWeight: " + quest.TotalExperienceWeight);
                 Console.WriteLine("  Nodes:");

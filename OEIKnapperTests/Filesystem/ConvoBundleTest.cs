@@ -22,7 +22,7 @@ public class ConvoBundleTest
             
             foreach (var speaker in tables.Item1)
             {
-                Console.WriteLine("Speaker: " + speaker.ObjectName);
+                Console.WriteLine("Speaker: " + speaker.Tag);
                 Console.WriteLine("  ID: " + speaker.ID);
             }
 
@@ -30,7 +30,7 @@ public class ConvoBundleTest
             {
                 Console.WriteLine("Conversation: " + convo.Name);
                 Console.WriteLine("  ID: " + convo.ID);
-                Console.WriteLine("  Filename: " + convo.Filename);
+                Console.WriteLine("  Filename: " + convo.Tag);
             }
         }).Wait();
     }

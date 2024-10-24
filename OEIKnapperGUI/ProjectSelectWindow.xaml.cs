@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Drawing;
 using System.Windows.Interop;
+using OEIKnapper;
 
 namespace OEIKnapperGUI;
 
@@ -91,6 +92,7 @@ public partial class ProjectSelectWindow : Window
         if (projectList.SelectedItem == null) return;
         
         var project = (ProjectData) projectList.SelectedItem;
+        Database.LoadProject(project.Path);
         var mainWindow = new MainWindow();
         mainWindow.Show();
         this.Close();

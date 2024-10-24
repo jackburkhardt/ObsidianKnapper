@@ -31,23 +31,24 @@ public class GameRummager
         
         foreach (var path in paths)
         {
+            Console.WriteLine(path);
             switch (path.Split('.')[1])
             {
                 case StringTableExt:
-                    var stringTableReader = new StringTableReader(path);
+                   // var  stringTableReader = new StringTableReader(path);
                    // tasks.Add(stringTableReader.Read());
                     break;
                 case ConversationBundleExt:
-                    var convoReader = new ConvoBundleReader(path);
+                   // var convoReader = new ConvoBundleReader(path);
                    // tasks.Add(convoReader.Read());
                     break;
                 case QuestExt:
-                    var questReader = new QuestBundleReader(path);
-                    Task.Run(() => questReader.Read());
+                    //var questReader = new QuestBundleReader(path);
+                   // Task.Run(() => questReader.Read());
                     break;
                 case GlobalVariableExt:
-                    var globalVarReader = new GlobalVariableReader(path);
-                    globalVarReader.Read();
+                    //var globalVarReader = new GlobalVariableReader(path);
+                    //globalVarReader.Read();
                     break;
                 default:
                     Console.WriteLine($"File not assigned to a reader: {path}");

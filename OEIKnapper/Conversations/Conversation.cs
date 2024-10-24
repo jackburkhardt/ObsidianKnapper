@@ -6,7 +6,8 @@ namespace OEIKnapper.Conversations;
 public class Conversation : IBundleItem
 {
     public Guid ID { get; set; }
-    public string Filename { get; set; }
+    [JsonProperty(PropertyName = "Filename")]
+    public string Tag { get; set; }
     public List<Guid> CharacterMappings;
     public List<Node> Nodes;
     
@@ -22,7 +23,7 @@ public class Conversation : IBundleItem
         return new Conversation
         {
             ID = json["ID"].ToObject<Guid>(),
-            Filename = json["Filename"].Value<string>(),
+            Tag = json["Filename"].Value<string>(),
             //CharacterMappings = json["CharacterMappings"].Select(x => Guid.Parse(x.Value<string>())).ToList(),
             Nodes = nodes
         };

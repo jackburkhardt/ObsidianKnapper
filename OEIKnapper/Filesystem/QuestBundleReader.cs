@@ -3,20 +3,20 @@ using OEIKnapper.Quests;
 
 namespace OEIKnapper.Filesystem;
 
-public class QuestBundleReader
+public class QuestBundleReader : FileReader
 {
-    string _path;
-    
+
     public QuestBundleReader(string path)
     {
         _path = path;
     }
 
-    public async Task<List<Quest>> Read()
+    public async Task Read()
     {
         var fileText = await File.ReadAllTextAsync(_path);
         var json = JObject.Parse(fileText);
-
-        return json["Quests"].Select(Quest.TryParse).ToList();
+        var questList = json["Quests"].Select(Quest.TryParse).ToList();
+        
+        RaiseFileParsedEvent(questList, questList.GetType(), _path);
     }
 }

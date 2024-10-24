@@ -3,17 +3,15 @@ using OEIKnapper.Conversations;
 
 namespace OEIKnapper.Filesystem;
 
-public class ConvoBundleReader
+public class ConvoBundleReader : FileReader
 {
-    string _path;
-    
     public ConvoBundleReader(string path)
     {
         _path = path;
     }
 
-    public async Task<(List<Speaker>, List<ConversationNameLookup>)> Read(AsyncCallback callback = null)
-    {
+    public async Task Read()
+    { 
         var fileText = await File.ReadAllTextAsync(_path);
         var json = JObject.Parse(fileText);
         var speakers = new List<Speaker>();
@@ -30,6 +28,7 @@ public class ConvoBundleReader
             conversations.Add(ConversationNameLookup.TryParse(tableJson));
         }
         
-        return (speakers, conversations);
+        var result = (speakers, conversations);
+        RaiseFileParsedEvent(result, result.GetType(), _path);
     }
 }

@@ -3,13 +3,13 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
-public class Speaker
+public class Speaker : IBundleItem
 {
     public Guid ID { get; set; }
     public int DisplayNameStringTableID;
     public int DisplayNameID;
     [JsonProperty(PropertyName = "ObjectName")]
-    public string ObjectName { get; set; }
+    public string Tag { get; set; }
 
     public static Speaker TryParse(JToken json)
     {
@@ -23,7 +23,7 @@ public class Speaker
             ID = json["ID"].ToObject<Guid>(),
             DisplayNameStringTableID = json["DisplayNameStringTableID"].Value<int>(),
             DisplayNameID = json["DisplayNameID"]?.Value<int>() ?? -1,
-            ObjectName = json["ObjectName"]?.Value<string>()
+            Tag = json["ObjectName"]?.Value<string>()
         };
     }
 }

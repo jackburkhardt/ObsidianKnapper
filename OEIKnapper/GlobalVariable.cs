@@ -3,10 +3,10 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper;
 
-public struct GlobalVariable
+public struct GlobalVariable : IBundleItem
 {
-    public Guid ID;
-    public string Tag; // "b" prefix is bool, otherwise int...?
+    public Guid ID { get; set; }
+    public string Tag { get; set; } // "b" prefix is bool, otherwise int...?
     public int Type; // todo: what is this? not a datatype it seems
     public string InitialValue;
     

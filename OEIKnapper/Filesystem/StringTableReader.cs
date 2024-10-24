@@ -3,16 +3,15 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Filesystem;
 
-public class StringTableReader
+public class StringTableReader : FileReader
 {
-    string _path;
-    
+  
     public StringTableReader(string path)
     {
         _path = path;
     }
 
-    public async Task<List<StringTable>> Read()
+    public async Task Read()
     {
         var fileText = await File.ReadAllTextAsync(_path);
         var json = JObject.Parse(fileText);
@@ -23,6 +22,6 @@ public class StringTableReader
             tables.Add(StringTable.TryParse(tableJson));
         }
         
-        return tables;
+        RaiseFileParsedEvent(tables, tables.GetType(), _path);
     }
 }
