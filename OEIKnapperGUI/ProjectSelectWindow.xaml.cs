@@ -92,9 +92,10 @@ public partial class ProjectSelectWindow : Window
         if (projectList.SelectedItem == null) return;
         
         var project = (ProjectData) projectList.SelectedItem;
-        Database.LoadProject(project.Path);
+        var db = new Database();
+        db.LoadProject(project.Path);
         var mainWindow = new MainWindow();
         mainWindow.Show();
-        this.Close();
+        //this.Close();
     }
 }

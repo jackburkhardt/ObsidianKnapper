@@ -19,7 +19,7 @@ public class Database
         FileReader.OnFileParseFailedEvent += LogParseFailure;
     }
     
-    public static void LoadProject(string path)
+    public void LoadProject(string path)
     {
         
         var foundFiles = GameRummager.RummageForGameFiles(path);
@@ -30,6 +30,7 @@ public class Database
     
     private void OnFileParsed(object data, Type type, string path)
     {
+        Console.WriteLine($"Parsed file: {Path.GetFileName(path)}");
         switch (data)
         {
             case (List<Speaker> speakers, List<ConversationNameLookup> convos):
