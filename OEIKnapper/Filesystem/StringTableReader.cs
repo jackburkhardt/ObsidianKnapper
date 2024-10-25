@@ -6,22 +6,29 @@ namespace OEIKnapper.Filesystem;
 public class StringTableReader : FileReader
 {
   
-    public StringTableReader(string path)
+    public StringTableReader(string locale)
     {
-        _path = path;
+
     }
 
     public async Task Read()
     {
-        var fileText = await File.ReadAllTextAsync(_path);
-        var json = JObject.Parse(fileText);
-        var tables = new List<StringTable>();
-
-        foreach (var tableJson in json["StringTables"] as JArray)
+        try
         {
-            tables.Add(StringTable.TryParse(tableJson));
+            var fileText = await File.ReadAllTextAsync(_path);
+            var json = JObject.Parse(fileText);
+            var tables = new List<StringTable>();
+
+            foreach (var tableJson in json["StringTables"])
+            {
+                tables.Add(StringTable.TryParse(tableJson));
+            }
+
+            RaiseFileParsedEvent(tables, tables.GetType(), _path);
         }
-        
-        RaiseFileParsedEvent(tables, tables.GetType(), _path);
+        catch (Exception e)
+        {
+            RaiseFileParseFailedEvent(_path, e.Message);
+        }
     }
 }

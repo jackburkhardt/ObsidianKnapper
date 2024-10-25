@@ -12,23 +12,29 @@ public class ConvoBundleReader : FileReader
 
     public async Task Read()
     { 
-        var fileText = await File.ReadAllTextAsync(_path);
-        var json = JObject.Parse(fileText);
-        var speakers = new List<Speaker>();
+        try {
+            var fileText = await File.ReadAllTextAsync(_path);
+            var json = JObject.Parse(fileText);
+            var speakers = new List<Speaker>();
 
-        foreach (var tableJson in json["Speakers"] as JArray)
-        {
-            speakers.Add(Speaker.TryParse(tableJson));
+            foreach (var tableJson in json["Speakers"] as JArray)
+            {
+                speakers.Add(Speaker.TryParse(tableJson));
+            }
+            
+            var conversations = new List<ConversationNameLookup>();
+            
+            foreach (var tableJson in json["ConversationNameLookup"] as JArray)
+            {
+                conversations.Add(ConversationNameLookup.TryParse(tableJson));
+            }
+            
+            var result = (speakers, conversations);
+            RaiseFileParsedEvent(result, result.GetType(), _path);
         }
-        
-        var conversations = new List<ConversationNameLookup>();
-        
-        foreach (var tableJson in json["ConversationNameLookup"] as JArray)
+        catch (Exception e)
         {
-            conversations.Add(ConversationNameLookup.TryParse(tableJson));
+            RaiseFileParseFailedEvent(_path, e.Message);
         }
-        
-        var result = (speakers, conversations);
-        RaiseFileParsedEvent(result, result.GetType(), _path);
     }
 }

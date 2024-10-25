@@ -13,10 +13,16 @@ public class QuestBundleReader : FileReader
 
     public async Task Read()
     {
-        var fileText = await File.ReadAllTextAsync(_path);
-        var json = JObject.Parse(fileText);
-        var questList = json["Quests"].Select(Quest.TryParse).ToList();
-        
-        RaiseFileParsedEvent(questList, questList.GetType(), _path);
+        try {
+            var fileText = await File.ReadAllTextAsync(_path);
+            var json = JObject.Parse(fileText);
+            var questList = json["Quests"].Select(Quest.TryParse).ToList();
+            
+            RaiseFileParsedEvent(questList, questList.GetType(), _path);
+        }
+        catch (Exception e)
+        {
+            RaiseFileParseFailedEvent(_path, e.Message);
+        }
     }
 }

@@ -21,7 +21,7 @@ public struct GlobalVariable : IBundleItem
         {
             ID = json["ID"].ToObject<Guid>(),
             Tag = json["Tag"].Value<string>(),
-            Type = json["VariableType"].Value<int>(),
+            Type = json["VariableType"]?.Value<int>() ?? 0,
             InitialValue = json["InitialValue"]?.Value<string>() ?? ""
         };
     }

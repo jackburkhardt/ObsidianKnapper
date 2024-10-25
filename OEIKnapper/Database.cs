@@ -13,6 +13,7 @@ public class Database
     public Bundle<Speaker> Speakers { get; private set; } = [];
     public Dictionary<string, StringTable> StringTable { get; private set; } = new();
     
+    
     public Database()
     {
         FileReader.OnFileParsedEvent += OnFileParsed;

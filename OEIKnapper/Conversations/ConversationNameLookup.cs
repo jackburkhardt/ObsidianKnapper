@@ -6,9 +6,10 @@ namespace OEIKnapper.Conversations;
 public class ConversationNameLookup : IBundleItem
 {
     public Guid ID { get; set; }
-    public string Name;
-    [JsonProperty(PropertyName = "Filename")]
+    [JsonProperty(PropertyName = "Name")]
     public string Tag { get; set; }
+    
+    public string Filename;
     
     public static ConversationNameLookup TryParse(JToken json)
     {
@@ -17,8 +18,8 @@ public class ConversationNameLookup : IBundleItem
             return new ConversationNameLookup
             {
                 ID = json["ID"].ToObject<Guid>(),
-                Name = json["Name"].Value<string>(),
-                Tag = json["Filename"].Value<string>()
+                Tag = json["Name"].Value<string>(),
+                Filename = json["Filename"].Value<string>()
             };
         }
         catch (Exception)

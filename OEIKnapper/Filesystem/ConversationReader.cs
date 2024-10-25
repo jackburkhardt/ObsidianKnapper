@@ -12,10 +12,16 @@ public class ConversationReader : FileReader
 
     public async Task Read()
     {
-        var fileText = await File.ReadAllTextAsync(_path);
-        var json = JObject.Parse(fileText);
-        var parsedConvo =  Conversation.TryParse(json);
-        
-        RaiseFileParsedEvent(parsedConvo, parsedConvo.GetType(), _path);
+        try {
+            var fileText = await File.ReadAllTextAsync(_path);
+            var json = JObject.Parse(fileText);
+            var parsedConvo =  Conversation.TryParse(json);
+            
+            RaiseFileParsedEvent(parsedConvo, parsedConvo.GetType(), _path);
+        }
+        catch (Exception e)
+        {
+            RaiseFileParseFailedEvent(_path, e.Message);
+        }
     }
 }
