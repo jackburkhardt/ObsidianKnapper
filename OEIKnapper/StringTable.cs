@@ -39,8 +39,8 @@ public class StringTable
 /// </summary>
 public class String
 {
-    public int ID;
-    public string DefaultText;
+    public int ID { get; set; }
+    public string DefaultText { get; set; }
 
     public static String TryParse(JToken json)
     {

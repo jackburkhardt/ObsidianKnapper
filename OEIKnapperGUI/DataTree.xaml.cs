@@ -96,7 +96,20 @@ public partial class DataTree : UserControl
     }
 
 
-
+    private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+        var item = (TreeViewItem)treeView.SelectedItem;
+        if (item.Tag.ToString() == "file")
+        {
+            var path = item.Header.ToString();
+            while (item.Parent is TreeViewItem parent)
+            {
+                item = parent;
+                path = item.Header + "/" + path;
+            }
+            OnPathSelected?.Invoke(path);
+        }
+    }
 }
 
 

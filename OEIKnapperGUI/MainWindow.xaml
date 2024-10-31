@@ -14,9 +14,10 @@
         </Ribbon>
         
         <TabControl x:Name="tabControl">
-            <TabItem Header="act3_simon">
-                <local:DataTree x:Name="dataTree"/>
+            <TabItem Header="StringTable: en__us">
+                <local:StringTableEditor></local:StringTableEditor>
             </TabItem>
+            
         </TabControl>
     </Grid>
 </Window>
