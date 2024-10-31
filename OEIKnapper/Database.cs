@@ -25,6 +25,7 @@ public class Database
         
         var foundFiles = GameRummager.RummageForGameFiles(path);
         GameRummager.AssignFilesToReaders(foundFiles);
+        GameRummager.LoadStringTable("enus");
         
         
     }

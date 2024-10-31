@@ -17,4 +17,12 @@
       <ProjectReference Include="..\OEIKnapper\OEIKnapper.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="GameSelectWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

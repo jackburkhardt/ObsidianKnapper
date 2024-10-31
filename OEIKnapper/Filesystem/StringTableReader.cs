@@ -6,9 +6,9 @@ namespace OEIKnapper.Filesystem;
 public class StringTableReader : FileReader
 {
   
-    public StringTableReader(string locale)
+    public StringTableReader(string path)
     {
-
+        _path = path;
     }
 
     public async Task Read()

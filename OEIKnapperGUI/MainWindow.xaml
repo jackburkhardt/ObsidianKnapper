@@ -14,7 +14,9 @@
         </Ribbon>
         
         <TabControl x:Name="tabControl">
-            <TabItem Header="act3_simon"></TabItem>
+            <TabItem Header="act3_simon">
+                <local:DataTree x:Name="dataTree"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
