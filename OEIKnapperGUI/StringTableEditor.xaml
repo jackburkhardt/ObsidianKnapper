@@ -16,16 +16,16 @@
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <DockPanel  HorizontalAlignment="Left">
                 <Label>Filter: </Label>
-                <TextBox x:Name="filterBox" Width="150"></TextBox>
+                <TextBox x:Name="filterBox" Width="150" Height="20"></TextBox>
                 <Label>Goto:</Label>
-                <TextBox x:Name="gotoBox" Width="50" TextChanged="GotoBox_OnTextChanged">
+                <TextBox x:Name="gotoBox" Width="50" Height="20" TextChanged="GotoBox_OnTextChanged">
                 </TextBox>
-            </StackPanel>
+            </DockPanel>
             <DataGrid Grid.Row="1" x:Name="stringTableDisplay" AutoGenerateColumns="True" AlternatingRowBackground="Lavender">
             </DataGrid>
         </Grid>

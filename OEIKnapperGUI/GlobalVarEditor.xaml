@@ -6,40 +6,10 @@
              xmlns:local="clr-namespace:OEIKnapperGUI"
              xmlns:oei="clr-namespace:OEIKnapper;assembly=OEIKnapper"
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:pt="http://propertytools.org/wpf"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="globalVarTypesEnum"
-                            MethodName="GetValues" 
-                            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="oei:GlobalVarDataType"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <DataTemplate x:Key="variableFields" DataType="{x:Type oei:GlobalVariable}">
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0">ID:</Label>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ID, Mode=TwoWay}" VerticalAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0">Tag:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Tag, Mode=TwoWay}"  VerticalAlignment="Center"></TextBox>
-            <Label Grid.Row="2" Grid.Column="0">Data Type:</Label>
-            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="dataTypeDrpdn" ItemsSource="{Binding Source={StaticResource globalVarTypesEnum}}" SelectedValue="{Binding Type}"  VerticalAlignment="Center"/>
-            <Label Grid.Row="3" Grid.Column="0">Initial Value:</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding InitialValue, Mode=TwoWay}"  VerticalAlignment="Center"></TextBox>
-            <Button Grid.Column="0" Grid.Row="4" Width="50" HorizontalAlignment="Left" Click="SaveButton_OnClick">Save</Button>
-        </Grid>
-        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,6 +19,9 @@
         </Grid.ColumnDefinitions>
         <local:DataTree x:Name="variableList"/>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
-        <ContentControl Grid.Column="2" x:Name="currentVarEditor" Content="{Binding currentVar, Mode=TwoWay}" ContentTemplate="{StaticResource variableFields}" VerticalAlignment="Top"></ContentControl>    
+        <StackPanel Grid.Column="2">
+            <pt:PropertyGrid x:Name="propertyEditor"  SelectedObject="{Binding CurrentVar, UpdateSourceTrigger=Explicit}" TabVisibility="VisibleIfMoreThanOne"/>
+            <Button Width="50" HorizontalAlignment="Left" Click="SaveButton_OnClick">Save</Button>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -3,10 +3,11 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper;
 
-public struct GlobalVariable : IBundleItem
+public class GlobalVariable : IBundleItem
 {
     public Guid ID { get; set; }
     public string Tag { get; set; } // "b" prefix is bool, otherwise int...?
+    [JsonProperty("VariableType")]
     public GlobalVarDataType Type { get; set; } // todo: what is this? not a datatype it seems
     public string InitialValue { get; set; }
     
@@ -21,7 +22,7 @@ public struct GlobalVariable : IBundleItem
         {
             ID = json["ID"].ToObject<Guid>(),
             Tag = json["Tag"].Value<string>(),
-            Type = OEIJsonUtils.ParseEnum(json["Type"], GlobalVarDataType.Boolean),
+            Type = OEIJsonUtils.ParseEnum(json["VariableType"], GlobalVarDataType.Boolean),
             InitialValue = json["InitialValue"]?.Value<string>() ?? ""
         };
     }
