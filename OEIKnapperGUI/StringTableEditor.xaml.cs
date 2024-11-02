@@ -9,7 +9,12 @@ public partial class StringTableEditor : UserControl
     public StringTableEditor()
     {
         InitializeComponent();
-        DataTree.OnPathSelected += UpdateViewedTable;
+        dataTree.OnPathSelected += UpdateViewedTable;
+        
+        Loaded += (sender, args) =>
+        {
+            dataTree.ItemsSource = MainWindow.Database.StringTable.Keys;
+        };
     }
 
     public void UpdateViewedTable(string path)

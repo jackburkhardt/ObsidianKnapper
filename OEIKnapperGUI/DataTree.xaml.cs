@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -10,22 +11,30 @@ namespace OEIKnapperGUI;
 
 public partial class DataTree : UserControl
 {
-
     public delegate void PathDelegate(string fullPath);
-    public static event PathDelegate OnPathSelected;
+    public event PathDelegate? OnPathSelected;
     
-    public TreeView TreeView => treeView;
+    public IEnumerable<string> ItemsSource
+    {
+        get => (IEnumerable<string>)GetValue(ItemsSourceProperty);
+        set
+        {
+            SetValue(ItemsSourceProperty, value);
+            GetItems(value);
+        }
+    }
+
+    public static DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
+        "ItemsSource", typeof(IEnumerable<string>), typeof(DataTree), new PropertyMetadata(default(ObservableCollection<string>)));
     
     public DataTree()
     {
         InitializeComponent();
-        
-         this.Loaded += DataTree_Loaded; ;
     }
     
     private void DataTree_Loaded(object sender, RoutedEventArgs e)
     {
-        GetItems(MainWindow.Database.StringTable.Keys);
+       GetItems(MainWindow.Database.GlobalVariables.Select(v => v.Tag));
     }
 
     private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -39,7 +48,7 @@ public partial class DataTree : UserControl
     private void ToggleVisibleBySearch(TreeViewItem item, string search)
     {
         var header = item.Header.ToString();
-        if (header.Contains(search))
+        if (header.Contains(search, StringComparison.CurrentCultureIgnoreCase))
         {
             item.Visibility = Visibility.Visible;
         }
@@ -54,7 +63,7 @@ public partial class DataTree : UserControl
         }
     }
 
-    private void GetItems(IEnumerable<string> paths, char seperator = '/')
+    public void GetItems(IEnumerable<string> paths, char seperator = '/')
     {
         treeView.Items.Clear();
         var root = new TreeViewItem { Header = "", Focusable = false, IsExpanded = true };
@@ -99,6 +108,7 @@ public partial class DataTree : UserControl
     private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
         var item = (TreeViewItem)treeView.SelectedItem;
+        if (item == null) return;
         if (item.Tag.ToString() == "file")
         {
             var path = item.Header.ToString();

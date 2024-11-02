@@ -1,6 +1,8 @@
+using System.IO;
 using OEIKnapper.Conversations;
 using OEIKnapper.Filesystem;
 using OEIKnapper.Quests;
+using OEIKnapperGUI;
 
 namespace OEIKnapper;
 

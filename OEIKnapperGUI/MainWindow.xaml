@@ -17,6 +17,9 @@
             <TabItem Header="StringTable: en__us">
                 <local:StringTableEditor></local:StringTableEditor>
             </TabItem>
+            <TabItem Header="Global Variables">
+                <local:GlobalVarEditor></local:GlobalVarEditor>
+            </TabItem>
             
         </TabControl>
     </Grid>

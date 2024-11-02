@@ -7,8 +7,8 @@ public struct GlobalVariable : IBundleItem
 {
     public Guid ID { get; set; }
     public string Tag { get; set; } // "b" prefix is bool, otherwise int...?
-    public int Type; // todo: what is this? not a datatype it seems
-    public string InitialValue;
+    public GlobalVarDataType Type { get; set; } // todo: what is this? not a datatype it seems
+    public string InitialValue { get; set; }
     
     public static GlobalVariable TryParse(JToken json)
     {
@@ -21,8 +21,16 @@ public struct GlobalVariable : IBundleItem
         {
             ID = json["ID"].ToObject<Guid>(),
             Tag = json["Tag"].Value<string>(),
-            Type = json["VariableType"]?.Value<int>() ?? 0,
+            Type = OEIJsonUtils.ParseEnum(json["Type"], GlobalVarDataType.Boolean),
             InitialValue = json["InitialValue"]?.Value<string>() ?? ""
         };
     }
+}
+
+public enum GlobalVarDataType
+{
+    Boolean,
+    String,
+    Integer,
+    Float
 }

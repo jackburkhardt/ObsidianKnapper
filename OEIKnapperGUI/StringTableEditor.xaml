@@ -12,7 +12,7 @@
             <ColumnDefinition Width="3"/>
             <ColumnDefinition MinWidth="200" Width="*"/>
         </Grid.ColumnDefinitions>
-        <local:DataTree/>
+        <local:DataTree x:Name="dataTree"/>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
