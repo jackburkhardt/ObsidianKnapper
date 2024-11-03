@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:OEIKnapperGUI"
              StartupUri="GameSelectWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Nodify;component/Themes/Dark.xaml" />    </Application.Resources>
 </Application>
