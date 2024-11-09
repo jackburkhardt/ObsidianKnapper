@@ -35,10 +35,20 @@
     </UserControl.Resources>
     <Grid>
         <Grid Background="{StaticResource NodifyEditor.BackgroundBrush}">
-            <nodify:NodifyEditor x:Name="Editor" Background="{StaticResource SmallGridLinesDrawingBrush}" />
-                <!-- <nodify:Node.templ></nodify:Node.> -->
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
                   Panel.ZIndex="-2" />
+            <nodify:NodifyEditor ItemsSource="{Binding Nodes}">
+                <nodify:NodifyEditor.DataContext>
+                    <local:EditorViewModel />
+                </nodify:NodifyEditor.DataContext>
+
+                <nodify:NodifyEditor.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:NodeViewModel}">
+                        <nodify:Node Header="{Binding Title}" />
+                    </DataTemplate>
+                </nodify:NodifyEditor.ItemTemplate>
+
+            </nodify:NodifyEditor>
         </Grid>
     </Grid>
 </UserControl>

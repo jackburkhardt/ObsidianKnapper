@@ -9,17 +9,19 @@ public partial class StringTableEditor : UserControl
     public StringTableEditor()
     {
         InitializeComponent();
+        
+        Database.LoadStringTable("enus", table => { Database.OnFileParsed(table, typeof(List<StringTable>), "");});
         dataTree.OnPathSelected += UpdateViewedTable;
         
         Loaded += (sender, args) =>
         {
-            dataTree.ItemsSource = MainWindow.Database.StringTable.Keys;
+            dataTree.ItemsSource = Database.StringTable.Keys;
         };
     }
 
     public void UpdateViewedTable(string path)
     {
-        var table = MainWindow.Database.StringTable[path];
+        var table = Database.StringTable[path];
         stringTableDisplay.ItemsSource = table.Strings;
     }
 

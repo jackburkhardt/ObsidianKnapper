@@ -20,6 +20,9 @@
             <TabItem Header="Global Variables">
                 <local:GlobalVarEditor></local:GlobalVarEditor>
             </TabItem>
+            <TabItem Header="Conversation">
+                <local:DialogueEditor></local:DialogueEditor>
+            </TabItem>
             
         </TabControl>
     </Grid>

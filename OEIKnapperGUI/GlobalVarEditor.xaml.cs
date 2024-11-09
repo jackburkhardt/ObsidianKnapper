@@ -27,13 +27,13 @@ public partial class GlobalVarEditor : UserControl
         Loaded += (sender, args) =>
         {
             variableList.OnPathSelected += UpdateViewedVariable; 
-            variableList.ItemsSource = MainWindow.Database.GlobalVariables.Select(v => v.Tag);
+            variableList.ItemsSource = Database.GlobalVariables.Select(v => v.Tag);
         };
     }
     
     public void UpdateViewedVariable(string tag)
     {
-        var originalVar = MainWindow.Database.GlobalVariables[tag];
+        var originalVar = Database.GlobalVariables[tag];
         var copy = new GlobalVariable()
         {
             ID = originalVar.ID,
@@ -47,10 +47,10 @@ public partial class GlobalVarEditor : UserControl
     
     public void SaveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show(JsonConvert.SerializeObject(MainWindow.Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
+        MessageBox.Show(JsonConvert.SerializeObject(Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
         propertyEditor.GetBindingExpression(PropertyGrid.SelectedObjectProperty)?.UpdateSource();
-        MainWindow.Database.GlobalVariables[CurrentVar.Tag] = CurrentVar;
-        MessageBox.Show(JsonConvert.SerializeObject(MainWindow.Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
+        Database.GlobalVariables[CurrentVar.Tag] = CurrentVar;
+        MessageBox.Show(JsonConvert.SerializeObject(Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
     }
     
 }

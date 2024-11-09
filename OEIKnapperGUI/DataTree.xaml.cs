@@ -31,11 +31,6 @@ public partial class DataTree : UserControl
     {
         InitializeComponent();
     }
-    
-    private void DataTree_Loaded(object sender, RoutedEventArgs e)
-    {
-       GetItems(MainWindow.Database.GlobalVariables.Select(v => v.Tag));
-    }
 
     private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)
     {

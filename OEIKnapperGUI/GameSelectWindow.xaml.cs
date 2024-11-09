@@ -92,9 +92,7 @@ public partial class GameSelectWindow : Window
         if (projectList.SelectedItem == null) return;
         
         var project = (GameExeData) projectList.SelectedItem;
-        var db = new Database();
-        db.LoadProject(project.Path);
-        MainWindow.Database = db;
+        Database.LoadProject(project.Path);
         var mainWindow = new MainWindow();
         mainWindow.Show();
         this.Close();

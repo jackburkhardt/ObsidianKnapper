@@ -5,8 +5,7 @@ namespace OEIKnapper.Filesystem;
 
 public class GameRummager
 {
-    private const string baseGamePath = @"C:\Program Files (x86)\Steam\steamapps\common\Pentiment\Pentiment_Data\StreamingAssets";
-    private const string StringTableExt = "stringtablebundle";
+    public const string StringTableExt = "stringtablebundle";
     private const string ConversationBundleExt = "conversationbundle";
     private const string QuestExt = "questbundle";
     private const string ConversationExt = "conversationasset";
@@ -41,14 +40,17 @@ public class GameRummager
             {
                 case ConversationBundleExt:
                     var convoReader = new ConvoBundleReader(path);
+                    convoReader.OnFileParsedEvent += Database.OnFileParsed;
                     tasks.Add(convoReader.Read());
                     break;
                 case QuestExt:
                     var questReader = new QuestBundleReader(path);
+                    questReader.OnFileParsedEvent += Database.OnFileParsed;
                     tasks.Add(questReader.Read());
                     break;
                 case GlobalVariableExt:
                     var globalVarReader = new GlobalVariableReader(path);
+                    globalVarReader.OnFileParsedEvent += Database.OnFileParsed;
                     tasks.Add(globalVarReader.Read());
                     break;
                 case ConversationExt:
@@ -60,18 +62,5 @@ public class GameRummager
         }
 
         Task.WhenAll(tasks);
-    }
-
-    // todo: create some sort of relative filesystem for ripped game files, since actual paths vary by game/user
-    public static void LoadConversation(string relativePath)
-    {
-        var convoReader = new ConversationReader($"{baseGamePath}/design/conversations/{relativePath}");
-        Task.Run(() => convoReader.Read());
-    }
-    
-    public static void LoadStringTable(string locale)
-    {
-        var stringTableReader = new StringTableReader($"{baseGamePath}/localized/{locale}/text/text_{locale}.{StringTableExt}");
-        Task.Run(() => stringTableReader.Read());
     }
 } 
