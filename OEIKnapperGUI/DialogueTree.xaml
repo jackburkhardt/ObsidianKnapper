@@ -33,6 +33,7 @@
                       Transform="{Binding ViewportTransform, ElementName=Editor}"
                       Drawing="{StaticResource LargeGridGeometry}" />
     </UserControl.Resources>
+    
     <Grid>
         <Grid Background="{StaticResource NodifyEditor.BackgroundBrush}">
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"

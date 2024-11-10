@@ -31,6 +31,9 @@ public abstract class Node
             case "OEIFormats.FlowCharts.Conversations.ScriptNode, OEIFormats":
                 newNode = ScriptNode.TryParse(json);
                 break;
+            case "OEIFormats.FlowCharts.BankNode, OEIFormats":
+                newNode = BankNode.TryParse(json);
+                break;
             case "OEIFormats.FlowCharts.Quests.GlobalQuestEventGlobalVariableNode, OEIFormats":
                 newNode = QuestEventGlobalVariableNode.TryParse(json);
                 break;

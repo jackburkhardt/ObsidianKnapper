@@ -22,6 +22,7 @@ public class Database
         
         var foundFiles = GameRummager.RummageForGameFiles(path);
         GameRummager.AssignFilesToReaders(foundFiles);
+        
     }
     
     public static void OnFileParsed(object data, Type type, string path)
@@ -58,7 +59,7 @@ public class Database
     
     public static void LoadConversation(string relativePath, Action<Conversation> callback)
     {
-        var convoReader = new ConversationReader($"{baseGamePath}/design/conversations/{relativePath}");
+        var convoReader = new ConversationReader($"{baseGamePath}/design/conversations/{relativePath}.conversationasset");
         convoReader.OnFileParsedEvent += (data, type, path) =>
         {
             if (data is Conversation convo)

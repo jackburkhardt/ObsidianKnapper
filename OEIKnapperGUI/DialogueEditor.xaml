@@ -4,8 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:OEIKnapperGUI"
+             xmlns:nodify="https://miroiu.github.io/nodify"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <GeometryDrawing x:Key="SmallGridGeometry"
+                         Geometry="M0,0 L0,1 0.03,1 0.03,0.03 1,0.03 1,0 Z"
+                         Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+        <GeometryDrawing x:Key="LargeGridGeometry"
+                         Geometry="M0,0 L0,1 0.015,1 0.015,0.015 1,0.015 1,0 Z"
+                         Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+        <DrawingBrush x:Key="SmallGridLinesDrawingBrush"
+                      TileMode="Tile"
+                      ViewportUnits="Absolute"
+                      Viewport="0 0 20 20"
+                      Transform="{Binding ViewportTransform, ElementName=Editor}"
+                      Drawing="{StaticResource SmallGridGeometry}" />
+
+        <DrawingBrush x:Key="LargeGridLinesDrawingBrush"
+                      TileMode="Tile"
+                      ViewportUnits="Absolute"
+                      Opacity="0.5"
+                      Viewport="0 0 100 100"
+                      Transform="{Binding ViewportTransform, ElementName=Editor}"
+                      Drawing="{StaticResource LargeGridGeometry}" />
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
@@ -16,5 +43,21 @@
         </Grid.ColumnDefinitions>
         <local:DataTree x:Name="convoBrowser"></local:DataTree>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Background="{StaticResource NodifyEditor.BackgroundBrush}">
+            <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
+                  Panel.ZIndex="-2" />
+            <nodify:NodifyEditor x:Name="nodeEditor" ItemsSource="{Binding Nodes}">
+                <nodify:NodifyEditor.DataContext>
+                    <local:EditorViewModel />
+                </nodify:NodifyEditor.DataContext>
+
+                <nodify:NodifyEditor.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:NodeViewModel}">
+                        <nodify:Node Header="{Binding Title}" />
+                    </DataTemplate>
+                </nodify:NodifyEditor.ItemTemplate>
+
+            </nodify:NodifyEditor>
+        </Grid>
     </Grid>
 </UserControl>
