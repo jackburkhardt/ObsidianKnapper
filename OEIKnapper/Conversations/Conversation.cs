@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
-public class Conversation : IBundleItem
+public class Conversation : IBundleItem  
 {
     public Guid ID { get; set; }
     [JsonProperty(PropertyName = "Filename")]

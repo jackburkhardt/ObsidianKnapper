@@ -37,27 +37,67 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
             <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3"/>
             <ColumnDefinition MinWidth="200" Width="*"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition MinWidth="200" Width="Auto"/>
         </Grid.ColumnDefinitions>
         <local:DataTree x:Name="convoBrowser"></local:DataTree>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Background="{StaticResource NodifyEditor.BackgroundBrush}">
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
                   Panel.ZIndex="-2" />
-            <nodify:NodifyEditor x:Name="nodeEditor" ItemsSource="{Binding Nodes}">
+            <nodify:NodifyEditor x:Name="nodeEditor" ItemsSource="{Binding Nodes}" Connections="{Binding Connections}">
+                
                 <nodify:NodifyEditor.DataContext>
                     <local:EditorViewModel />
                 </nodify:NodifyEditor.DataContext>
-
-                <nodify:NodifyEditor.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:NodeViewModel}">
-                        <nodify:Node Header="{Binding Title}" />
+                
+                <nodify:NodifyEditor.ConnectionTemplate>
+                    <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
+                        <nodify:CircuitConnection Angle="90" Spacing="10" Source="{Binding Source}" Target="{Binding Target}"/>
                     </DataTemplate>
-                </nodify:NodifyEditor.ItemTemplate>
+                </nodify:NodifyEditor.ConnectionTemplate>
+                
+                <nodify:NodifyEditor.Resources>
+                    <DataTemplate DataType="{x:Type local:NodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Aqua">
+                        </nodify:Node>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:TalkNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Pink" Input="{Binding IncomingConnectors}" Output="{Binding OutgoingConnectors}">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <nodify:Connector x:Name="inputConn"/>
+                                    <TextBox Text="{Binding Content, Mode=TwoWay}" 
+                                            Width="100" Height="100" 
+                                            TextWrapping="Wrap"/>
+                                    <nodify:Connector x:Name="outputConn" />
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
+                        
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:PlayerResponseNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Goldenrod" HorizontalContentAlignment="Stretch">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <nodify:Connector x:Name="inputConn"/>
+                                    <TextBox Text="{Binding Content, Mode=TwoWay}" 
+                                             Width="100" Height="100" 
+                                             TextWrapping="Wrap"/>
+                                    <nodify:Connector x:Name="outputConn" />
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:ScriptNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Green"/>
+                    </DataTemplate>
+                </nodify:NodifyEditor.Resources>
+
 
             </nodify:NodifyEditor>
         </Grid>
+        <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

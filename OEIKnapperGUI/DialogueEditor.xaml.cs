@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using Nodify;
 using OEIKnapper;
 using OEIKnapper.Conversations;
 
@@ -26,7 +27,7 @@ public partial class DialogueEditor : UserControl
         {
             _currentConvo = convo;
 
-            var nodeList = new List<NodeViewModel>();
+            var nodeMap = new Dictionary<int, NodeViewModel>();
 
             foreach (var node in _currentConvo.Nodes)
             {
@@ -63,14 +64,48 @@ public partial class DialogueEditor : UserControl
                         throw new ArgumentException("No visual component for node type: " + node.GetType());
                 }
 
-                nodeList.Add(newNode);
+                var nodeContext = convo.Tag.Replace(".conversation", "").ToLower();
+                newNode.NodeContentContext = nodeContext;
+                nodeMap.Add(newNode.ID, newNode);
             }
 
+            var connections = ArrangeNodesForView(nodeMap);
+            
             this.Dispatcher.Invoke(() =>
-                ((EditorViewModel)nodeEditor.DataContext).Nodes = new ObservableCollection<NodeViewModel>(nodeList));
+            {
+                ((EditorViewModel)nodeEditor.DataContext).Nodes.Clear();
+                foreach (var node in nodeMap)
+                {
+                    ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node.Value);
+                }
 
+                foreach (var conn in connections)
+                {
+                    ((EditorViewModel)nodeEditor.DataContext).Connections.Add(conn);
+                }
+            });
         });
 
+    }
+
+    private ObservableCollection<ConnectionViewModel> ArrangeNodesForView(Dictionary<int, NodeViewModel> nodes)
+    {
+        var connections = new ObservableCollection<ConnectionViewModel>();
+        foreach (var node in nodes.Values)
+        {
+            foreach (var nodeLink in node.AffiliatedNode.Links)
+            {
+                var inConn = new ConnectorViewModel();
+                var outConn = new ConnectorViewModel();
+                
+                node.OutgoingConnectors.Add(outConn);
+                nodes[nodeLink.ToNodeID].IncomingConnectors.Add(inConn);
+                
+                connections.Add(new ConnectionViewModel(){ Source = outConn, Target = inConn});
+            }
+        }
+
+        return connections;
     }
 
 }
