@@ -54,7 +54,7 @@
                 
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
-                        <nodify:CircuitConnection Angle="90" Spacing="10" Source="{Binding Source}" Target="{Binding Target}"/>
+                        <nodify:CircuitConnection Angle="90" Spacing="10" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}"/>
                     </DataTemplate>
                 </nodify:NodifyEditor.ConnectionTemplate>
                 
