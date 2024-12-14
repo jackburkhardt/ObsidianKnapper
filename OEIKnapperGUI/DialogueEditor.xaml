@@ -72,13 +72,13 @@
                 
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
-                        <nodify:Connection Spacing="15" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
+                        <nodify:CircuitConnection Angle="90" Spacing="15" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
                             <!-- <nodify:Connection.Triggers> -->
                             <!--     <DataTrigger Binding="{Binding Source.IsConditional}" Value="True"> -->
                             <!--         <Setter Property="Stroke" Value="Orange"/> -->
                             <!--     </DataTrigger> -->
                             <!-- </nodify:Connection.Triggers> -->
-                        </nodify:Connection>
+                        </nodify:CircuitConnection>
                     </DataTemplate>
                 </nodify:NodifyEditor.ConnectionTemplate>
                 

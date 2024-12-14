@@ -55,6 +55,12 @@ public class GameRummager
                     break;
                 case ConversationExt:
                     break;
+                case StringTableExt:
+                    if (!path.Contains(Database.CurrentLocale)) break;
+                    var stringTableReader = new StringTableReader(path);
+                    stringTableReader.OnFileParsedEvent += Database.OnFileParsed;
+                    tasks.Add(stringTableReader.Read());
+                    break;
                 default:
                     Console.WriteLine($"File not assigned to a reader: {path}");
                     break;

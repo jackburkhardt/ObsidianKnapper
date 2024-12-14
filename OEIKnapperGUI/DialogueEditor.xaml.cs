@@ -22,71 +22,68 @@ public partial class DialogueEditor : UserControl
         };
     }
 
-    public void UpdateViewedConvo(string filename)
+    public async void UpdateViewedConvo(string filename)
     {
-        Database.LoadConversation(filename, convo =>
+        var convo = await Database.LoadConversation(filename);
+        _currentConvo = convo;
+
+        var nodes = new List<NodeViewModel>();
+
+        foreach (var node in _currentConvo.Nodes)
         {
-            _currentConvo = convo;
-
-            var nodes = new List<NodeViewModel>();
-
-            foreach (var node in _currentConvo.Nodes)
+            NodeViewModel newNode;
+            switch (node)
             {
-                NodeViewModel newNode;
-                switch (node)
-                {
-                    case TalkNode talkNode:
-                        newNode = new TalkNodeViewModel
-                        {
-                            AffiliatedNode = talkNode,
-                            Speaker = Database.Speakers[talkNode.SpeakerGuid].Tag,
-                            Listener = Database.Speakers[talkNode.ListenerGuid].Tag
-                        };
-                        break;
-                    case PlayerResponseNode playerResponseNode:
-                        newNode = new PlayerResponseNodeViewModel
-                        {
-                            AffiliatedNode = playerResponseNode
-                        };
-                        break;
-                    case ScriptNode scriptNode:
-                        newNode = new ScriptNodeViewModel
-                        {
-                            AffiliatedNode = scriptNode
-                        };
-                        break;
-                    case BankNode bankNode:
-                        newNode = new BankNodeViewModel
-                        {
-                            AffiliatedNode = bankNode
-                        };
-                        break;
-                    default:
-                        throw new ArgumentException("No visual component for node type: " + node.GetType());
-                }
-
-                var nodeContext = convo.Tag.Replace(".conversation", "").ToLower();
-                newNode.NodeContentContext = nodeContext;
-                nodes.Add(newNode);
+                case TalkNode talkNode:
+                    newNode = new TalkNodeViewModel
+                    {
+                        AffiliatedNode = talkNode,
+                        Speaker = Database.Speakers[talkNode.SpeakerGuid].Tag,
+                        Listener = Database.Speakers[talkNode.ListenerGuid].Tag
+                    };
+                    break;
+                case PlayerResponseNode playerResponseNode:
+                    newNode = new PlayerResponseNodeViewModel
+                    {
+                        AffiliatedNode = playerResponseNode
+                    };
+                    break;
+                case ScriptNode scriptNode:
+                    newNode = new ScriptNodeViewModel
+                    {
+                        AffiliatedNode = scriptNode
+                    };
+                    break;
+                case BankNode bankNode:
+                    newNode = new BankNodeViewModel
+                    {
+                        AffiliatedNode = bankNode
+                    };
+                    break;
+                default:
+                    throw new ArgumentException("No visual component for node type: " + node.GetType());
             }
 
-            var connections = ArrangeNodesForView(nodes);
-            
-            this.Dispatcher.Invoke(() =>
-            {
-                ((EditorViewModel)nodeEditor.DataContext).Nodes.Clear();
-                ((EditorViewModel)nodeEditor.DataContext).Connections.Clear();
-                foreach (var node in nodes)
-                {
-                    ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node);
-                }
+            var nodeContext = convo.Tag.Replace(".conversation", "").ToLower();
+            newNode.NodeContentContext = nodeContext;
+            nodes.Add(newNode);
+        }
 
-                foreach (var conn in connections)
-                {
-                    ((EditorViewModel)nodeEditor.DataContext).Connections.Add(conn);
-                }
-            });
-        });
+        var connections = ArrangeNodesForView(nodes);
+            
+
+        ((EditorViewModel)nodeEditor.DataContext).Nodes.Clear();
+        ((EditorViewModel)nodeEditor.DataContext).Connections.Clear();
+        foreach (var node in nodes)
+        {
+            ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node);
+        }
+
+        foreach (var conn in connections)
+        {
+            ((EditorViewModel)nodeEditor.DataContext).Connections.Add(conn);
+        }
+            
 
     }
 
@@ -96,6 +93,8 @@ public partial class DialogueEditor : UserControl
         var sortedNodes = nodes.OrderBy(n => n.ID).ToList();
         var nodeDict = sortedNodes.ToDictionary(n => n.ID, n => n); 
         var firstNode = sortedNodes.First(n => n.ID != -200);
+
+        var placedNodes = new Stack<int>();
         
         firstNode.Location = new Point(100, 100);
         PlaceNodesAndConnect(firstNode, firstNode.Location);
@@ -105,13 +104,18 @@ public partial class DialogueEditor : UserControl
         void PlaceNodesAndConnect(NodeViewModel node, Point lastPos)
         {
             var linkCount = node.AffiliatedNode.Links.Count;
-            for (int i = 1; i <= linkCount; i++)
+            for (int i = 0; i < linkCount; i++)
             {
                 var toNode = nodeDict[node.AffiliatedNode.Links[i].ToNodeID];
-                var pos = new Point(lastPos.X + 200, lastPos.Y + 200 * i);
+                var pos = new Point(lastPos.X + 200, lastPos.Y + 200 * (i + 1));
                 node.Location = pos;
                 connections.Add(new ConnectionViewModel(){ Source = node.OutConnector, Target = toNode.InConnector});
-                PlaceNodesAndConnect(toNode, pos);
+                
+                if (!placedNodes.Contains(toNode.ID))
+                {
+                    placedNodes.Push(toNode.ID);
+                    PlaceNodesAndConnect(toNode, pos);
+                }
             }
         }
     }

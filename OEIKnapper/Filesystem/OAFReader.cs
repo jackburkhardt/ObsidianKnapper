@@ -28,7 +28,7 @@ public class OAFReader : FileReader
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, e.Message);
+            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
         }
     }
 }

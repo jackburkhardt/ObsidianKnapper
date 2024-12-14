@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using OEIKnapper;
 using String = OEIKnapper.String;
 
@@ -10,13 +11,13 @@ public partial class StringTableEditor : UserControl
     {
         InitializeComponent();
         
-        Database.LoadStringTable("enus", table => { Database.OnFileParsed(table, typeof(List<StringTable>), "");});
         dataTree.OnPathSelected += UpdateViewedTable;
-        
-        Loaded += (sender, args) =>
-        {
-            dataTree.ItemsSource = Database.StringTable.Keys;
-        };
+        Loaded += OnLoad;
+    }
+
+    public async void OnLoad(object source, RoutedEventArgs e)
+    {
+        dataTree.ItemsSource = Database.StringTable.Keys;
     }
 
     public void UpdateViewedTable(string path)

@@ -9,7 +9,7 @@ public class Conversation : IBundleItem
     [JsonProperty(PropertyName = "Filename")]
     public string Tag { get; set; }
     public List<Guid> CharacterMappings;
-    public List<Node> Nodes;
+    public List<Node> Nodes = [];
     
     public static Conversation TryParse(JToken json)
     {

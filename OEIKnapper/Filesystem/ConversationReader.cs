@@ -15,13 +15,13 @@ public class ConversationReader : FileReader
         try {
             var fileText = await File.ReadAllTextAsync(_path);
             var json = JObject.Parse(fileText);
-            var parsedConvo =  Conversation.TryParse(json);
+            var parsedConvo = Conversation.TryParse(json);
             
             RaiseFileParsedEvent(parsedConvo, parsedConvo.GetType(), _path);
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, e.Message);
+            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
         }
     }
 }

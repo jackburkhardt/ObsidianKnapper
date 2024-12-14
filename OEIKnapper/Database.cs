@@ -8,9 +8,8 @@ namespace OEIKnapper;
 
 public class Database
 {
+    public static string CurrentLocale = "enus";
     private const string baseGamePath = @"C:\Program Files (x86)\Steam\steamapps\common\Pentiment\Pentiment_Data\StreamingAssets";
-
-    public record OperationProgress(int total = 0, int current = 0, string message = "");
     public static Bundle<GlobalVariable> GlobalVariables { get; private set; } = new();
     public static Bundle<Quest> Quests { get; private set; } = [];
     public static Bundle<ConversationNameLookup> ConvoLookup { get; private set; } = [];
@@ -41,6 +40,7 @@ public class Database
                 Quests.AddRange(quests);
                 break;
             case List<StringTable> stringTables:
+                StringTable.Clear();
                 foreach (var table in stringTables)
                 {
                     StringTable.Add(table.Name, table);
@@ -57,33 +57,43 @@ public class Database
         Console.WriteLine($"Failed to parse file: {path} - {message}");
     }
     
-    public static void LoadConversation(string relativePath, Action<Conversation> callback)
+    public static async Task<Conversation> LoadConversation(string relativePath)
     {
         var convoReader = new ConversationReader($"{baseGamePath}/design/conversations/{relativePath}.conversationasset");
+        Conversation output = new Conversation();
         convoReader.OnFileParsedEvent += (data, type, path) =>
         {
             if (data is Conversation convo)
             {
-                callback(convo);
+                output = convo;
             }
         };
         
         convoReader.OnFileParseFailedEvent += LogParseFailure;
-        Task.Run(() => convoReader.Read());
+        await convoReader.Read();
+        return output;
     }
     
-    public static void LoadStringTable(string locale, Action<List<StringTable>> callback)
+    public static async Task<List<StringTable>> LoadStringTables(string locale)
     {
         var stringTableReader = new StringTableReader($"{baseGamePath}/localized/{locale}/text/text_{locale}.{GameRummager.StringTableExt}");
+        List<StringTable> output = new();
         stringTableReader.OnFileParsedEvent += (data, type, path) =>
         {
-            if (data is List<StringTable> table)
+            if (data is List<StringTable> tables)
             {
-                callback(table);
+                output = tables;
+                StringTable.Clear();
+                foreach (var table in tables)
+                {
+                    StringTable.Add(table.Name, table);
+                }
+                
             }
         };
         
         stringTableReader.OnFileParseFailedEvent += LogParseFailure;
-        Task.Run(() => stringTableReader.Read());
+        await stringTableReader.Read();
+        return output;
     }
 }

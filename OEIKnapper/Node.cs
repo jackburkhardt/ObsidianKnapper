@@ -6,11 +6,11 @@ namespace OEIKnapper.Conversations;
 
 public abstract class Node
 {
-    public int NodeID;
-    public List<NodeLink> Links;
-    public List<string> ExtendedProperties;
+    public int NodeID = -1;
+    public List<NodeLink> Links = [];
+    public List<string> ExtendedProperties = [];
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    public ConditionalExpression Conditionals;
+    public ConditionalExpression Conditionals = new ();
 
     public static Node TryParse(JToken json)
     {

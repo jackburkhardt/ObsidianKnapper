@@ -9,8 +9,8 @@ namespace OEIKnapper;
 /// </summary>
 public class StringTable
 {
-    public string Name;
-    public List<String> Strings;
+    public string Name = "DEFAULT";
+    public List<String> Strings = [];
     
     public static StringTable TryParse(JToken json)
     {

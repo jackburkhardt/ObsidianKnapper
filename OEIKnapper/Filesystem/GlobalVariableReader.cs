@@ -27,7 +27,7 @@ public class GlobalVariableReader : FileReader
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, e.Message);
+            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
         }
     }
 }
