@@ -31,6 +31,14 @@
                       Viewport="0 0 100 100"
                       Transform="{Binding ViewportTransform, ElementName=Editor}"
                       Drawing="{StaticResource LargeGridGeometry}" />
+        
+        <DataTemplate x:Key="InputTemplate" DataType="{x:Type local:ConnectorViewModel}">
+            <nodify:NodeInput IsConnected="True" Anchor="{Binding Anchor, Mode=OneWayToSource}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="OutputTemplate" DataType="{x:Type local:ConnectorViewModel}">
+            <nodify:NodeOutput IsConnected="True" Anchor="{Binding Anchor, Mode=OneWayToSource}" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -46,32 +54,51 @@
         <Grid Grid.Column="2" Background="{StaticResource NodifyEditor.BackgroundBrush}">
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
                   Panel.ZIndex="-2" />
-            <nodify:NodifyEditor x:Name="nodeEditor" ItemsSource="{Binding Nodes}" Connections="{Binding Connections}">
+            <nodify:NodifyEditor x:Name="nodeEditor" 
+                                 ItemsSource="{Binding Nodes}" 
+                                 Connections="{Binding Connections}"
+                                 Background="{StaticResource SmallGridLinesDrawingBrush}">
                 
                 <nodify:NodifyEditor.DataContext>
                     <local:EditorViewModel />
                 </nodify:NodifyEditor.DataContext>
                 
+                <nodify:NodifyEditor.ItemContainerStyle>
+                    <Style TargetType="{x:Type nodify:ItemContainer}">
+                        <Setter Property="Location"
+                                Value="{Binding Location}" />
+                    </Style>
+                </nodify:NodifyEditor.ItemContainerStyle>
+                
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
-                        <nodify:CircuitConnection Angle="90" Spacing="10" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}"/>
+                        <nodify:Connection Spacing="15" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
+                            <!-- <nodify:Connection.Triggers> -->
+                            <!--     <DataTrigger Binding="{Binding Source.IsConditional}" Value="True"> -->
+                            <!--         <Setter Property="Stroke" Value="Orange"/> -->
+                            <!--     </DataTrigger> -->
+                            <!-- </nodify:Connection.Triggers> -->
+                        </nodify:Connection>
                     </DataTemplate>
                 </nodify:NodifyEditor.ConnectionTemplate>
+                
                 
                 <nodify:NodifyEditor.Resources>
                     <DataTemplate DataType="{x:Type local:NodeViewModel}">
                         <nodify:Node Header="{Binding ID}"  Background="Aqua">
                         </nodify:Node>
                     </DataTemplate>
+                    
+                    
                     <DataTemplate DataType="{x:Type local:TalkNodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Pink" Input="{Binding IncomingConnectors}" Output="{Binding OutgoingConnectors}">
+                        <nodify:Node Header="{Binding ID}"  Background="Pink">
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
-                                    <nodify:Connector x:Name="inputConn"/>
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
                                     <TextBox Text="{Binding Content, Mode=TwoWay}" 
-                                            Width="100" Height="100" 
-                                            TextWrapping="Wrap"/>
-                                    <nodify:Connector x:Name="outputConn" />
+                                             Width="100" Height="100" 
+                                             TextWrapping="Wrap"/>
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
                             </nodify:Node.Content>
                         </nodify:Node>
@@ -81,18 +108,30 @@
                         <nodify:Node Header="{Binding ID}"  Background="Goldenrod" HorizontalContentAlignment="Stretch">
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
-                                    <nodify:Connector x:Name="inputConn"/>
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
                                     <TextBox Text="{Binding Content, Mode=TwoWay}" 
                                              Width="100" Height="100" 
                                              TextWrapping="Wrap"/>
-                                    <nodify:Connector x:Name="outputConn" />
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
                             </nodify:Node.Content>
                         </nodify:Node>
                     </DataTemplate>
+                    
                     <DataTemplate DataType="{x:Type local:ScriptNodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Green"/>
+                        <nodify:Node Header="{Binding ID}"  Background="Green">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
+                                    <TextBox Text="{Binding  NodeContentContext, Mode=TwoWay}" 
+                                             Width="100" Height="100" 
+                                             TextWrapping="Wrap"/>
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
                     </DataTemplate>
+                    
                 </nodify:NodifyEditor.Resources>
 
 

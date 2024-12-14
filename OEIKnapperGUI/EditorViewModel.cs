@@ -18,8 +18,17 @@ public class ConnectorViewModel
         }
         get => _anchor;
     }
-
-    public string Title { get; set; }
+    
+    private bool _isConditional;
+    public bool IsConditional
+    {
+        set
+        {
+            _isConditional = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsConditional)));
+        }
+        get => _isConditional;
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
@@ -35,9 +44,20 @@ public class NodeViewModel : INotifyPropertyChanged
     public string NodeContentContext { get; set; }
     public Node AffiliatedNode { get; set; }
     public int ID { get => AffiliatedNode.NodeID;  set => AffiliatedNode.NodeID = value; }
+    
+    private Point _location;
+    public Point Location
+    {
+        set
+        {
+            _location = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Location)));
+        }
+        get => _location;
+    }
 
-    public ObservableCollection<ConnectorViewModel> IncomingConnectors { get; set; } = [];
-    public ObservableCollection<ConnectorViewModel> OutgoingConnectors { get; set; } = [];
+    public ConnectorViewModel InConnector { get; set; } = new();
+    public ConnectorViewModel OutConnector { get; set; } = new();
     public event PropertyChangedEventHandler? PropertyChanged;
 }
 

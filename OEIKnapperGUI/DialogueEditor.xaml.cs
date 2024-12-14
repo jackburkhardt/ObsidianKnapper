@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using Nodify;
 using OEIKnapper;
@@ -27,7 +28,7 @@ public partial class DialogueEditor : UserControl
         {
             _currentConvo = convo;
 
-            var nodeMap = new Dictionary<int, NodeViewModel>();
+            var nodes = new List<NodeViewModel>();
 
             foreach (var node in _currentConvo.Nodes)
             {
@@ -66,17 +67,18 @@ public partial class DialogueEditor : UserControl
 
                 var nodeContext = convo.Tag.Replace(".conversation", "").ToLower();
                 newNode.NodeContentContext = nodeContext;
-                nodeMap.Add(newNode.ID, newNode);
+                nodes.Add(newNode);
             }
 
-            var connections = ArrangeNodesForView(nodeMap);
+            var connections = ArrangeNodesForView(nodes);
             
             this.Dispatcher.Invoke(() =>
             {
                 ((EditorViewModel)nodeEditor.DataContext).Nodes.Clear();
-                foreach (var node in nodeMap)
+                ((EditorViewModel)nodeEditor.DataContext).Connections.Clear();
+                foreach (var node in nodes)
                 {
-                    ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node.Value);
+                    ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node);
                 }
 
                 foreach (var conn in connections)
@@ -88,24 +90,30 @@ public partial class DialogueEditor : UserControl
 
     }
 
-    private ObservableCollection<ConnectionViewModel> ArrangeNodesForView(Dictionary<int, NodeViewModel> nodes)
+    private ObservableCollection<ConnectionViewModel> ArrangeNodesForView(List<NodeViewModel> nodes)
     {
         var connections = new ObservableCollection<ConnectionViewModel>();
-        foreach (var node in nodes.Values)
-        {
-            foreach (var nodeLink in node.AffiliatedNode.Links)
-            {
-                var inConn = new ConnectorViewModel();
-                var outConn = new ConnectorViewModel();
-                
-                node.OutgoingConnectors.Add(outConn);
-                nodes[nodeLink.ToNodeID].IncomingConnectors.Add(inConn);
-                
-                connections.Add(new ConnectionViewModel(){ Source = outConn, Target = inConn});
-            }
-        }
+        var sortedNodes = nodes.OrderBy(n => n.ID).ToList();
+        var nodeDict = sortedNodes.ToDictionary(n => n.ID, n => n); 
+        var firstNode = sortedNodes.First(n => n.ID != -200);
+        
+        firstNode.Location = new Point(100, 100);
+        PlaceNodesAndConnect(firstNode, firstNode.Location);
 
         return connections;
+
+        void PlaceNodesAndConnect(NodeViewModel node, Point lastPos)
+        {
+            var linkCount = node.AffiliatedNode.Links.Count;
+            for (int i = 1; i <= linkCount; i++)
+            {
+                var toNode = nodeDict[node.AffiliatedNode.Links[i].ToNodeID];
+                var pos = new Point(lastPos.X + 200, lastPos.Y + 200 * i);
+                node.Location = pos;
+                connections.Add(new ConnectionViewModel(){ Source = node.OutConnector, Target = toNode.InConnector});
+                PlaceNodesAndConnect(toNode, pos);
+            }
+        }
     }
 
 }
