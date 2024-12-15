@@ -9,7 +9,7 @@ public class Speaker : IBundleItem
     public int DisplayNameStringTableID;
     public int DisplayNameID;
     [JsonProperty(PropertyName = "ObjectName")]
-    public string Tag { get; set; }
+    public string Tag { get; set; } = "";
 
     public static Speaker TryParse(JToken json)
     {

@@ -2,11 +2,11 @@
 - create notion of project and special directory
 - create homepage to choose tool (tab) to open
 - copy tab system from iLabTicketMgr
-- layout nodes to move left -> right properly
+- layout nodes to move left -> right properly and spacing
 - switch back to awaitable tasks for readers
 - OAF file parser
 
 
 conversation editor:
 - show conditionals
-- show script nodes
+- show scripts

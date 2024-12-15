@@ -38,8 +38,8 @@ public partial class DialogueEditor : UserControl
                     newNode = new TalkNodeViewModel
                     {
                         AffiliatedNode = talkNode,
-                        Speaker = Database.Speakers[talkNode.SpeakerGuid].Tag,
-                        Listener = Database.Speakers[talkNode.ListenerGuid].Tag
+                        Speaker = talkNode.SpeakerGuid == Guid.Empty ? "None" : Database.Speakers[talkNode.SpeakerGuid].Tag,
+                        Listener = talkNode.ListenerGuid == Guid.Empty ? "None" : Database.Speakers[talkNode.ListenerGuid].Tag
                     };
                     break;
                 case PlayerResponseNode playerResponseNode:
@@ -107,7 +107,7 @@ public partial class DialogueEditor : UserControl
             for (int i = 0; i < linkCount; i++)
             {
                 var toNode = nodeDict[node.AffiliatedNode.Links[i].ToNodeID];
-                var pos = new Point(lastPos.X + 200, lastPos.Y + 200 * (i + 1));
+                var pos = new Point(lastPos.X + 300, lastPos.Y + (i / ((float)linkCount * -1)) * 400);
                 node.Location = pos;
                 connections.Add(new ConnectionViewModel(){ Source = node.OutConnector, Target = toNode.InConnector});
                 

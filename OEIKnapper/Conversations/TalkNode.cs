@@ -12,9 +12,9 @@ public class TalkNode : Node
     {
         return new TalkNode
         {
-            SpeakerGuid = Guid.Parse(json["SpeakerGuid"].Value<string>()),
-            ListenerGuid = Guid.Parse(json["ListenerGuid"].Value<string>()),
-            HasVO = json["HasVO"].Value<bool>()
+            SpeakerGuid = Guid.Parse(json["SpeakerGuid"]?.Value<string>() ?? Guid.Empty.ToString()),
+            ListenerGuid = Guid.Parse(json["ListenerGuid"]?.Value<string>() ?? Guid.Empty.ToString()),
+            HasVO = json["HasVO"]?.Value<bool>() ?? false
         };
     }
 }

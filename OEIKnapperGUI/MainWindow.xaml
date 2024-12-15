@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:OEIKnapperGUI"
         mc:Ignorable="d"
-        Title="ObsidianKnapper" Height="450" Width="800">
+        Title="ObsidianKnapper" Height="900" Width="1600">
     <Grid>
         <Ribbon x:Name="menuRibbon" SelectedIndex="0">
             <RibbonTab Header="Home">

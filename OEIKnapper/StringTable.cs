@@ -29,8 +29,17 @@ public class StringTable
     // opting to use this instead of a dictionary for better serialized schema compatibility
     public string this[int i]
     {
-        get => Strings.First(s => s.ID == i).DefaultText;
-        set => Strings.First(s => s.ID == i).DefaultText = value;
+        get => Strings.FirstOrDefault(s => s.ID == i)?.DefaultText ?? "";
+        set {
+            if (Strings.FirstOrDefault(s => s.ID == i) != null)
+            {
+                Strings[i].DefaultText = value;
+            }
+            else
+            {
+                Strings.Add(new String { ID = i, DefaultText = value });
+            }
+        }
     }
 }
 
@@ -39,8 +48,8 @@ public class StringTable
 /// </summary>
 public class String
 {
-    public int ID { get; set; }
-    public string DefaultText { get; set; }
+    public int ID { get; set; } = -1;
+    public string DefaultText { get; set; } = "";
 
     public static String TryParse(JToken json)
     {

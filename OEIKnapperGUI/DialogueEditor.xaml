@@ -72,7 +72,7 @@
                 
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
-                        <nodify:CircuitConnection Angle="90" Spacing="15" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
+                        <nodify:CircuitConnection Angle="90" Spacing="25" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
                             <!-- <nodify:Connection.Triggers> -->
                             <!--     <DataTrigger Binding="{Binding Source.IsConditional}" Value="True"> -->
                             <!--         <Setter Property="Stroke" Value="Orange"/> -->
@@ -123,13 +123,15 @@
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
-                                    <TextBox Text="{Binding  NodeContentContext, Mode=TwoWay}" 
-                                             Width="100" Height="100" 
-                                             TextWrapping="Wrap"/>
+                                    <TextBlock Text="&lt;Script&gt;"></TextBlock>
                                     <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
                             </nodify:Node.Content>
                         </nodify:Node>
+                    </DataTemplate>
+                    
+                    <DataTemplate DataType="{x:Type local:BankNodeViewModel}">
+                        <nodify:GroupingNode Header="{Binding ID}" Content="Bank Node -- NOT IMPLEMENTED"/>
                     </DataTemplate>
                     
                 </nodify:NodifyEditor.Resources>
@@ -138,5 +140,6 @@
             </nodify:NodifyEditor>
         </Grid>
         <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="4"></Grid>
     </Grid>
 </UserControl>
