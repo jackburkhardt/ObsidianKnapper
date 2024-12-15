@@ -42,7 +42,7 @@ public partial class DataTree : UserControl
     
     private void ToggleVisibleBySearch(TreeViewItem item, string search)
     {
-        var header = item.Header.ToString();
+        var header = item.Header.ToString() ?? "";
         if (header.Contains(search, StringComparison.CurrentCultureIgnoreCase))
         {
             item.Visibility = Visibility.Visible;
@@ -52,10 +52,18 @@ public partial class DataTree : UserControl
             item.Visibility = Visibility.Collapsed;
         }
         
+        if (item.Parent is TreeViewItem parent)
+        {
+            parent.Visibility = parent.Items.Cast<TreeViewItem>().Any(i => i.Visibility == Visibility.Visible) ? Visibility.Visible : Visibility.Collapsed;
+            parent.IsExpanded = parent.Visibility == Visibility.Visible;
+        }
+        
+        // le classic depth first search
         foreach (TreeViewItem child in item.Items)
         {
             ToggleVisibleBySearch(child, search);
         }
+        
     }
 
     public void GetItems(IEnumerable<string> paths, char seperator = '/')
