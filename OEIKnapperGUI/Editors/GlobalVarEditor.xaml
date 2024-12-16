@@ -1,0 +1,27 @@
+﻿<local:TabContentControl x:Class="OEIKnapperGUI.GlobalVarEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:OEIKnapperGUI"
+             xmlns:oei="clr-namespace:OEIKnapper;assembly=OEIKnapper"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:pt="http://propertytools.org/wpf"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" Width="Auto"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition MinWidth="200" Width="*"/>
+        </Grid.ColumnDefinitions>
+        <local:DataTree x:Name="variableList"/>
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+        <StackPanel Grid.Column="2">
+            <pt:PropertyGrid x:Name="propertyEditor"  SelectedObject="{Binding CurrentVar, UpdateSourceTrigger=Explicit}" TabVisibility="VisibleIfMoreThanOne"/>
+            <Button Width="50" HorizontalAlignment="Left" Click="SaveButton_OnClick">Save</Button>
+        </StackPanel>
+    </Grid>
+</local:TabContentControl>

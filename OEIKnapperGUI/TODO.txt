@@ -1,7 +1,5 @@
-- project selection window
-- create notion of project and special directory
 - create homepage to choose tool (tab) to open
-- copy tab system from iLabTicketMgr
+- create menu items
 - layout nodes to move left -> right properly and spacing
 - OAF file parser
 

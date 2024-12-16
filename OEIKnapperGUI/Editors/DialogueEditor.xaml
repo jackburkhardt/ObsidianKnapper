@@ -1,0 +1,145 @@
+﻿<local:TabContentControl x:Class="OEIKnapperGUI.DialogueEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:OEIKnapperGUI"
+             xmlns:nodify="https://miroiu.github.io/nodify"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <GeometryDrawing x:Key="SmallGridGeometry"
+                         Geometry="M0,0 L0,1 0.03,1 0.03,0.03 1,0.03 1,0 Z"
+                         Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+        <GeometryDrawing x:Key="LargeGridGeometry"
+                         Geometry="M0,0 L0,1 0.015,1 0.015,0.015 1,0.015 1,0 Z"
+                         Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+        <DrawingBrush x:Key="SmallGridLinesDrawingBrush"
+                      TileMode="Tile"
+                      ViewportUnits="Absolute"
+                      Viewport="0 0 20 20"
+                      Transform="{Binding ViewportTransform, ElementName=Editor}"
+                      Drawing="{StaticResource SmallGridGeometry}" />
+
+        <DrawingBrush x:Key="LargeGridLinesDrawingBrush"
+                      TileMode="Tile"
+                      ViewportUnits="Absolute"
+                      Opacity="0.5"
+                      Viewport="0 0 100 100"
+                      Transform="{Binding ViewportTransform, ElementName=Editor}"
+                      Drawing="{StaticResource LargeGridGeometry}" />
+        
+        <DataTemplate x:Key="InputTemplate" DataType="{x:Type local:ConnectorViewModel}">
+            <nodify:NodeInput IsConnected="True" Anchor="{Binding Anchor, Mode=OneWayToSource}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="OutputTemplate" DataType="{x:Type local:ConnectorViewModel}">
+            <nodify:NodeOutput IsConnected="True" Anchor="{Binding Anchor, Mode=OneWayToSource}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" Width="Auto"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition MinWidth="200" Width="*"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition MinWidth="200" Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <local:DataTree x:Name="convoBrowser"></local:DataTree>
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Background="{StaticResource NodifyEditor.BackgroundBrush}">
+            <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
+                  Panel.ZIndex="-2" />
+            <nodify:NodifyEditor x:Name="nodeEditor" 
+                                 ItemsSource="{Binding Nodes}" 
+                                 Connections="{Binding Connections}"
+                                 Background="{StaticResource SmallGridLinesDrawingBrush}">
+                
+                <nodify:NodifyEditor.DataContext>
+                    <local:EditorViewModel />
+                </nodify:NodifyEditor.DataContext>
+                
+                <nodify:NodifyEditor.ItemContainerStyle>
+                    <Style TargetType="{x:Type nodify:ItemContainer}">
+                        <Setter Property="Location"
+                                Value="{Binding Location}" />
+                    </Style>
+                </nodify:NodifyEditor.ItemContainerStyle>
+                
+                <nodify:NodifyEditor.ConnectionTemplate>
+                    <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
+                        <nodify:CircuitConnection Angle="90" Spacing="25" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
+                            <!-- <nodify:Connection.Triggers> -->
+                            <!--     <DataTrigger Binding="{Binding Source.IsConditional}" Value="True"> -->
+                            <!--         <Setter Property="Stroke" Value="Orange"/> -->
+                            <!--     </DataTrigger> -->
+                            <!-- </nodify:Connection.Triggers> -->
+                        </nodify:CircuitConnection>
+                    </DataTemplate>
+                </nodify:NodifyEditor.ConnectionTemplate>
+                
+                
+                <nodify:NodifyEditor.Resources>
+                    <DataTemplate DataType="{x:Type local:NodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Aqua">
+                        </nodify:Node>
+                    </DataTemplate>
+                    
+                    
+                    <DataTemplate DataType="{x:Type local:TalkNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Pink">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
+                                    <TextBox Text="{Binding Content, Mode=TwoWay}" 
+                                             Width="100" Height="100" 
+                                             TextWrapping="Wrap"/>
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
+                        
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:PlayerResponseNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Goldenrod" HorizontalContentAlignment="Stretch">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
+                                    <TextBox Text="{Binding Content, Mode=TwoWay}" 
+                                             Width="100" Height="100" 
+                                             TextWrapping="Wrap"/>
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
+                    </DataTemplate>
+                    
+                    <DataTemplate DataType="{x:Type local:ScriptNodeViewModel}">
+                        <nodify:Node Header="{Binding ID}"  Background="Green">
+                            <nodify:Node.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
+                                    <TextBlock Text="&lt;Script&gt;"></TextBlock>
+                                    <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
+                                </StackPanel>
+                            </nodify:Node.Content>
+                        </nodify:Node>
+                    </DataTemplate>
+                    
+                    <DataTemplate DataType="{x:Type local:BankNodeViewModel}">
+                        <nodify:GroupingNode Header="{Binding ID}" Content="Bank Node -- NOT IMPLEMENTED"/>
+                    </DataTemplate>
+                    
+                </nodify:NodifyEditor.Resources>
+
+
+            </nodify:NodifyEditor>
+        </Grid>
+        <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="4"></Grid>
+    </Grid>
+</local:TabContentControl>

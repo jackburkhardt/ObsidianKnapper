@@ -1,0 +1,49 @@
+<Window x:Class="OEIKnapperGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:OEIKnapperGUI"
+        mc:Ignorable="d"
+        Title="ObsidianKnapper" Height="900" Width="1600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Ribbon SelectedIndex="0" Margin="0,-48,0,0">
+            <RibbonTab Header="Home" KeyTip="H"  x:Name="menuRibbon">
+                <RibbonGroup>
+                    <RibbonMenuButton Label="New View" >
+                        <RibbonMenuItem  Header="Dialogue Editor" />
+                        <RibbonMenuItem  Header="Global Variable Editor" />
+                        <RibbonMenuItem  Header="String Table Editor" />
+                    </RibbonMenuButton>
+                    <RibbonButton  Label="Re-scan Game" />
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        
+        <TabControl Grid.Row="1" x:Name="TabView" ItemsSource="{Binding Path=Tabs,  RelativeSource={RelativeSource AncestorType=local:MainWindow}}" SelectionChanged="OnTabSelectionChanged">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Header}" Padding="0,0,15,0"/>
+                        <Button Click="CloseTabClicked" BorderThickness="0">
+                            <Button.Content>
+                                <Image Source="Images/CloseSolution_16x.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type local:TabContentControl}">
+                    <ScrollViewer>
+                        <ContentControl Content="{Binding Content}" VerticalAlignment="Stretch"/>
+                    </ScrollViewer>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</Window>
