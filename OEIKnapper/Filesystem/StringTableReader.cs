@@ -5,13 +5,12 @@ namespace OEIKnapper.Filesystem;
 
 public class StringTableReader : FileReader
 {
-  
     public StringTableReader(string path)
     {
         _path = path;
     }
 
-    public async Task Read()
+    public async Task<IList<StringTable>> Read()
     {
         try
         {
@@ -24,11 +23,13 @@ public class StringTableReader : FileReader
                 tables.Add(StringTable.TryParse(tableJson));
             }
 
-            RaiseFileParsedEvent(tables, tables.GetType(), _path);
+            return tables;
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+            Console.WriteLine("Failed to parse string table file: " + _path);
+            Console.WriteLine($"{e.Source} -> {e.Message}");
+            return [];
         }
     }
 }

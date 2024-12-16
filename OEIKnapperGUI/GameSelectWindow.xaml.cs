@@ -87,12 +87,13 @@ public partial class GameSelectWindow : Window
         Projects.Add(new GameExeData(iconBitmapImg, fname, path));
     }
 
-    private void OpenProject_OnClick(object sender, RoutedEventArgs e)
+    private async void OpenProject_OnClick(object sender, RoutedEventArgs e)
     {
         if (projectList.SelectedItem == null) return;
         
         var project = (GameExeData) projectList.SelectedItem;
-        Database.LoadProject(project.Path);
+        var progress = new Progress<Database.ProgressReport>();
+        await Database.LoadProjectAsync(project.Path, progress);
         var mainWindow = new MainWindow();
         mainWindow.Show();
         this.Close();

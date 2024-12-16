@@ -24,7 +24,7 @@ public partial class DialogueEditor : UserControl
 
     public async void UpdateViewedConvo(string filename)
     {
-        var convo = await Database.LoadConversation(filename);
+        var convo = await Database.LoadConversationAsync(filename);
         _currentConvo = convo;
 
         var nodes = new List<NodeViewModel>();

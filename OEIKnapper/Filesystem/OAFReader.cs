@@ -24,11 +24,11 @@ public class OAFReader : FileReader
             var content = bReader.ReadBytes((int)bReader.BaseStream.Length);
             var contentString = Encoding.UTF8.GetString(content);
             
-            RaiseFileParsedEvent(contentString, typeof(string), _path);
+           
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+
         }
     }
 }

@@ -11,18 +11,20 @@ public class QuestBundleReader : FileReader
         _path = path;
     }
 
-    public async Task Read()
+    public async Task<IList<Quest>> Read()
     {
         try {
             var fileText = await File.ReadAllTextAsync(_path);
             var json = JObject.Parse(fileText);
             var questList = json["Quests"].Select(Quest.TryParse).ToList();
             
-            RaiseFileParsedEvent(questList, questList.GetType(), _path);
+            return questList;
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+            Console.WriteLine("Failed to parse quest file: " + _path);
+            Console.WriteLine($"{e.Source} -> {e.Message}");
+            return [];
         }
     }
 }

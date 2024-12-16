@@ -11,7 +11,7 @@ public class GlobalVariableReader : FileReader
         _path = path;
     }
 
-    public async Task Read()
+    public async Task<IList<GlobalVariable>> Read()
     {
         try {
             var fileText = await File.ReadAllTextAsync(_path);
@@ -22,12 +22,14 @@ public class GlobalVariableReader : FileReader
             {
                 variables.AddRange(varSet["GlobalVariables"].Select(GlobalVariable.TryParse));
             }
-            
-            RaiseFileParsedEvent(variables, variables.GetType(), _path);
+
+            return variables;
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+            Console.WriteLine("Failed to parse global variable file: " + _path);
+            Console.WriteLine($"{e.Source} -> {e.Message}");
+            return [];
         }
     }
 }

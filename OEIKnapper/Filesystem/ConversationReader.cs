@@ -10,18 +10,20 @@ public class ConversationReader : FileReader
         _path = path;
     }
 
-    public async Task Read()
+    public async Task<Conversation> Read()
     {
         try {
             var fileText = await File.ReadAllTextAsync(_path);
             var json = JObject.Parse(fileText);
             var parsedConvo = Conversation.TryParse(json);
-            
-            RaiseFileParsedEvent(parsedConvo, parsedConvo.GetType(), _path);
+
+            return parsedConvo;
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+            Console.WriteLine("Failed to parse conversation file: " + _path);
+            Console.WriteLine($"{e.Source} -> {e.Message}");
+            return new Conversation();
         }
     }
 }

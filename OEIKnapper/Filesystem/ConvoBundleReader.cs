@@ -10,7 +10,7 @@ public class ConvoBundleReader : FileReader
         _path = path;
     }
 
-    public async Task Read()
+    public async Task<(IList<Speaker> speakers, IList<ConversationNameLookup> convos)> Read()
     { 
         try {
             var fileText = await File.ReadAllTextAsync(_path);
@@ -30,11 +30,13 @@ public class ConvoBundleReader : FileReader
             }
             
             var result = (speakers, conversations);
-            RaiseFileParsedEvent(result, result.GetType(), _path);
+            return result;
         }
         catch (Exception e)
         {
-            RaiseFileParseFailedEvent(_path, $"{e.Source} -> {e.Message}");
+            Console.WriteLine("Failed to parse bundle file: " + _path);
+            Console.WriteLine($"{e.Source} -> {e.Message}");
+            return new();
         }
     }
 }
