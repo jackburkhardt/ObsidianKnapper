@@ -16,45 +16,57 @@ public static class Database
         public int Total { get; set; }
         public string CurrentTask { get; set; }
     }
-    public static KnapperProject CurrentProject { get; private set; }
+
+    public static KnapperProject CurrentProject;
     public static Bundle<GlobalVariable> GlobalVariables { get; private set; } = new();
     public static Bundle<Quest> Quests { get; private set; } = [];
     public static Bundle<ConversationNameLookup> ConvoLookup { get; private set; } = [];
     public static Bundle<Speaker> Speakers { get; private set; } = [];
     public static Dictionary<string, StringTable> StringTable { get; private set; } = new();
 
-    public static async Task CreateProjectAsync(string gamePath, string projectName)
+    public static async Task<KnapperProject> FindOrCreateProjectAsync(string gamePath)
     {
-        var project = new KnapperProject
+        if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\KnapperProjects"))
         {
-            Name = projectName,
-            GamePath = gamePath,
-        };
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\KnapperProjects");
+        }
         
+        KnapperProject project = new KnapperProject 
+        {
+            Name = Path.GetFileNameWithoutExtension(gamePath),
+            GamePath = gamePath,
+            SelectedLocale = "enus"
+        };
         project.Path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $@"\KnapperProjects\{project.Name}";
         if (!Directory.Exists(project.Path))
         {
             Directory.CreateDirectory(project.Path);
         }
         
+        if (File.Exists($@"{project.Path}\project.config"))
+        {
+            var fileText = await File.ReadAllTextAsync($@"{project.Path}\project.config");
+            var parsedProject = JsonConvert.DeserializeObject<KnapperProject>(fileText);
+            if (parsedProject != null)
+            {
+                project = parsedProject;
+            }
+        }
+
+        
         GameRummager.RummageForGameFiles(ref project);
         
         var projectText = JsonConvert.SerializeObject(project, Formatting.Indented);
         await File.WriteAllTextAsync($@"{project.Path}\project.config", projectText);
+        
+        return project;
     }
     
-    public static async Task LoadProjectAsync(string projectPath, IProgress<ProgressReport> progress)
+    public static async Task LoadProjectAsync(string gamePath, IProgress<ProgressReport> progress)
     {
-        var project = JsonConvert.DeserializeObject<KnapperProject>(await File.ReadAllTextAsync($@"{projectPath}\project.config"));
-        
-        if (project == null)
-        {
-            throw new Exception($"Database: Failed to load project file at {projectPath}");
-            return;
-        }
-        CurrentProject = project;
-        
         var projectLoadTasks = new List<(string path, Task task)>();
+        
+        CurrentProject = await FindOrCreateProjectAsync(gamePath);
 
         projectLoadTasks.Add(($"StringTable ({CurrentProject.SelectedLocale})",SetLocaleAsync(CurrentProject.SelectedLocale)));
         
@@ -93,6 +105,7 @@ public static class Database
     {
         var reader = new GlobalVariableReader(path);
         var variables = await reader.Read();
+        await Task.Delay(100);
         GlobalVariables.AddRange(variables);
     }
 
@@ -100,6 +113,7 @@ public static class Database
     {
         var reader = new QuestBundleReader(path);
         var quests = await reader.Read();
+        await Task.Delay(100);
         Quests.AddRange(quests);
     }
     
@@ -107,6 +121,7 @@ public static class Database
     {
         var convoBundleReader = new ConvoBundleReader(path);
         var convos = await convoBundleReader.Read();
+        await Task.Delay(100);
         
         Speakers.AddRange(convos.speakers);
         ConvoLookup.AddRange(convos.convos);

@@ -28,6 +28,7 @@ public class GameRummager
             .Where(file => GameFileExtensions.Any(ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase))).ToArray();
         
         project.GameAssets = [];
+        project.SupportedFeatures = [];
         
         foreach (var path in foundFiles)
         {

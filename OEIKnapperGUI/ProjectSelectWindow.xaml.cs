@@ -33,11 +33,11 @@ public struct GameExeData()
         Path = path;
     }
 };
-public partial class GameSelectWindow : Window
+public partial class ProjectSelectWindow : Window
 {
     public ObservableCollection<GameExeData> Projects { get; set; } = [];
     
-    public GameSelectWindow()
+    public ProjectSelectWindow()
     {
         InitializeComponent();
         this.Loaded += ProjectSelectWindow_Loaded;
@@ -93,6 +93,8 @@ public partial class GameSelectWindow : Window
         
         var project = (GameExeData) projectList.SelectedItem;
         var progress = new Progress<Database.ProgressReport>();
+        var progressWindow = new TaskProgress(progress);
+        progressWindow.Show();
         await Database.LoadProjectAsync(project.Path, progress);
         var mainWindow = new MainWindow();
         mainWindow.Show();
