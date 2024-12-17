@@ -14,12 +14,12 @@
         <Ribbon SelectedIndex="0" Margin="0,-48,0,0">
             <RibbonTab Header="Home" KeyTip="H"  x:Name="menuRibbon">
                 <RibbonGroup>
-                    <RibbonMenuButton Label="New View" >
-                        <RibbonMenuItem  Header="Dialogue Editor" />
-                        <RibbonMenuItem  Header="Global Variable Editor" />
-                        <RibbonMenuItem  Header="String Table Editor" />
+                    <RibbonMenuButton Label="Open tool..." >
+                        <RibbonMenuItem  Header="Dialogue Editor" Click="OpenDialogueEditor"/>
+                        <RibbonMenuItem  Header="Global Variable Editor" Click="OpenGlobalVariableEditor"/>
+                        <RibbonMenuItem  Header="String Table Editor" Click="OpenStringTableEditor"/>
                     </RibbonMenuButton>
-                    <RibbonButton  Label="Re-scan Game" />
+                    <RibbonButton  Label="Re-scan Game" Click="RescanGame_OnClick"/>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
@@ -31,7 +31,7 @@
                         <TextBlock Text="{Binding Header}" Padding="0,0,15,0"/>
                         <Button Click="CloseTabClicked" BorderThickness="0">
                             <Button.Content>
-                                <Image Source="Images/CloseSolution_16x.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <Image Source="../Images/CloseSolution_16x.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button.Content>
                         </Button>
                     </StackPanel>

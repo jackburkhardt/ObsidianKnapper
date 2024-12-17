@@ -26,6 +26,7 @@ public partial class DialogueEditor : TabContentControl
     {
         var convo = await Database.LoadConversationAsync(filename);
         _currentConvo = convo;
+        TabHeader = $"Dialogue Editor ({convo.Tag})";
 
         var nodes = new List<NodeViewModel>();
 

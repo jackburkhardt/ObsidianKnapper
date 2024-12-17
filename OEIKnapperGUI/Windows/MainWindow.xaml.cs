@@ -8,6 +8,7 @@ namespace OEIKnapperGUI;
 
 public partial class MainWindow : Window
 {
+    public static MainWindow Instance;
     public ObservableCollection<TabViewModel> Tabs { get; set; } = [];
 
     public MainWindow()
@@ -15,17 +16,32 @@ public partial class MainWindow : Window
         InitializeComponent();
         Loaded += (sender, args) =>
         {
+            Instance = this;
             AddTab(new Homepage().GetViewModel());
         };
     }
     
+    public void OpenDialogueEditor(object sender, RoutedEventArgs e)
+    {
+        AddTab(new DialogueEditor().GetViewModel());
+    }
+    
+    public void OpenGlobalVariableEditor(object sender, RoutedEventArgs e)
+    {
+        AddTab(new GlobalVarEditor().GetViewModel());
+    }
+    
+    public void OpenStringTableEditor(object sender, RoutedEventArgs e)
+    {
+        AddTab(new StringTableEditor().GetViewModel());
+    }
     
     private void CloseTabClicked(object sender, RoutedEventArgs e)
     {
         RemoveTab(Tabs[TabView.SelectedIndex]);
     }
 
-    private void AddTab(TabViewModel tabInfo)
+    public void AddTab(TabViewModel tabInfo)
     {
         Tabs.Add(tabInfo);
         foreach (var group in tabInfo.MenuItems)
@@ -60,12 +76,20 @@ public partial class MainWindow : Window
         }
     }
 
-    private void RemoveTab(TabViewModel tabInfo)
+    public void RemoveTab(TabViewModel tabInfo)
     {
         Tabs.Remove(tabInfo);
         foreach (var group in tabInfo.MenuItems)
         {
             menuRibbon.Items.Remove(group);
         }
+    }
+
+    private async void RescanGame_OnClick(object sender, RoutedEventArgs e)
+    {
+        var progress = new Progress<Database.ProgressReport>();
+        var progressWindow = new TaskProgress(progress);
+        progressWindow.Show();
+        await Database.LoadProjectAsync(Database.CurrentProject.GamePath, progress);
     }
 }

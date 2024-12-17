@@ -18,6 +18,7 @@ public partial class StringTableEditor : TabContentControl
     public async void OnLoad(object source, RoutedEventArgs e)
     {
         dataTree.ItemsSource = Database.StringTable.Keys;
+        TabHeader = $"StringTable ({Database.CurrentProject.SelectedLocale})";
     }
 
     public void UpdateViewedTable(string path)

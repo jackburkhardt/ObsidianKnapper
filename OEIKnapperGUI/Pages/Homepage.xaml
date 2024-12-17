@@ -11,16 +11,37 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <oeiKnapperGui:TabContentControl.Resources>
         <DataTemplate x:Key="toolDisplayTemplate" DataType="{x:Type local:ToolInformation}">
-            <Grid>
+            <Grid Margin="0, 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
             
-                <Button Grid.Row="1" Height="40" Width="125" Margin="10,0" Content="{Binding Name}" IsEnabled="{Binding IsEnabled}"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Description}"/>
+                <Button Grid.Row="1" Height="40" Width="125" Margin="10,0" 
+                        Content="{Binding Name}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Click="OpenTool_OnClick"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="{Binding Description}"/>
+                    <TextBlock Foreground="Firebrick" Text="(This tool is not supported for this game)">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
             </Grid>
         </DataTemplate>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
         
     </oeiKnapperGui:TabContentControl.Resources>
     
@@ -34,7 +55,8 @@
             Welcome to OEIKnapper. This tool will let you view and dump content specific to Obsidian Entertainment games.&#10;
             To get started, select an editor below.
         </TextBlock>
-        <ContentControl Grid.Row="1" Content="{Binding Tools}"/>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Tools}" ItemTemplate="{StaticResource toolDisplayTemplate}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,20"/>
+        
         <TextBlock Grid.Row="2" VerticalAlignment="Bottom" TextWrapping="Wrap" TextAlignment="Center"> 
             Want to help extend the capabilities of OEIKnapper? Check out the <Hyperlink NavigateUri="https://github.com/jackburkhardt/ObsdianKnapper">GitHub repository</Hyperlink> for in-progress features. 
         </TextBlock>

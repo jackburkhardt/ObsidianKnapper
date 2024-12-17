@@ -10,14 +10,13 @@ public class TabViewModel : INotifyPropertyChanged
 {
     public string Header
     {
-        get => header;
+        get => content.TabHeader;
         set
         {
-            header = value;
+            content.TabHeader = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Header)));
         }
     }
-    private string header;
 
     public TabContentControl Content
     {

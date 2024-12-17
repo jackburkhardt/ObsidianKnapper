@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using OEIKnapper;
 
@@ -12,31 +14,34 @@ public partial class Homepage : TabContentControl
         new ToolInformation
         {
             Name = "Dialogue Editor", 
-            Description = "This is the first tool", 
-            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.ConvoEditor)
+            Description = "View and edit conversations within the game in a graphical interface.", 
+            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.ConvoEditor),
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new DialogueEditor().GetViewModel())
         },
         new ToolInformation
         {
             Name = "Global Variable Editor", 
-            Description = "This is the second tool", 
-            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.GlobalVarEditor)
+            Description = "View and edit variables that are used for dialogue, questing, and other game features.", 
+            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.GlobalVarEditor),
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new GlobalVarEditor().GetViewModel())
         },
         new ToolInformation
         {
             Name = "StringTable Editor", 
-            Description = "This is the third tool", 
-            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.StringTableEditor)
+            Description = "View and edit \"strings\", lines of text that are used in dialogue and user interfaces. Supports toggling between languages.", 
+            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.StringTableEditor),
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new StringTableEditor().GetViewModel())
         },
         new ToolInformation
         {
             Name = "OAF Reader", 
-            Description = "This is the fourth tool", 
+            Description = "Some games (i.e. Stick of Truth) use this .OAF file for bundling game data. This tool lets you extract those files.", 
             IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.OAFReader)
         },
         new ToolInformation
         {
             Name = "Quest Editor", 
-            Description = "This is the fifth tool", 
+            Description = "View game quests, including their dependencies and rewards.", 
             IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.QuestEditor)
         }
     };
@@ -44,7 +49,14 @@ public partial class Homepage : TabContentControl
     {
         InitializeComponent();
     }
-    
+
+    private void OpenTool_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.DataContext is ToolInformation tool)
+        {
+            tool.OnClick?.Invoke(sender, e);
+        }
+    }
 }
 
 public class ToolInformation : INotifyPropertyChanged
@@ -62,6 +74,8 @@ public class ToolInformation : INotifyPropertyChanged
         }
         get => _isEnabled;
     }
+    
+    public RoutedEventHandler? OnClick { get; set; }
         
     public new event PropertyChangedEventHandler? PropertyChanged;
 }

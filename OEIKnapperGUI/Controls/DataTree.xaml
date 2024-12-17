@@ -79,8 +79,8 @@
             <TextBox Grid.Column="1" HorizontalAlignment="Stretch" x:Name="searchBox" TextChanged="SearchBox_OnTextChanged"> </TextBox>
             <!-- <Button Grid.Column="0">Refresh</Button> -->
         </Grid>
-        <TreeView Grid.Row="1" x:Name="treeView" SelectedItemChanged="TreeView_OnSelectedItemChanged">
-            
-        </TreeView>
+        <ScrollViewer Grid.Row="1">
+            <TreeView x:Name="treeView" SelectedItemChanged="TreeView_OnSelectedItemChanged"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>
