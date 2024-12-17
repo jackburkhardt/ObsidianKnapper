@@ -22,5 +22,15 @@ public abstract class TabContentControl : UserControl
     public ObservableCollection<RibbonGroup> MenuGroups { get; set; } = new();
     
     public virtual void RefreshView(){}
+    
+    public TabViewModel GetViewModel()
+    {
+        return new TabViewModel
+        {
+            Content = this,
+            Header = TabHeader,
+            MenuItems = MenuGroups
+        };
+    }
 
 }

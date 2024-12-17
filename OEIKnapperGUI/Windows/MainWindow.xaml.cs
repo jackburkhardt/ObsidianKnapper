@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using OEIKnapper;
+using OEIKnapperGUI.Controls;
 
 namespace OEIKnapperGUI;
 
@@ -12,7 +13,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Loaded += (sender, args) =>
+        {
+            AddTab(new Homepage().GetViewModel());
+        };
     }
+    
     
     private void CloseTabClicked(object sender, RoutedEventArgs e)
     {
