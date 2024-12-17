@@ -1,6 +1,5 @@
 using System.IO;
 using Newtonsoft.Json;
-using OEIKnapper;
 using OEIKnapper.Conversations;
 using OEIKnapper.Filesystem;
 using OEIKnapper.Quests;

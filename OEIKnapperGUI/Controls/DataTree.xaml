@@ -3,16 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:OEIKnapperGUI"
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         
-        <BitmapImage x:Key="searchIcon" UriSource="vswin2019/Search/Search_16x.png"></BitmapImage>
-        <BitmapImage x:Key="folderOpenImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png"></BitmapImage>
-        <BitmapImage x:Key="folderClosedImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png"></BitmapImage>
-        <BitmapImage x:Key="fileIcon" UriSource="vswin2019/TextFile/TextFile_16x.png"></BitmapImage>
+        <BitmapImage x:Key="searchIcon" UriSource="vswin2019/Search/Search_16x.png" />
+        <BitmapImage x:Key="folderOpenImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
+        <BitmapImage x:Key="folderClosedImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
+        <BitmapImage x:Key="fileIcon" UriSource="vswin2019/TextFile/TextFile_16x.png" />
         <!-- <DataTemplate DataType="{x:Type local:TreeDirectory}" > -->
         <!--     <Grid> -->
         <!--         <Grid.ColumnDefinitions> -->
@@ -75,8 +74,8 @@
                 <ColumnDefinition Width="16"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Source="vswin2019/Search/Search_16x.png"></Image>
-            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" x:Name="searchBox" TextChanged="SearchBox_OnTextChanged"> </TextBox>
+            <Image Source="vswin2019/Search/Search_16x.png" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" x:Name="searchBox" TextChanged="SearchBox_OnTextChanged" />
             <!-- <Button Grid.Column="0">Refresh</Button> -->
         </Grid>
         <ScrollViewer Grid.Row="1">

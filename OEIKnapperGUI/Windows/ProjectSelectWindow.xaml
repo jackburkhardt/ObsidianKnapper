@@ -18,10 +18,10 @@
             <ListBox.ItemTemplate>
                 <DataTemplate  DataType="{x:Type local:GameExeData}">
                     <StackPanel Orientation="Horizontal">
-                        <Image x:Name="Icon"  Source="{Binding Icon}"></Image>
+                        <Image x:Name="Icon"  Source="{Binding Icon}" />
                         <StackPanel>
-                            <TextBlock x:Name="Name" Text="{Binding Name}"></TextBlock>
-                            <TextBlock x:Name="Path" Text="{Binding Path}" TextWrapping="NoWrap"></TextBlock>
+                            <TextBlock x:Name="Name" Text="{Binding Name}" />
+                            <TextBlock x:Name="Path" Text="{Binding Path}" TextWrapping="NoWrap" />
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

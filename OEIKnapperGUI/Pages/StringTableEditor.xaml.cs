@@ -9,6 +9,7 @@ public partial class StringTableEditor : TabContentControl
 {
     public StringTableEditor()
     {
+        TabHeader = $"StringTable ({Database.CurrentProject.SelectedLocale})";
         InitializeComponent();
         
         dataTree.OnPathSelected += UpdateViewedTable;
@@ -17,8 +18,7 @@ public partial class StringTableEditor : TabContentControl
 
     public async void OnLoad(object source, RoutedEventArgs e)
     {
-        dataTree.ItemsSource = Database.StringTable.Keys;
-        TabHeader = $"StringTable ({Database.CurrentProject.SelectedLocale})";
+        dataTree.ItemsSource = Database.StringTable.Keys; 
     }
 
     public void UpdateViewedTable(string path)
@@ -42,6 +42,26 @@ public partial class StringTableEditor : TabContentControl
                 stringTableDisplay.SelectedItem = node;
                 break;
             }
+        }
+    }
+
+    private void FilterBox_OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        stringTableDisplay.Items.Filter = o =>
+        {
+            if (o is not String entry) return false;
+            return entry.DefaultText.Contains(filterBox.Text);
+        };
+        
+        stringTableDisplay.Items.Refresh();
+    }
+
+    private void StringTableDisplay_OnAutoGeneratingColumn(object? sender, DataGridAutoGeneratingColumnEventArgs e)
+    {
+        var col = e.Column;
+        if (col is DataGridTextColumn textCol)
+        {
+            textCol.ElementStyle = (Style)FindResource("TextWrap");
         }
     }
 }

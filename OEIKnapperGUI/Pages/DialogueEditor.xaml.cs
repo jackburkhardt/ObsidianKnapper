@@ -1,7 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using Nodify;
 using OEIKnapper;
 using OEIKnapper.Conversations;
 

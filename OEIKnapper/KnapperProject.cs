@@ -1,7 +1,4 @@
-using Newtonsoft.Json.Linq;
-using OEIKnapper;
-
-namespace OEIKnapperGUI;
+namespace OEIKnapper;
 
 public class KnapperProject
 {

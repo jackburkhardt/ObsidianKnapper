@@ -17,4 +17,9 @@ public class ConditionalExpression : Conditional
 
         return expression;
     }
+    
+    public override string ToString()
+    {
+        return $"({string.Join($" {Operator} ", Conditions)})";
+    }
 }

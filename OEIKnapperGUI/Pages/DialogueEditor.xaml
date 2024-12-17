@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:OEIKnapperGUI"
              xmlns:nodify="https://miroiu.github.io/nodify"
+             xmlns:controls="clr-namespace:OEIKnapperGUI.Controls"
              TabHeader="Dialogue Editor"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
@@ -50,7 +51,7 @@
             <ColumnDefinition Width="3"/>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <local:DataTree x:Name="convoBrowser"></local:DataTree>
+        <local:DataTree x:Name="convoBrowser" />
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Background="{StaticResource NodifyEditor.BackgroundBrush}">
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
@@ -86,8 +87,7 @@
                 
                 <nodify:NodifyEditor.Resources>
                     <DataTemplate DataType="{x:Type local:NodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Aqua">
-                        </nodify:Node>
+                        <nodify:Node Header="{Binding ID}"  Background="Aqua" />
                     </DataTemplate>
                     
                     
@@ -124,7 +124,7 @@
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
-                                    <TextBlock Text="&lt;Script&gt;"></TextBlock>
+                                    <TextBlock Text="&lt;Script&gt;" />
                                     <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
                             </nodify:Node.Content>
@@ -141,6 +141,6 @@
             </nodify:NodifyEditor>
         </Grid>
         <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
-        <Grid Grid.Column="4"></Grid>
+        <controls:NodeInspector x:Name="nodeInspector" Grid.Column="4" />
     </Grid>
 </local:TabContentControl>

@@ -38,7 +38,10 @@ public partial class MainWindow : Window
     
     private void CloseTabClicked(object sender, RoutedEventArgs e)
     {
-        RemoveTab(Tabs[TabView.SelectedIndex]);
+        if (sender is Button button && button.DataContext is TabViewModel tab)
+        {
+            RemoveTab(tab);
+        }
     }
 
     public void AddTab(TabViewModel tabInfo)
@@ -82,6 +85,11 @@ public partial class MainWindow : Window
         foreach (var group in tabInfo.MenuItems)
         {
             menuRibbon.Items.Remove(group);
+        }
+
+        if (Tabs.Count == 0)
+        {
+            AddTab(new Homepage().GetViewModel());
         }
     }
 

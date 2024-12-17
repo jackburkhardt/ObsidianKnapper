@@ -8,8 +8,8 @@
         Title="ObsidianKnapper" Height="900" Width="1600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Ribbon SelectedIndex="0" Margin="0,-48,0,0">
             <RibbonTab Header="Home" KeyTip="H"  x:Name="menuRibbon">
@@ -39,9 +39,7 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate DataType="{x:Type local:TabContentControl}">
-                    <ScrollViewer>
-                        <ContentControl Content="{Binding Content}" VerticalAlignment="Stretch"/>
-                    </ScrollViewer>
+                    <ContentControl Content="{Binding Content}" VerticalAlignment="Stretch"/>
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>

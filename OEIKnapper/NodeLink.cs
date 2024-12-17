@@ -1,7 +1,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OEIKnapper.Conversations;
 
-namespace OEIKnapper.Conversations;
+namespace OEIKnapper;
 
 public class NodeLink
 {

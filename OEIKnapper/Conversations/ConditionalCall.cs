@@ -18,4 +18,9 @@ public class ConditionalCall : Conditional
             Not = json["Not"]?.Value<bool>() ?? false
         };
     }
+    
+    public override string ToString()
+    {
+        return $"{(Not ? "!" : "")}{Function}({string.Join(", ", Parameters)})";
+    }
 }

@@ -1,8 +1,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OEIKnapper.Conversations;
 using OEIKnapper.Quests;
 
-namespace OEIKnapper.Conversations;
+namespace OEIKnapper;
 
 public abstract class Node
 {
@@ -11,6 +12,9 @@ public abstract class Node
     public List<string> ExtendedProperties = [];
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ConditionalExpression Conditionals = new ();
+    public List<NodeScriptItem> OnEnterScripts = [];
+    public List<NodeScriptItem> OnExitScripts = [];
+    public List<NodeScriptItem> OnUpdateScripts = [];
 
     public static Node TryParse(JToken json)
     {
@@ -54,6 +58,9 @@ public abstract class Node
         newNode.Links = json["Links"].Select(NodeLink.TryParse).ToList();
         newNode.Conditionals = Conditional.TryParse(json["Conditionals"]);
         newNode.ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>();
+        newNode.OnEnterScripts = json["OnEnterScripts"].Select(NodeScriptItem.TryParse).ToList();
+        newNode.OnExitScripts = json["OnExitScripts"].Select(NodeScriptItem.TryParse).ToList();
+        newNode.OnUpdateScripts = json["OnUpdateScripts"].Select(NodeScriptItem.TryParse).ToList();
         
         return newNode;
     }

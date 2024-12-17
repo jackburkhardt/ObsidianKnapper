@@ -1,7 +1,6 @@
 - create menu items
 - layout nodes to move left -> right properly and spacing
 - OAF file parser
-- fix scroll bars not being used for right elements in editor controls
 - icons :)
 
 

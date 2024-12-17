@@ -4,8 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:OEIKnapperGUI"
-      xmlns:oei="clr-namespace:OEIKnapper;assembly=OEIKnapper"
       mc:Ignorable="d">
+    
+    <local:TabContentControl.Resources>
+        <Style TargetType="TextBlock" x:Key="TextWrap">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </local:TabContentControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
@@ -21,13 +27,14 @@
             </Grid.RowDefinitions>
             <DockPanel  HorizontalAlignment="Left">
                 <Label>Filter: </Label>
-                <TextBox x:Name="filterBox" Width="150" Height="20"></TextBox>
+                <TextBox x:Name="filterBox" Width="150" Height="20" TextChanged="FilterBox_OnTextChanged"/>
                 <Label>Goto:</Label>
-                <TextBox x:Name="gotoBox" Width="50" Height="20" TextChanged="GotoBox_OnTextChanged">
-                </TextBox>
+                <TextBox x:Name="gotoBox" Width="50" Height="20" TextChanged="GotoBox_OnTextChanged" />
             </DockPanel>
-            <DataGrid Grid.Row="1" x:Name="stringTableDisplay" AutoGenerateColumns="True" AlternatingRowBackground="Lavender">
-            </DataGrid>
+            <DataGrid Grid.Row="1" x:Name="stringTableDisplay"
+                      AutoGenerateColumns="True"
+                      AutoGeneratingColumn="StringTableDisplay_OnAutoGeneratingColumn"
+                      AlternatingRowBackground="Lavender"/>
         </Grid>
     </Grid>
 </local:TabContentControl>

@@ -26,10 +26,10 @@
                     <TextBlock Foreground="Firebrick" Text="(This tool is not supported for this game)">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsEnabled}" Value="False">
-                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
