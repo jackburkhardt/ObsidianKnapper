@@ -12,6 +12,14 @@
         </Style>
     </local:TabContentControl.Resources>
     
+    <local:TabContentControl.MenuGroups>
+        <RibbonGroup>
+            <RibbonMenuButton x:Name="localeSelectorBtn" LargeImageSource="../Images/TranslateDocument_32x.png" Label="Switch Locale" RibbonMenuItem.Click="SwitchLocale_OnClick">
+                
+            </RibbonMenuButton>            
+        </RibbonGroup>
+    </local:TabContentControl.MenuGroups>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>

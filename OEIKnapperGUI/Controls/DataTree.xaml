@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         
-        <BitmapImage x:Key="searchIcon" UriSource="vswin2019/Search/Search_16x.png" />
+        <BitmapImage x:Key="searchIcon" UriSource="../Images/Search_32x.png" />
         <BitmapImage x:Key="folderOpenImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
         <BitmapImage x:Key="folderClosedImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
         <BitmapImage x:Key="fileIcon" UriSource="vswin2019/TextFile/TextFile_16x.png" />
@@ -74,7 +74,7 @@
                 <ColumnDefinition Width="16"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Source="vswin2019/Search/Search_16x.png" />
+            <Image Source="{StaticResource searchIcon}" />
             <TextBox Grid.Column="1" HorizontalAlignment="Stretch" x:Name="searchBox" TextChanged="SearchBox_OnTextChanged" />
             <!-- <Button Grid.Column="0">Refresh</Button> -->
         </Grid>

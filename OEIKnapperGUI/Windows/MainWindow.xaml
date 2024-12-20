@@ -14,12 +14,12 @@
         <Ribbon SelectedIndex="0" Margin="0,-48,0,0">
             <RibbonTab Header="Home" KeyTip="H"  x:Name="menuRibbon">
                 <RibbonGroup>
-                    <RibbonMenuButton Label="Open tool..." >
+                    <RibbonMenuButton LargeImageSource="../Images/SDK_32x.png" Label="Open tool..." >
                         <RibbonMenuItem  Header="Dialogue Editor" Click="OpenDialogueEditor"/>
                         <RibbonMenuItem  Header="Global Variable Editor" Click="OpenGlobalVariableEditor"/>
                         <RibbonMenuItem  Header="String Table Editor" Click="OpenStringTableEditor"/>
                     </RibbonMenuButton>
-                    <RibbonButton  Label="Re-scan Game" Click="RescanGame_OnClick"/>
+                    <RibbonButton LargeImageSource="../Images/Refresh_32x.png" Label="Re-scan Game" Click="RescanGame_OnClick"/>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

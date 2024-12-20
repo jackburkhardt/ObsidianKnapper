@@ -67,8 +67,12 @@ public static class Database
         
         CurrentProject = await FindOrCreateProjectAsync(gamePath);
 
-        projectLoadTasks.Add(($"StringTable ({CurrentProject.SelectedLocale})",SetLocaleAsync(CurrentProject.SelectedLocale)));
-        
+        if (CurrentProject.SupportedFeatures.Contains(KnapperFeature.StringTableEditor))
+        {
+            projectLoadTasks.Add(($"StringTable ({CurrentProject.SelectedLocale})",
+                SetLocaleAsync(CurrentProject.SelectedLocale)));
+        }
+
         foreach (var asset in CurrentProject.GameAssets)
         {
             switch (asset.AssetType)
@@ -128,7 +132,13 @@ public static class Database
     
     public static async Task<Conversation> LoadConversationAsync(string path)
     {
-        var convoReader = new ConversationReader(path);
+        var realPath = CurrentProject.GameAssets.FirstOrDefault(f => f.GamePath.Contains(path.Replace('/', '\\')));
+        if (realPath == null)
+        {
+            throw new Exception($"Database: Could not find conversation {path}");
+            return new Conversation();
+        }
+        var convoReader = new ConversationReader(realPath.GamePath);
 
         return await convoReader.Read();
     }
@@ -151,5 +161,13 @@ public static class Database
             StringTable.Add(table.Name, table);
         }
         CurrentProject.SelectedLocale = locale;
+    }
+
+    public static IList<string> GetAvailableLocales()
+    {
+        return CurrentProject.GameAssets
+            .Where(f => f.GamePath.Contains(GameRummager.StringTableExt))
+            .Select(f => Path.GetFileNameWithoutExtension(f.GamePath).Split('_')[1])
+            .ToList();
     }
 }

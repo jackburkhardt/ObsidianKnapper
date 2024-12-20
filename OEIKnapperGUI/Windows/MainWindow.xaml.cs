@@ -57,22 +57,22 @@ public partial class MainWindow : Window
 
     private void OnTabSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.OriginalSource is not TabControl) return;
+        if (sender is not TabControl) return;
         
-        var newTab = e.AddedItems.Cast<TabViewModel>().FirstOrDefault();
-        var lastTab = e.RemovedItems.Cast<TabViewModel>().FirstOrDefault();
+        var lastTab = e.RemovedItems.Count > 0 ? e.RemovedItems[0] : null;
+        var newTab = e.AddedItems.Count > 0 ? e.AddedItems[0] : null;
 
-        if (lastTab != null)
+        if (lastTab is TabViewModel ltab)
         {
-            foreach (var oldGroup in lastTab.MenuItems)
+            foreach (var oldGroup in ltab.MenuItems)
             {
                 oldGroup.Visibility = Visibility.Collapsed;
             }
         }
 
-        if (newTab != null)
+        if (newTab is TabViewModel ntab)
         {
-            foreach (var newGroup in newTab.MenuItems)
+            foreach (var newGroup in ntab.MenuItems)
             {
                 newGroup.Visibility = Visibility.Visible;
             }

@@ -71,6 +71,26 @@
       <Resource Include="Images\CloseSolution_16x.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Images\TranslateDocument_32x.png" />
+      <Resource Include="Images\TranslateDocument_32x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\Refresh_32x.png" />
+      <Resource Include="Images\Refresh_32x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\SDK_32x.png" />
+      <Resource Include="Images\SDK_32x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\Search_32x.png" />
+      <Resource Include="Images\Search_32x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\AddNamespace_32x.png" />
+      <Resource Include="Images\AddNamespace_32x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

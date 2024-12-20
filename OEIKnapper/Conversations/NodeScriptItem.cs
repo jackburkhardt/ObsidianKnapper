@@ -19,7 +19,7 @@ public class NodeScriptItem
         }
         return new NodeScriptItem
         {
-            Functions = ConditionalCall.TryParse(json["Data"]),
+            Functions = ConditionalCall.TryParse(json),
             Conditional = OEIKnapper.Conversations.Conditional.TryParse(json["Conditional"])
         };
     }

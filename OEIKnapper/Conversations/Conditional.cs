@@ -29,15 +29,27 @@ public abstract class Conditional
         {
             foreach (var item in json["Components"])
             {
-                switch (item["$type"].Value<string>())
+                var type = item["$type"]?.Value<string>();
+                if (type == "OEIFormats.FlowCharts.ConditionalCall, OEIFormats")
                 {
-                    case "OEIFormats.FlowCharts.ConditionalCall, OEIFormats":
-                        cond.Conditions.Add(ConditionalCall.TryParse(item));
-                        break;
-                    case "OEIFormats.FlowCharts.ConditionalExpression, OEIFormats":
-                        cond.Conditions.Add(ConditionalExpression.TryParse(item));
-                        break;
+                    cond.Conditions.Add(ConditionalCall.TryParse(item));
                 }
+                else if (type == "OEIFormats.FlowCharts.ConditionalExpression, OEIFormats")
+                {
+                    cond.Conditions.Add(ConditionalExpression.TryParse(item));
+                }
+                // switch (item["$type"]?.Value<string>())
+                // {
+                //     case "OEIFormats.FlowCharts.ConditionalCall, OEIFormats":
+                //         cond.Conditions.Add(ConditionalCall.TryParse(item));
+                //         break;
+                //     case "OEIFormats.FlowCharts.ConditionalExpression, OEIFormats":
+                //         cond.Conditions.Add(ConditionalExpression.TryParse(item));
+                //         break;
+                //     default:
+                //         cond.Conditions.Add(ConditionalCall.TryParse(item));
+                //         break;
+                // }
             }
         }
         

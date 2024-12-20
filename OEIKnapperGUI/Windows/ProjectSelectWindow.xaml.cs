@@ -37,7 +37,7 @@ public partial class ProjectSelectWindow : Window
     private void ProjectSelectWindow_Loaded(object sender, RoutedEventArgs e)
     {
         string[] searchDirs = [@"C:\Program Files (x86)\Steam\steamapps\common", @"C:\Program Files\Epic Games"];
-        string[] searchPaths = [@"\Pentiment\Pentiment.exe", @"\TheOuterWorlds\TheOuterWorlds.exe"];
+        string[] searchPaths = [@"\Pentiment\Pentiment.exe", @"\TheOuterWorlds\TheOuterWorlds.exe", @"\South Park - The Stick of Truth\South Park - The Stick of Truth.exe"];
         
         foreach (var dir in searchDirs)
         {

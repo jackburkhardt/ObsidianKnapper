@@ -15,6 +15,7 @@ public class GameRummager
     private static string[] GameFileExtensions = new string[]
     {
         StringTableExt,
+        ConversationExt,
         ConversationBundleExt,
         QuestExt,
         GlobalVariableExt,

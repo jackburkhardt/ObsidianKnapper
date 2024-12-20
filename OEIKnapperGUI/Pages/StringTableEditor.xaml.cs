@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using OEIKnapper;
 using String = OEIKnapper.String;
 
@@ -7,6 +9,7 @@ namespace OEIKnapperGUI;
 
 public partial class StringTableEditor : TabContentControl
 {
+    private ObservableCollection<string> AvailableLocales = [];
     public StringTableEditor()
     {
         TabHeader = $"StringTable ({Database.CurrentProject.SelectedLocale})";
@@ -16,9 +19,15 @@ public partial class StringTableEditor : TabContentControl
         Loaded += OnLoad;
     }
 
-    public async void OnLoad(object source, RoutedEventArgs e)
+    public void OnLoad(object source, RoutedEventArgs e)
     {
-        dataTree.ItemsSource = Database.StringTable.Keys; 
+        dataTree.ItemsSource = Database.StringTable.Keys;
+        AvailableLocales.Clear();
+        foreach (var locale in Database.GetAvailableLocales())
+        {
+            AvailableLocales.Add(locale);
+        }
+        localeSelectorBtn.ItemsSource = AvailableLocales;
     }
 
     public void UpdateViewedTable(string path)
@@ -63,5 +72,13 @@ public partial class StringTableEditor : TabContentControl
         {
             textCol.ElementStyle = (Style)FindResource("TextWrap");
         }
+    }
+
+    private async void SwitchLocale_OnClick(object sender, RoutedEventArgs e)
+    {
+       if (e.OriginalSource is not RibbonMenuItem item) return;
+       if (item.Header is not string locale) return;
+       
+       await Database.SetLocaleAsync(locale);
     }
 }

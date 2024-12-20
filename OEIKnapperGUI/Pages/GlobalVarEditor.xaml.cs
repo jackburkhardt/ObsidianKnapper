@@ -26,8 +26,8 @@ public partial class GlobalVarEditor : TabContentControl
             variableList.ItemsSource = Database.GlobalVariables.Select(v => v.Tag);
         };
     }
-    
-    public void UpdateViewedVariable(string tag)
+
+    private void UpdateViewedVariable(string tag)
     {
         var originalVar = Database.GlobalVariables[tag];
         var copy = new GlobalVariable()
@@ -40,13 +40,26 @@ public partial class GlobalVarEditor : TabContentControl
 
         CurrentVar = copy;
     }
-    
-    public void SaveButton_OnClick(object sender, RoutedEventArgs e)
+
+    private void SaveButton_OnClick(object sender, RoutedEventArgs e)
     {
         MessageBox.Show(JsonConvert.SerializeObject(Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
         propertyEditor.GetBindingExpression(PropertyGrid.SelectedObjectProperty)?.UpdateSource();
         Database.GlobalVariables[CurrentVar.Tag] = CurrentVar;
         MessageBox.Show(JsonConvert.SerializeObject(Database.GlobalVariables[CurrentVar.Tag]), "Save Changes", MessageBoxButton.YesNo);
+    }
+
+    private void NewVariableButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var newVar = new GlobalVariable()
+        {
+            ID = new Guid(),
+            Tag = "NEW_VARIABLE",
+            Type = GlobalVarDataType.Boolean,
+            InitialValue = ""
+        };
+        Database.GlobalVariables.Insert(0, newVar);
+        variableList.ItemsSource = Database.GlobalVariables.Select(v => v.Tag);
     }
     
 }

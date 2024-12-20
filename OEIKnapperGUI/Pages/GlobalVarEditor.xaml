@@ -8,8 +8,12 @@
              TabHeader="Variable Editor"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d">
-    <UserControl.Resources>
-    </UserControl.Resources>
+    <local:TabContentControl.MenuGroups>
+        <RibbonGroup>
+            <RibbonButton LargeImageSource="../Images/AddNamespace_32x.png" Label="New Variable" Click="NewVariableButton_OnClick"/>
+        </RibbonGroup>
+        
+    </local:TabContentControl.MenuGroups>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
