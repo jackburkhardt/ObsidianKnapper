@@ -20,6 +20,6 @@ public class ConditionalExpression : Conditional
     
     public override string ToString()
     {
-        return $"({string.Join($" {Operator} ", Conditions)})";
+        return "{\n" + $"{string.Join($" {Operator} ", Conditions)}" + "\n}";
     }
 }

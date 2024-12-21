@@ -49,11 +49,11 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="200" Width="Auto"/>
+            <ColumnDefinition MinWidth="200" Width="200"/>
             <ColumnDefinition Width="3"/>
             <ColumnDefinition MinWidth="200" Width="*"/>
             <ColumnDefinition Width="3"/>
-            <ColumnDefinition MinWidth="200" Width="Auto"/>
+            <ColumnDefinition MinWidth="200" Width="250"/>
         </Grid.ColumnDefinitions>
         <local:DataTree x:Name="convoBrowser" />
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />

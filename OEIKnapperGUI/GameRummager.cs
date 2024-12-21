@@ -1,4 +1,7 @@
 using System.IO;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using OEIKnapper;
 
 namespace OEIKnapperGUI;
@@ -21,6 +24,47 @@ public class GameRummager
         GlobalVariableExt,
         OAFExt
     };
+
+    public static IList<GameExeData> RummageForGames()
+    {
+        string[] searchDirs = [];
+        string[] gamePaths = [];
+        List<GameExeData> foundGames = [];
+        
+        try
+        {
+            searchDirs = File.ReadAllLines(@"Config\searchdirs.txt");
+            gamePaths = File.ReadAllLines(@"Config\gamepaths.txt");
+        } catch (Exception e)
+        {
+            Console.WriteLine("GameRummager could not find required Config/searchdirs.txt or Config/gamepaths.txt files.");
+            Console.WriteLine(e);
+        }
+        
+        // ReSharper disable once LoopCanBeConvertedToQuery (for readability)
+        foreach (var dir in searchDirs)
+        {
+            foreach (var path in gamePaths)
+            {
+                var fullPath = dir + path;
+                if (File.Exists(fullPath))
+                {
+                    foundGames.Add(LoadProjectData(fullPath));
+                }
+            }
+        }
+            
+        return foundGames;
+    }
+    
+    public static GameExeData LoadProjectData(string path)
+    {
+        var icon = System.Drawing.Icon.ExtractAssociatedIcon(path);
+        var iconBitmapImg = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        var fname = path.Split('\\').Last();
+
+        return new GameExeData(iconBitmapImg, fname, path);
+    }
 
     public static void RummageForGameFiles(ref KnapperProject project)
     {
@@ -62,3 +106,17 @@ public class GameRummager
         }
     }
 } 
+
+public struct GameExeData()
+{
+    public BitmapSource Icon { get; private set; }
+    public string Name { get; private set; }
+    public string Path { get; private set; }
+    
+    public GameExeData(BitmapSource icon, string name, string path) : this()
+    {
+        Icon = icon;
+        Name = name;
+        Path = path;
+    }
+};

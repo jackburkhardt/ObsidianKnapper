@@ -86,6 +86,14 @@
       <Resource Include="Images\AddNamespace_32x.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Config\gamepaths.txt" />
+      <AdditionalFiles Include="Config\gamepaths.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </AdditionalFiles>
+      <None Remove="Config\searchpaths.txt" />
+      <AdditionalFiles Include="Config\searchdirs.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </AdditionalFiles>
     </ItemGroup>
 
 </Project>

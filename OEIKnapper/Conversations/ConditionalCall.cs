@@ -28,6 +28,10 @@ public class ConditionalCall : Conditional
     
     public override string ToString()
     {
-        return $"{(Not ? "!" : "")}{Function}({string.Join(", ", Parameters)})";
+        int start = Function.IndexOf('(');
+        int end = Function.IndexOf(')');
+        string func = Function.Substring(start+1, end - start - 1);
+        string funcWithParams = Parameters.Count > 0 ? Function.Replace(func, string.Join(", ", Parameters)) : Function;
+        return $"{(Not ? "!" : "")}{funcWithParams}";
     }
 }

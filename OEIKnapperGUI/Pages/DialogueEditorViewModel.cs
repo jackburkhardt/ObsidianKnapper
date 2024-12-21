@@ -45,6 +45,18 @@ public class NodeViewModel : INotifyPropertyChanged
     public Node AffiliatedNode { get; set; }
     public int ID { get => AffiliatedNode.NodeID;  set => AffiliatedNode.NodeID = value; }
 
+    public ConditionalExpression Conditionals
+    {
+        get => AffiliatedNode.Conditionals;
+        set => AffiliatedNode.Conditionals = value;
+    }
+    
+    public List<string> ExtendedProperties
+    {
+        get => AffiliatedNode.ExtendedProperties;
+        set => AffiliatedNode.ExtendedProperties = value;
+    }
+
     public List<NodeScriptItem> OnEnterScript
     {
         get => AffiliatedNode.OnEnterScripts;

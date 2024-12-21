@@ -1,11 +1,14 @@
 ﻿using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using OEIKnapper;
 using OEIKnapper.Conversations;
 
 namespace OEIKnapperGUI.Controls;
+
 
 public partial class NodeInspector : UserControl
 {
@@ -13,9 +16,35 @@ public partial class NodeInspector : UserControl
     {
         InitializeComponent();
     }
+    
+    public static string ReplaceParamGuidWithName(string original)
+    {
+        var condString = original;
+        var guidMatches = GuidRegex().Matches(condString);
+        foreach (var guid in guidMatches)
+        {
+            if (Guid.TryParse(guid.ToString(), out Guid g))
+            {
+                try
+                {
+                    condString = condString.Replace(guid.ToString(), Database.GlobalVariables[g].Tag);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    continue;
+                }
+            }
+        }
+        
+        return condString;
+    }
+    
+    [GeneratedRegex(@"\b[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}\b", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex GuidRegex(); // moved here for inclusion at compile-time
 }
 
-public class ExtendedPropertyNameConverter : IValueConverter
+public class ExtendedPropertyConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -38,17 +67,57 @@ public class ExtendedPropertyNameConverter : IValueConverter
     }
 }
 
-public class ConditionalComponentConverter : IValueConverter
+public partial class ScriptItemConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not ConditionalExpression exp) return value;
+        if (value is not List<NodeScriptItem> scripts) return value;
+         StringBuilder sb = new();
+         sb.Append("{\n");
+         foreach (var item in scripts)
+         {
+             if (item.Functions.Parameters.Count > 0)
+             {
+                 sb.AppendLine(NodeInspector.ReplaceParamGuidWithName(item.Functions.ToString()));
+             }
+             else
+             {
+                 sb.AppendLine(item.Functions.ToString());
+             }
 
-        return exp.ToString();
+             if (item.Conditional.Conditions.Count > 0)
+             {
+                 sb.AppendLine(NodeInspector.ReplaceParamGuidWithName(item.Conditional.ToString()));
+             }
+         }
+         
+
+         sb.AppendLine("}");
+         return sb.ToString();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value;
+        throw new NotSupportedException("Editing scripts and conditions is not supported.");
+    }
+    
+}
+
+public partial class ConditionalConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is not ConditionalExpression expression) return value;
+        StringBuilder sb = new();
+        if (expression.Conditions.Count > 0)
+        {
+            sb.AppendLine(NodeInspector.ReplaceParamGuidWithName(expression.ToString()));
+        }
+        return sb.ToString();
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotSupportedException("Editing scripts and conditions is not supported.");
     }
 }

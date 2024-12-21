@@ -1,8 +1,8 @@
 - layout nodes to move left -> right properly and spacing
 - OAF file parser
-- move game search to gamerummager
-
-
-conversation editor:
-- show conditionals
-- show scripts
+- node datatemplates for each node type
+- node icon footer for at-a-glance info
+- unpack + test with Outer Worlds
+- unpack + test with Grounded
+- fix spacing for inspector
+- icon pass 2

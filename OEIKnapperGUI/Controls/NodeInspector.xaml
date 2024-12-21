@@ -10,26 +10,46 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <local:ConditionalComponentConverter x:Key="ConditionalConverter"/>
+        <local:ScriptItemConverter x:Key="ScriptItemConverter"/>
+        <local:ExtendedPropertyConverter x:Key="ExtendedPropertyConverter"/>
+        <local:ConditionalConverter x:Key="ConditionalConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListBox x:Name="extPropertyList">
-        </ListBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel  Margin="0,0,0,20">
+            <TextBlock FontWeight="Bold" FontSize="14">Additional Properties</TextBlock>
+            <ListBox x:Name="extPropertyList" VerticalAlignment="Stretch"
+                     ItemsSource="{Binding SelectedNode.ExtendedProperties, 
+                     Converter={StaticResource ExtendedPropertyConverter}}">
+            </ListBox>
+        </StackPanel>
         
-        <TabControl>
-            <TabItem Header="OnEnter">
-                <TextBlock Text="{Binding SelectedNode.OnEnterScript, 
-                Converter={StaticResource ConditionalConverter}}"/>
-            </TabItem>
-            <TabItem Header="OnExit">
-                <TextBlock Text="{Binding SelectedNode.OnExitScript, 
-                Converter={StaticResource ConditionalConverter}}"/>
-            </TabItem>
-            <TabItem Header="OnUpdate">
-                <TextBlock Text="{Binding SelectedNode.OnUpdateScript, 
-                Converter={StaticResource ConditionalConverter}}"/>
-            </TabItem>
-        </TabControl>
+        <StackPanel Grid.Row="1">
+            <TextBlock FontWeight="Bold" FontSize="14">Conditions</TextBlock>
+            <TextBox VerticalAlignment="Stretch" Text="{Binding SelectedNode.Conditionals, Converter={StaticResource ConditionalConverter}}"></TextBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2">
+            <TextBlock FontWeight="Bold" FontSize="14">Scripts</TextBlock>
+            <TabControl VerticalAlignment="Stretch">
+                <TabItem Header="OnEnter">
+                    <TextBlock Text="{Binding SelectedNode.OnEnterScript, 
+                    Converter={StaticResource ScriptItemConverter}}"/>
+                </TabItem>
+                <TabItem Header="OnExit">
+                    <TextBlock Text="{Binding SelectedNode.OnExitScript, 
+                    Converter={StaticResource ScriptItemConverter}}"/>
+                </TabItem>
+                <TabItem Header="OnUpdate">
+                    <TextBlock Text="{Binding SelectedNode.OnUpdateScript, 
+                    Converter={StaticResource ScriptItemConverter}}"/>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
         
     </Grid>
 </UserControl>

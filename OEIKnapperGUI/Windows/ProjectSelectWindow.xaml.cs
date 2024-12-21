@@ -11,19 +11,6 @@ namespace OEIKnapperGUI;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public struct GameExeData()
-{
-    public BitmapSource Icon { get; private set; }
-    public string Name { get; private set; }
-    public string Path { get; private set; }
-    
-    public GameExeData(BitmapSource icon, string name, string path) : this()
-    {
-        Icon = icon;
-        Name = name;
-        Path = path;
-    }
-};
 public partial class ProjectSelectWindow : Window
 {
     public ObservableCollection<GameExeData> Projects { get; set; } = [];
@@ -36,20 +23,8 @@ public partial class ProjectSelectWindow : Window
     
     private void ProjectSelectWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        string[] searchDirs = [@"C:\Program Files (x86)\Steam\steamapps\common", @"C:\Program Files\Epic Games"];
-        string[] searchPaths = [@"\Pentiment\Pentiment.exe", @"\TheOuterWorlds\TheOuterWorlds.exe", @"\South Park - The Stick of Truth\South Park - The Stick of Truth.exe"];
-        
-        foreach (var dir in searchDirs)
-        {
-            foreach (var path in searchPaths)
-            {
-                var fullPath = dir + path;
-                if (File.Exists(fullPath))
-                {
-                    LoadProjectData(fullPath);
-                }
-            }
-        }
+        Projects = new ObservableCollection<GameExeData>(GameRummager.RummageForGames());
+        projectList.ItemsSource = Projects;
     }
 
 
@@ -64,18 +39,8 @@ public partial class ProjectSelectWindow : Window
         
         if (dialog.ShowDialog() == true)
         {
-            LoadProjectData(dialog.FileName);
+            Projects.Add(GameRummager.LoadProjectData(dialog.FileName));
         }
-    }
-
-    void LoadProjectData(string path)
-    {
-        // pull icon from executable
-        var icon = System.Drawing.Icon.ExtractAssociatedIcon(path);
-        var iconBitmapImg = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        var fname = path.Split('\\').Last();
-        
-        Projects.Add(new GameExeData(iconBitmapImg, fname, path));
     }
 
     private async void OpenProject_OnClick(object sender, RoutedEventArgs e)
