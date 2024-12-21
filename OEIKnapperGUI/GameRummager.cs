@@ -1,7 +1,7 @@
 using System.IO;
-using OEIKnapperGUI;
+using OEIKnapper;
 
-namespace OEIKnapper.Filesystem;
+namespace OEIKnapperGUI;
 
 public class GameRummager
 {

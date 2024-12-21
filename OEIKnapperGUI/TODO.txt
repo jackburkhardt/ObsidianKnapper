@@ -1,5 +1,6 @@
 - layout nodes to move left -> right properly and spacing
 - OAF file parser
+- move game search to gamerummager
 
 
 conversation editor:

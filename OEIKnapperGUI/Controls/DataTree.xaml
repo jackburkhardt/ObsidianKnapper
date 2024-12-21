@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:oeiKnapperGui="clr-namespace:OEIKnapperGUI"
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        
         <BitmapImage x:Key="searchIcon" UriSource="../Images/Search_32x.png" />
-        <BitmapImage x:Key="folderOpenImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
-        <BitmapImage x:Key="folderClosedImage" UriSource="vswin2019/FolderOpened/FolderOpened_16x.png" />
-        <BitmapImage x:Key="fileIcon" UriSource="vswin2019/TextFile/TextFile_16x.png" />
+        <BitmapImage x:Key="folderOpenImage" UriSource="../Images/CloseSolution_16x.png" />
+        <BitmapImage x:Key="folderClosedImage" UriSource="../Images/AddNamespace_32x.png" />
+        <BitmapImage x:Key="fileIcon" UriSource="../Images/Search_32x.png" />
         <!-- <DataTemplate DataType="{x:Type local:TreeDirectory}" > -->
         <!--     <Grid> -->
         <!--         <Grid.ColumnDefinitions> -->
@@ -61,6 +61,47 @@
         <!--         </DataTrigger> -->
         <!--     </DataTemplate.Triggers> -->
         <!-- </DataTemplate> -->
+        
+        <DataTemplate x:Key="FolderTemplate" DataType="{x:Type TreeViewItem}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Width="16"
+                       Height="16"
+                       Source="{StaticResource folderClosedImage}"
+                       x:Name="img" >
+                    <Image.Triggers>
+                        <!-- <DataTrigger Binding="{Binding IsExpanded}" Value="True"> -->
+                        <!--     <Setter TargetName="img" Property="Source" Value="{StaticResource folderOpenImage}"></Setter> -->
+                        <!-- </DataTrigger> -->
+                    </Image.Triggers>
+                </Image>
+                <TextBlock Text="{Binding Path=Header}"
+                           ToolTip="Click to open this item."
+                           Grid.Column="2" />
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="FileTemplate" DataType="{x:Type TreeViewItem}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Width="16"
+                       Height="16"
+                       Source="{StaticResource fileIcon}"
+                       x:Name="img" >
+                </Image>
+                <TextBlock Text="{Binding Path=Header}"
+                           ToolTip="Click to open this item."
+                           Grid.Column="2" />
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     
     
@@ -79,7 +120,13 @@
             <!-- <Button Grid.Column="0">Refresh</Button> -->
         </Grid>
         <ScrollViewer Grid.Row="1">
-            <TreeView x:Name="treeView" SelectedItemChanged="TreeView_OnSelectedItemChanged"/>
+            <TreeView x:Name="treeView" SelectedItemChanged="TreeView_OnSelectedItemChanged">
+                <TreeView.ItemTemplateSelector>
+                    <oeiKnapperGui:TreeItemTemplateSelector
+                        FolderTemplate="{StaticResource FolderTemplate}"
+                        FileTemplate="{StaticResource FileTemplate}"/>
+                </TreeView.ItemTemplateSelector>
+            </TreeView>
         </ScrollViewer>
     </Grid>
 </UserControl>

@@ -120,5 +120,21 @@ public partial class DataTree : UserControl
     }
 }
 
+public class TreeItemTemplateSelector : DataTemplateSelector
+{
+    public DataTemplate? FolderTemplate { get; set; }
+    public DataTemplate? FileTemplate { get; set; }
+
+    public override DataTemplate? SelectTemplate(object item, DependencyObject container)
+    {
+        if (item is TreeViewItem treeViewItem)
+        {
+            return treeViewItem.Tag.ToString() == "file" ? FileTemplate : FolderTemplate;
+        }
+        
+        return base.SelectTemplate(item, container);
+    }
+}
+
 
 
