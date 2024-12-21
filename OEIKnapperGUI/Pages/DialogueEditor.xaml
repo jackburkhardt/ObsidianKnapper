@@ -43,6 +43,10 @@
         </DataTemplate>
     </UserControl.Resources>
     
+    <UserControl.DataContext>
+        <local:DialogueEditorViewModel/>
+    </UserControl.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200" Width="Auto"/>
@@ -59,11 +63,8 @@
             <nodify:NodifyEditor x:Name="nodeEditor" 
                                  ItemsSource="{Binding Nodes}" 
                                  Connections="{Binding Connections}"
-                                 Background="{StaticResource SmallGridLinesDrawingBrush}">
-                
-                <nodify:NodifyEditor.DataContext>
-                    <local:EditorViewModel />
-                </nodify:NodifyEditor.DataContext>
+                                 Background="{StaticResource SmallGridLinesDrawingBrush}"
+                                 SelectedItem="{Binding SelectedNode, Mode=OneWayToSource}">
                 
                 <nodify:NodifyEditor.ItemContainerStyle>
                     <Style TargetType="{x:Type nodify:ItemContainer}">
@@ -141,6 +142,6 @@
             </nodify:NodifyEditor>
         </Grid>
         <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
-        <controls:NodeInspector x:Name="nodeInspector" Grid.Column="4" />
+        <controls:NodeInspector x:Name="nodeInspector" Grid.Column="4" DataContext="{Binding}"/>
     </Grid>
 </local:TabContentControl>

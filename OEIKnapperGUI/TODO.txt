@@ -1,7 +1,5 @@
-- create menu items
 - layout nodes to move left -> right properly and spacing
 - OAF file parser
-- icons :)
 
 
 conversation editor:

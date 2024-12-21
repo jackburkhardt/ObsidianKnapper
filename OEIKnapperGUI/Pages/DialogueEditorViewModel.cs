@@ -44,6 +44,24 @@ public class NodeViewModel : INotifyPropertyChanged
     public string NodeContentContext { get; set; }
     public Node AffiliatedNode { get; set; }
     public int ID { get => AffiliatedNode.NodeID;  set => AffiliatedNode.NodeID = value; }
+
+    public List<NodeScriptItem> OnEnterScript
+    {
+        get => AffiliatedNode.OnEnterScripts;
+        set => AffiliatedNode.OnEnterScripts = value;
+    }
+
+    public List<NodeScriptItem> OnExitScript
+    {
+        get => AffiliatedNode.OnExitScripts;
+        set => AffiliatedNode.OnExitScripts = value;
+    }
+    
+    public List<NodeScriptItem> OnUpdateScript
+    {
+        get => AffiliatedNode.OnUpdateScripts;
+        set => AffiliatedNode.OnUpdateScripts = value;
+    }
     
     private Point _location;
     public Point Location
@@ -107,12 +125,24 @@ public class BankNodeViewModel : NodeViewModel
     
 }
 
-public class EditorViewModel
+public class DialogueEditorViewModel : INotifyPropertyChanged
 {
     public ObservableCollection<NodeViewModel> Nodes { get; set; } = [];
     public ObservableCollection<ConnectionViewModel> Connections { get; } = [];
+    private NodeViewModel _selectedNode;
+    public NodeViewModel SelectedNode
+    {
+        get => _selectedNode;
+        set
+        {
+            _selectedNode = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNode)));
+        }
+    }
     
-    public EditorViewModel()
+    public event PropertyChangedEventHandler? PropertyChanged;
+    
+    public DialogueEditorViewModel()
     {
 
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using OEIKnapper;
 using OEIKnapper.Conversations;
 
@@ -7,7 +8,6 @@ namespace OEIKnapperGUI;
 
 public partial class DialogueEditor : TabContentControl
 {
-
     private Conversation _currentConvo;
     
     public DialogueEditor()
@@ -71,16 +71,16 @@ public partial class DialogueEditor : TabContentControl
         var connections = ArrangeNodesForView(nodes);
             
 
-        ((EditorViewModel)nodeEditor.DataContext).Nodes.Clear();
-        ((EditorViewModel)nodeEditor.DataContext).Connections.Clear();
+        ((DialogueEditorViewModel)nodeEditor.DataContext).Nodes.Clear();
+        ((DialogueEditorViewModel)nodeEditor.DataContext).Connections.Clear();
         foreach (var node in nodes)
         {
-            ((EditorViewModel)nodeEditor.DataContext).Nodes.Add(node);
+            ((DialogueEditorViewModel)nodeEditor.DataContext).Nodes.Add(node);
         }
 
         foreach (var conn in connections)
         {
-            ((EditorViewModel)nodeEditor.DataContext).Connections.Add(conn);
+            ((DialogueEditorViewModel)nodeEditor.DataContext).Connections.Add(conn);
         }
             
 
@@ -118,5 +118,4 @@ public partial class DialogueEditor : TabContentControl
             }
         }
     }
-
 }

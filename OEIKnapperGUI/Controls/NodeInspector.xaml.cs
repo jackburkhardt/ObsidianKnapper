@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using OEIKnapper.Conversations;
@@ -8,16 +9,9 @@ namespace OEIKnapperGUI.Controls;
 
 public partial class NodeInspector : UserControl
 {
-    public NodeViewModel CurrentNode { get; set; }
     public NodeInspector()
     {
         InitializeComponent();
-    }
-    
-    public void UpdateSelectedNode(NodeViewModel node)
-    {
-        CurrentNode = node;
-        extPropertyList.ItemsSource = CurrentNode.AffiliatedNode.ExtendedProperties;
     }
 }
 
