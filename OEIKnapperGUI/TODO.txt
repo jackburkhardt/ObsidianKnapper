@@ -4,6 +4,3 @@
 - node icon footer for at-a-glance info
 - unpack + test with Outer Worlds
 - unpack + test with Grounded
-- fix spacing for inspector
-- icon pass 2
-- switching locale needs to operate for editor view + option for whole project

@@ -2,6 +2,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Dialogue node where one character speaks to another.
+/// </summary>
 public class TalkNode : Node
 {
     public Guid SpeakerGuid;

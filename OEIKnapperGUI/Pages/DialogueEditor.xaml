@@ -12,7 +12,7 @@
     
     <local:TabContentControl.MenuGroups>
         <RibbonGroup>
-            <RibbonTextBox x:Name="goToBox" LargeImageSource="../Images/AddNamespace_32x.png" Label="Go To..." TextBoxWidth="50" TextWrapping="NoWrap" LostKeyboardFocus="GoToBox_Changed"></RibbonTextBox>
+            <RibbonTextBox x:Name="goToBox" LargeImageSource="../Images/GoToNextComment_32x.png" Label="Go To..." TextBoxWidth="50" TextWrapping="NoWrap" LostKeyboardFocus="GoToBox_Changed"></RibbonTextBox>
         </RibbonGroup>
     </local:TabContentControl.MenuGroups>
     

@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// A character which may speak in a conversation. Used chiefly in <see cref="TalkNode"/>s.
+/// </summary>
 public class Speaker : IBundleItem
 {
     public Guid ID { get; set; }

@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Container for parsed Conversation (.conversationasset) data.
+/// </summary>
 public class Conversation : IBundleItem  
 {
     public Guid ID { get; set; }

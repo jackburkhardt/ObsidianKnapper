@@ -3,6 +3,10 @@ using Newtonsoft.Json;
 
 namespace OEIKnapper;
 
+/// <summary>
+/// Custom collection intended to provide additonal options for indexing certain datatypes.
+/// </summary>
+/// <typeparam name="T">Must implement <see cref="IBundleItem"/></typeparam>
 public class Bundle<T> : ObservableCollection<T> where T : IBundleItem
 {
     public T this[Guid id] 
@@ -46,6 +50,9 @@ public class Bundle<T> : ObservableCollection<T> where T : IBundleItem
     }
 }
 
+/// <summary>
+/// Interface for items that can be stored in a <see cref="Bundle{T}"/>.
+/// </summary>
 public interface IBundleItem
 {
     public Guid ID { get; set; }

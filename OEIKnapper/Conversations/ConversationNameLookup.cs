@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Part of OEI's .conversationbundle which acts as a lookup table for conversation names.
+/// </summary>
 public class ConversationNameLookup : IBundleItem
 {
     public Guid ID { get; set; }

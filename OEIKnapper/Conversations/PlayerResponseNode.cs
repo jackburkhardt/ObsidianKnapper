@@ -2,6 +2,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Node describing a selectable player response.
+/// </summary>
 public class PlayerResponseNode : Node
 {
     public int Persistence;

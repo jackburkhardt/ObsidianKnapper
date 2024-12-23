@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Defines a function with parameters that is evaluated as part of a <see cref="ConditionalExpression"/>.
+/// </summary>
 public class ConditionalCall : Conditional
 {
     public string Function;

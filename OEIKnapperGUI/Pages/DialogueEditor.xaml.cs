@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using OEIKnapper;
@@ -21,11 +22,11 @@ public partial class DialogueEditor : TabContentControl
         };
     }
 
-    public async void UpdateViewedConvo(string filename)
+    public async void UpdateViewedConvo(string path)
     {
-        var convo = await Database.LoadConversationAsync(filename);
+        var convo = await Database.LoadConversationAsync(path);
         _currentConvo = convo;
-        TabHeader = $"Dialogue Editor ({convo.Tag})";
+        SetTabHeader($"Dialogue Editor ({Path.GetFileName(path)})");
 
         var nodes = new List<NodeViewModel>();
 

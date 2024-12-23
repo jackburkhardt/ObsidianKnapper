@@ -95,7 +95,24 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </AdditionalFiles>
       <None Remove="Images\EventShortcut_16x.png" />
-      <Resource Include="Images\EventShortcut_16x.png">
+      <None Remove="Images\EventPrivate_16x.png" />
+      <Resource Include="Images\EventPrivate_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\StepIn_16x.png" />
+      <Resource Include="Images\StepIn_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\StepOut_16x.png" />
+      <Resource Include="Images\StepOut_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\While_16x.png" />
+      <Resource Include="Images\While_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\GoToNextComment_32x.png" />
+      <Resource Include="Images\GoToNextComment_32x.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
     </ItemGroup>

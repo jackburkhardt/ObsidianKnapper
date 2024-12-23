@@ -15,21 +15,21 @@ public partial class Homepage : TabContentControl
             Name = "Dialogue Editor", 
             Description = "View and edit conversations within the game in a graphical interface.", 
             IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.ConvoEditor),
-            OnClick = (o,e) => MainWindow.Instance.AddTab(new DialogueEditor().GetViewModel())
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new DialogueEditor().ViewModel)
         },
         new ToolInformation
         {
             Name = "Global Variable Editor", 
             Description = "View and edit variables that are used for dialogue, questing, and other game features.", 
             IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.GlobalVarEditor),
-            OnClick = (o,e) => MainWindow.Instance.AddTab(new GlobalVarEditor().GetViewModel())
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new GlobalVarEditor().ViewModel)
         },
         new ToolInformation
         {
             Name = "StringTable Editor", 
             Description = "View and edit \"strings\", lines of text that are used in dialogue and user interfaces. Supports toggling between languages.", 
             IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.StringTableEditor),
-            OnClick = (o,e) => MainWindow.Instance.AddTab(new StringTableEditor().GetViewModel())
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new StringTableEditor().ViewModel)
         },
         new ToolInformation
         {

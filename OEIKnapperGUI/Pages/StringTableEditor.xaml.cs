@@ -12,7 +12,7 @@ public partial class StringTableEditor : TabContentControl
     private ObservableCollection<string> AvailableLocales = [];
     public StringTableEditor()
     {
-        TabHeader = $"StringTable ({Database.CurrentProject.SelectedLocale})";
+        SetTabHeader($"StringTable ({Database.CurrentProject.SelectedLocale})");
         InitializeComponent();
         
         dataTree.OnPathSelected += UpdateViewedTable;
@@ -80,5 +80,6 @@ public partial class StringTableEditor : TabContentControl
        if (item.Header is not string locale) return;
        
        await Database.SetLocaleAsync(locale);
+       SetTabHeader($"StringTable ({locale})");
     }
 }

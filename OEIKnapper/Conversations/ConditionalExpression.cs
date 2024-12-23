@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Container for other <see cref="Conditional"/> objects that are evaluated together.
+/// </summary>
 public class ConditionalExpression : Conditional
 {
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]

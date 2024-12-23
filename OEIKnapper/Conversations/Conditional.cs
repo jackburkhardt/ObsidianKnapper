@@ -3,6 +3,10 @@ using Newtonsoft.Json.Linq;
 
 namespace OEIKnapper.Conversations;
 
+/// <summary>
+/// Defines conditions for proceeding to the attached <see cref="Node"/>, <see cref="NodeLink"/>, or <see cref="Quests.QuestNode"/>.
+/// This is a parent class for parsing <see cref="ConditionalExpression"/> and <see cref="ConditionalCall"/>.
+/// </summary>
 public abstract class Conditional
 {
     public enum ComparisonType

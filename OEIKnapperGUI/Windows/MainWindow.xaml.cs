@@ -17,23 +17,23 @@ public partial class MainWindow : Window
         Loaded += (sender, args) =>
         {
             Instance = this;
-            AddTab(new Homepage().GetViewModel());
+            AddTab(new Homepage().ViewModel);
         };
     }
     
     public void OpenDialogueEditor(object sender, RoutedEventArgs e)
     {
-        AddTab(new DialogueEditor().GetViewModel());
+        AddTab(new DialogueEditor().ViewModel);
     }
     
     public void OpenGlobalVariableEditor(object sender, RoutedEventArgs e)
     {
-        AddTab(new GlobalVarEditor().GetViewModel());
+        AddTab(new GlobalVarEditor().ViewModel);
     }
     
     public void OpenStringTableEditor(object sender, RoutedEventArgs e)
     {
-        AddTab(new StringTableEditor().GetViewModel());
+        AddTab(new StringTableEditor().ViewModel);
     }
     
     private void CloseTabClicked(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ public partial class MainWindow : Window
 
         if (Tabs.Count == 0)
         {
-            AddTab(new Homepage().GetViewModel());
+            AddTab(new Homepage().ViewModel);
         }
     }
 
