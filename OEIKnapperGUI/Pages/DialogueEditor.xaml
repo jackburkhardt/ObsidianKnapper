@@ -10,6 +10,12 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
     
+    <local:TabContentControl.MenuGroups>
+        <RibbonGroup>
+            <RibbonTextBox x:Name="goToBox" LargeImageSource="../Images/AddNamespace_32x.png" Label="Go To..." TextBoxWidth="50" TextWrapping="NoWrap" LostKeyboardFocus="GoToBox_Changed"></RibbonTextBox>
+        </RibbonGroup>
+    </local:TabContentControl.MenuGroups>
+    
     <UserControl.Resources>
         <GeometryDrawing x:Key="SmallGridGeometry"
                          Geometry="M0,0 L0,1 0.03,1 0.03,0.03 1,0.03 1,0 Z"
@@ -61,10 +67,11 @@
             <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
                   Panel.ZIndex="-2" />
             <nodify:NodifyEditor x:Name="nodeEditor" 
+                                 DisplayConnectionsOnTop="True"
                                  ItemsSource="{Binding Nodes}" 
                                  Connections="{Binding Connections}"
                                  Background="{StaticResource SmallGridLinesDrawingBrush}"
-                                 SelectedItem="{Binding SelectedNode, Mode=OneWayToSource}">
+                                 SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
                 
                 <nodify:NodifyEditor.ItemContainerStyle>
                     <Style TargetType="{x:Type nodify:ItemContainer}">
@@ -75,7 +82,7 @@
                 
                 <nodify:NodifyEditor.ConnectionTemplate>
                     <DataTemplate DataType="{x:Type local:ConnectionViewModel}">
-                        <nodify:CircuitConnection Angle="90" Spacing="25" Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}">
+                        <nodify:CircuitConnection Angle="90" Spacing="25" Source="{Binding SourceConn.Anchor}" Target="{Binding TargetConn.Anchor}">
                             <!-- <nodify:Connection.Triggers> -->
                             <!--     <DataTrigger Binding="{Binding Source.IsConditional}" Value="True"> -->
                             <!--         <Setter Property="Stroke" Value="Orange"/> -->

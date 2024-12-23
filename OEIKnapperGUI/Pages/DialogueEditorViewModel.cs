@@ -18,6 +18,15 @@ public class ConnectorViewModel
         }
         get => _anchor;
     }
+    public event PropertyChangedEventHandler PropertyChanged;
+}
+
+public class ConnectionViewModel
+{
+    public NodeViewModel SourceNode { get; set; }
+    public NodeViewModel TargetNode { get; set; }
+    public ConnectorViewModel SourceConn { get => SourceNode.OutConnector; }
+    public ConnectorViewModel TargetConn { get => TargetNode.InConnector; }
     
     private bool _isConditional;
     public bool IsConditional
@@ -29,14 +38,23 @@ public class ConnectorViewModel
         }
         get => _isConditional;
     }
+    
+    public ConditionalExpression Conditional { get; set; }
+
+    private bool _hasExtendedProperties;
+    public bool HasExtendedProperties
+    {
+        set
+        {
+            _hasExtendedProperties = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasExtendedProperties)));
+        }
+        get => _hasExtendedProperties;
+    }
+    
+    public List<string> ExtendedProperties { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
-}
-
-public class ConnectionViewModel
-{
-    public ConnectorViewModel Source { get; set; }
-    public ConnectorViewModel Target { get; set; }
 }
 
 public class NodeViewModel : INotifyPropertyChanged
@@ -74,6 +92,8 @@ public class NodeViewModel : INotifyPropertyChanged
         get => AffiliatedNode.OnUpdateScripts;
         set => AffiliatedNode.OnUpdateScripts = value;
     }
+    
+    public List<ConnectionViewModel> Connections { get; set; } = [];
     
     private Point _location;
     public Point Location

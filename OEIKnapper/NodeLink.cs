@@ -8,6 +8,7 @@ public class NodeLink
 {
     public int FromNodeID;
     public int ToNodeID;
+    public bool PointsToGhost;
     public ConditionalExpression Conditionals;
     public List<string> ExtendedProperties;
 
@@ -22,6 +23,7 @@ public class NodeLink
         {
             FromNodeID = json["FromNodeID"]?.Value<int>() ?? -1,
             ToNodeID = json["ToNodeID"].Value<int>(),
+            PointsToGhost = json["PointsToGhost"]?.Value<bool>() ?? false,                
             Conditionals = Conditional.TryParse(json["Conditionals"]),
             ExtendedProperties = json["ClassExtender"]["ExtendedProperties"].ToObject<List<string>>()
         };

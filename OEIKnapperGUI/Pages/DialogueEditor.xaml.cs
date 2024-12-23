@@ -15,6 +15,7 @@ public partial class DialogueEditor : TabContentControl
         InitializeComponent();
         Loaded += (sender, args) =>
         {
+            nodeInspector.RelatedEditor = this;
             convoBrowser.OnPathSelected += UpdateViewedConvo;
             convoBrowser.ItemsSource = Database.ConvoLookup.Select(c => c.Filename);
         };
@@ -108,13 +109,56 @@ public partial class DialogueEditor : TabContentControl
                 var toNode = nodeDict[node.AffiliatedNode.Links[i].ToNodeID];
                 var pos = new Point(lastPos.X + 300, lastPos.Y + (i / ((float)linkCount * -1)) * 400);
                 node.Location = pos;
-                connections.Add(new ConnectionViewModel(){ Source = node.OutConnector, Target = toNode.InConnector});
+                var connection = new ConnectionViewModel()
+                    { 
+                        SourceNode = node, 
+                        TargetNode = toNode,
+                        IsConditional = node.AffiliatedNode.Links[i].Conditionals.Conditions.Count > 0,
+                        Conditional = node.AffiliatedNode.Links[i].Conditionals,
+                        HasExtendedProperties = node.AffiliatedNode.Links[i].ExtendedProperties.Count > 0,
+                        ExtendedProperties = node.AffiliatedNode.Links[i].ExtendedProperties
+                    };
+                
+                connections.Add(connection);
+                node.Connections.Add(connection);
+                
                 
                 if (!placedNodes.Contains(toNode.ID))
                 {
                     placedNodes.Push(toNode.ID);
                     PlaceNodesAndConnect(toNode, pos);
                 }
+            }
+        }
+    }
+
+    public void SetFocusOnNode(int nodeID)
+    {
+        var node = ((DialogueEditorViewModel)nodeEditor.DataContext).Nodes.FirstOrDefault(n => n.ID == nodeID);
+        if (node != null)
+        {
+            SetFocusOnNode(node);
+        }
+    }
+    
+    public void SetFocusOnNode(NodeViewModel node)
+    {
+        nodeEditor.Focus();
+        nodeEditor.BringIntoView(node.Location, true, () =>
+        {
+            ((DialogueEditorViewModel)nodeEditor.DataContext).SelectedNode = node;
+        });
+    }
+
+    private void GoToBox_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!Equals(sender, goToBox)) return;
+        if (int.TryParse(goToBox.Text, out var id))
+        {
+            var node = ((DialogueEditorViewModel)nodeEditor.DataContext).Nodes.FirstOrDefault(n => n.ID == id);
+            if (node != null)
+            {
+                SetFocusOnNode(node);
             }
         }
     }

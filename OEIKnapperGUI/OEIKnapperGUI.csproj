@@ -94,6 +94,10 @@
       <AdditionalFiles Include="Config\searchdirs.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </AdditionalFiles>
+      <None Remove="Images\EventShortcut_16x.png" />
+      <Resource Include="Images\EventShortcut_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

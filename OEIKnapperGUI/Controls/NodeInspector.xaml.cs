@@ -12,6 +12,8 @@ namespace OEIKnapperGUI.Controls;
 
 public partial class NodeInspector : UserControl
 {
+    public DialogueEditor RelatedEditor { get; set; }
+    
     public NodeInspector()
     {
         InitializeComponent();
@@ -31,13 +33,20 @@ public partial class NodeInspector : UserControl
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
                     continue;
                 }
             }
         }
         
         return condString;
+    }
+    
+    private void GoToLinkedNode_Click(object sender, RoutedEventArgs e)
+    {
+        if ((sender as Button).Tag is int loc)
+        {
+            RelatedEditor.SetFocusOnNode(loc);
+        }
     }
     
     [GeneratedRegex(@"\b[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}\b", RegexOptions.IgnoreCase, "en-US")]
