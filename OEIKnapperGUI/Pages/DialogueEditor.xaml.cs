@@ -113,8 +113,8 @@ public partial class DialogueEditor : TabContentControl
                     { 
                         SourceNode = node, 
                         TargetNode = toNode,
-                        IsConditional = node.AffiliatedNode.Links[i].Conditionals.Conditions.Count > 0,
-                        Conditional = node.AffiliatedNode.Links[i].Conditionals,
+                        IsConditional = toNode.Conditionals.Conditions.Count > 0,
+                        Conditional = toNode.Conditionals,
                         HasExtendedProperties = node.AffiliatedNode.Links[i].ExtendedProperties.Count > 0,
                         ExtendedProperties = node.AffiliatedNode.Links[i].ExtendedProperties
                     };
