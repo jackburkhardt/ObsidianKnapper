@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using OEIKnapper;
+using OEIKnapperGUI.Pages;
 
 namespace OEIKnapperGUI.Controls;
 
@@ -35,7 +36,8 @@ public partial class Homepage : TabContentControl
         {
             Name = "OAF Reader", 
             Description = "Some games (i.e. Stick of Truth) use this .OAF file for bundling game data. This tool lets you extract those files.", 
-            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.OAFReader)
+            IsEnabled = Database.CurrentProject.SupportedFeatures.Contains(KnapperFeature.OAFReader),
+            OnClick = (o,e) => MainWindow.Instance.AddTab(new OAFViewer().ViewModel)
         },
         new ToolInformation
         {

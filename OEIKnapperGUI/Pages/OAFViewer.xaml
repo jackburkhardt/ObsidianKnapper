@@ -1,0 +1,41 @@
+﻿<oeiKnapperGui:TabContentControl x:Class="OEIKnapperGUI.Pages.OAFViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:OEIKnapperGUI.Pages"
+             xmlns:oeiKnapperGui="clr-namespace:OEIKnapperGUI"
+             mc:Ignorable="d"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             TabHeader="OAF Viewer"
+             d:DesignHeight="500" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100" Width="300"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition MinWidth="100" Width="300"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition MinWidth="100" Width="400"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition MinWidth="100" Width="*"/>
+        </Grid.ColumnDefinitions>
+        <oeiKnapperGui:DataTree 
+            x:Name="bundleList" 
+            OnPathSelected="BundleList_OnPathSelected"/>
+        <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+        <oeiKnapperGui:DataTree Grid.Column="2" x:Name="containedFiles" Seperator="/"/>
+        <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock FontSize="16" FontWeight="SemiBold">File Preview</TextBlock>
+            <TextBox x:Name="previewBox" Grid.Row="1"></TextBox>
+        </Grid>
+        <GridSplitter Grid.Column="5" Width="3" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="6">
+            <Button Click="DumpFile_OnClick">Dump File</Button>
+        </Grid>
+    </Grid>
+</oeiKnapperGui:TabContentControl>

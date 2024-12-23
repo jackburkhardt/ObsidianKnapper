@@ -30,6 +30,11 @@ Writing changes back to the original game files is not intentionally supported b
 
 Check out the wiki for documentation, feature timeline, and more.
 
+## Project Structure
+- `OEIKnapper` - The main project, intended to be a 1:1 representation of the datatypes used in OEI. OEI is the tool used by Obsidian for creating dialogue.
+- `OEIKnapperGUI` - A WPF application that runs a GUI for the project.
+- `OEIKnapperTests` - Tests for various functions of OEIKnapper.
+
 ## Licensing & redistribution
 
 This is a fan-made project and is not affiliated with Obsidian Entertainment, Microsoft, or any other entity.

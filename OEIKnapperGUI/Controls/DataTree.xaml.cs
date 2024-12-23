@@ -22,6 +22,15 @@ public partial class DataTree : UserControl
     public static DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
         "ItemsSource", typeof(IEnumerable<string>), typeof(DataTree), new PropertyMetadata(default(ObservableCollection<string>)));
     
+    public char Seperator
+    {
+        get => (char)GetValue(SeperatorProperty);
+        set => SetValue(SeperatorProperty, value);
+    }
+    
+    public static DependencyProperty SeperatorProperty = DependencyProperty.Register(
+        "Seperator", typeof(char), typeof(DataTree), new PropertyMetadata('/'));
+    
     public DataTree()
     {
         InitializeComponent();
@@ -61,7 +70,7 @@ public partial class DataTree : UserControl
         
     }
 
-    public void GetItems(IEnumerable<string> paths, char seperator = '/')
+    public void GetItems(IEnumerable<string> paths)
     {
         treeView.Items.Clear();
         var root = new TreeViewItem { Header = "", Focusable = false, IsExpanded = true };
@@ -69,7 +78,7 @@ public partial class DataTree : UserControl
         foreach (var path in paths)
         {
             var current = root;
-            var parts = path.Split(seperator);
+            var parts = path.Split(Seperator);
             for (int i = 0; i < parts.Length; i++)
             {
                 var found = false;
