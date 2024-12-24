@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Windows;
 
 public abstract class TabContentControl : UserControl, INotifyPropertyChanged
 {

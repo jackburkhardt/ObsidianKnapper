@@ -8,7 +8,8 @@
              xmlns:oeiKnapperGui="clr-namespace:OEIKnapperGUI"
              xmlns:oeiKnapper="clr-namespace:OEIKnapper;assembly=OEIKnapper"
              xmlns:pt="http://propertytools.org/wpf"
-             d:DataContext="{d:DesignInstance oeiKnapperGui:DialogueEditorViewModel}"
+             xmlns:pages="clr-namespace:OEIKnapperGUI.Pages"
+             d:DataContext="{d:DesignInstance pages:DialogueEditorViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -16,7 +17,7 @@
         <local:ScriptItemConverter x:Key="ScriptItemConverter"/>
         <local:ExtendedPropertyConverter x:Key="ExtendedPropertyConverter"/>
         <local:ConditionalConverter x:Key="ConditionalConverter"/>
-            <ListView x:Key="ConnectorIcons" d:DataContext="{d:DesignInstance oeiKnapperGui:ConnectionViewModel}" BorderThickness="0" HorizontalContentAlignment="Right">
+            <ListView x:Key="ConnectorIcons" d:DataContext="{d:DesignInstance pages:ConnectionViewModel}" BorderThickness="0" HorizontalContentAlignment="Right">
                 <ListView.Items>
                     <ListViewItem x:Name="condItem" Visibility="{Binding IsConditional, Converter={StaticResource BoolVisConverter}}">
                         <Image Source="../Images/EventPrivate_16x.png" ToolTip="{Binding Conditional, Converter={StaticResource ConditionalConverter}}"></Image>
@@ -42,7 +43,7 @@
             <ListBox Grid.Row="1" ItemsSource="{Binding SelectedNode.Connections}" HorizontalContentAlignment="Stretch
             ">
                 <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type oeiKnapperGui:ConnectionViewModel}">
+                    <DataTemplate DataType="{x:Type pages:ConnectionViewModel}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="50" />

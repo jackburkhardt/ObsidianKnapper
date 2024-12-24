@@ -37,6 +37,7 @@ public class ObsidianArchiveFile
         bReader.BaseStream.Seek(position, SeekOrigin.Begin);
         for (int i = 0; i < oaf.Items.Count; i++)
         {
+            bReader.ReadInt32(); // magic, we ignore
             oaf.Items[i].DataOffset = bReader.ReadInt32();
             oaf.Items[i].Compressed = (bReader.ReadInt32() == 0x10) ? true : false;
             oaf.Items[i].UncompressedSize = bReader.ReadInt32();

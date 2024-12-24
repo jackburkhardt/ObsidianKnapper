@@ -1,24 +1,26 @@
-﻿<local:TabContentControl x:Class="OEIKnapperGUI.StringTableEditor"
+﻿<windows:TabContentControl x:Class="OEIKnapperGUI.Pages.StringTableEditor"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:OEIKnapperGUI"
+      xmlns:windows="clr-namespace:OEIKnapperGUI.Windows"
+      xmlns:controls="clr-namespace:OEIKnapperGUI.Controls"
       mc:Ignorable="d">
     
-    <local:TabContentControl.Resources>
+    <windows:TabContentControl.Resources>
         <Style TargetType="TextBlock" x:Key="TextWrap">
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
-    </local:TabContentControl.Resources>
+    </windows:TabContentControl.Resources>
     
-    <local:TabContentControl.MenuGroups>
+    <windows:TabContentControl.MenuGroups>
         <RibbonGroup>
             <RibbonMenuButton x:Name="localeSelectorBtn" LargeImageSource="../Images/TranslateDocument_32x.png" Label="Switch Locale" RibbonMenuItem.Click="SwitchLocale_OnClick">
                 
             </RibbonMenuButton>            
         </RibbonGroup>
-    </local:TabContentControl.MenuGroups>
+    </windows:TabContentControl.MenuGroups>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,7 +28,7 @@
             <ColumnDefinition Width="3"/>
             <ColumnDefinition MinWidth="200" Width="*"/>
         </Grid.ColumnDefinitions>
-        <local:DataTree x:Name="dataTree"/>
+        <controls:DataTree x:Name="dataTree"/>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
@@ -45,4 +47,4 @@
                       AlternatingRowBackground="Lavender"/>
         </Grid>
     </Grid>
-</local:TabContentControl>
+</windows:TabContentControl>

@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using OEIKnapper;
-using OEIKnapperGUI.Pages;
+using OEIKnapperGUI.Windows;
 
-namespace OEIKnapperGUI.Controls;
+namespace OEIKnapperGUI.Pages;
 
 public partial class Homepage : TabContentControl
 {

@@ -1,10 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using OEIKnapper;
-using OEIKnapperGUI.Controls;
+using OEIKnapperGUI.Pages;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Windows;
 
 public partial class MainWindow : Window
 {

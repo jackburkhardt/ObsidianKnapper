@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using OEIKnapper;
 using OEIKnapper.Conversations;
+using OEIKnapperGUI.Pages;
 
 namespace OEIKnapperGUI.Controls;
 

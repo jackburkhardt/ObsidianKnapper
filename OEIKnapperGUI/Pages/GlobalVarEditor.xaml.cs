@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using Newtonsoft.Json;
 using OEIKnapper;
+using OEIKnapperGUI.Windows;
 using PropertyTools.Wpf;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Pages;
 
 public partial class GlobalVarEditor : TabContentControl
 {

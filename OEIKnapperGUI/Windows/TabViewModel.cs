@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Controls.Ribbon;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Windows;
 
 public class TabViewModel : INotifyPropertyChanged
 {

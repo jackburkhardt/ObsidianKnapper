@@ -1,3 +1,4 @@
 ﻿\Pentiment\Pentiment.exe
 \TheOuterWorlds\TheOuterWorlds.exe
 \South Park - The Stick of Truth\South Park - The Stick of Truth.exe
+\Pillars of Eternity II\PillarsOfEternityII.exe

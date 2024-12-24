@@ -1,5 +1,4 @@
 - layout nodes to move left -> right properly and spacing
-- OAF file parser
 - node datatemplates for each node type
 - node icon footer for at-a-glance info
 - unpack + test with Outer Worlds

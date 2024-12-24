@@ -4,7 +4,7 @@ using System.Windows;
 using OEIKnapper;
 using OEIKnapper.Conversations;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Pages;
 
 public class ConnectorViewModel
 {

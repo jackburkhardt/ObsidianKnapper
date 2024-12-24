@@ -1,9 +1,10 @@
-<Window x:Class="OEIKnapperGUI.MainWindow"
+<Window x:Class="OEIKnapperGUI.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:OEIKnapperGUI"
+        xmlns:windows="clr-namespace:OEIKnapperGUI.Windows"
         mc:Ignorable="d"
         Title="ObsidianKnapper" Height="900" Width="1600">
     <Grid>
@@ -24,7 +25,7 @@
             </RibbonTab>
         </Ribbon>
         
-        <TabControl Grid.Row="1" x:Name="TabView" ItemsSource="{Binding Path=Tabs,  RelativeSource={RelativeSource AncestorType=local:MainWindow}}" SelectionChanged="OnTabSelectionChanged">
+        <TabControl Grid.Row="1" x:Name="TabView" ItemsSource="{Binding Path=Tabs,  RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" SelectionChanged="OnTabSelectionChanged">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -38,7 +39,7 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type local:TabContentControl}">
+                <DataTemplate DataType="{x:Type windows:TabContentControl}">
                     <ContentControl Content="{Binding Content}" VerticalAlignment="Stretch"/>
                 </DataTemplate>
             </TabControl.ContentTemplate>

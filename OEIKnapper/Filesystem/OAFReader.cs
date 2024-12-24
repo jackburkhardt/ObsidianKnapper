@@ -23,7 +23,7 @@ public class OAFReader : FileReader
 
     public async Task<ObsidianArchiveFile> Read()
     {
-            var oaf = ObsidianArchiveFile.TryParse(_path);
-            return oaf;
+        var oaf = ObsidianArchiveFile.TryParse(_path);
+        return oaf;
     }
 }

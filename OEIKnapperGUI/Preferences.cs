@@ -1,4 +1,4 @@
-﻿namespace OEIKnapper.Filesystem;
+﻿namespace OEIKnapperGUI;
 
 public class Preferences
 {

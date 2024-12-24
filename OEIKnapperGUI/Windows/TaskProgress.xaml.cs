@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using OEIKnapper;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Windows;
 
 public partial class TaskProgress : Window
 {

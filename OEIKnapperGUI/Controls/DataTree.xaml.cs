@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Controls;
 
 public partial class DataTree : UserControl
 {
@@ -72,21 +72,34 @@ public partial class DataTree : UserControl
 
     public void GetItems(IEnumerable<string> paths)
     {
-        treeView.Items.Clear();
-        var root = new TreeViewItem { Header = "", Focusable = false, IsExpanded = true };
+        var rootNodes = new List<TreeViewItem>();
        
         foreach (var path in paths)
         {
-            var current = root;
+            TreeViewItem? current = null;
             var parts = path.Split(Seperator);
             for (int i = 0; i < parts.Length; i++)
             {
+                if (i == 0)
+                {
+                    var existing = rootNodes.FirstOrDefault(x => (string)x.Header == parts[i]);
+                    if (existing != null)
+                    {
+                        current = existing;
+                        continue;
+                    }
+                    var tag = i == parts.Length - 1 ? "file" : "folder";
+                    current = new TreeViewItem { Header = parts[i], Tag = tag };
+                    rootNodes.Add(current);
+                    continue;
+                }
+                
                 var found = false;
                 foreach (var item in current.Items)
                 {
-                    if (((TreeViewItem)item).Header.ToString() == parts[i])
+                    if (item is TreeViewItem tvi && (string)tvi.Header == parts[i])
                     {
-                        current = (TreeViewItem)item;
+                        current = tvi;
                         found = true;
                         break;
                     }
@@ -102,13 +115,7 @@ public partial class DataTree : UserControl
             }
         }
 
-        // removes the extra root node
-        List<TreeViewItem> rootNodes = root.Items.Cast<TreeViewItem>().ToList();
-        foreach (TreeViewItem branch in rootNodes)
-        {
-            root.Items.Remove(branch);
-            treeView.Items.Add(branch);
-        }
+        treeView.ItemsSource = rootNodes;
     }
 
 
@@ -144,6 +151,3 @@ public class TreeItemTemplateSelector : DataTemplateSelector
         return base.SelectTemplate(item, container);
     }
 }
-
-
-

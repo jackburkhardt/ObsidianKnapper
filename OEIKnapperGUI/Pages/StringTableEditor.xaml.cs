@@ -2,10 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
-using OEIKnapper;
+using OEIKnapperGUI.Windows;
 using String = OEIKnapper.String;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Pages;
 
 public partial class StringTableEditor : TabContentControl
 {

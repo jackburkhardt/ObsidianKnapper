@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using OEIKnapper;
 using OEIKnapper.Conversations;
+using OEIKnapperGUI.Windows;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Pages;
 
 public partial class DialogueEditor : TabContentControl
 {

@@ -1,12 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using OEIKnapper;
 
-namespace OEIKnapperGUI;
+namespace OEIKnapperGUI.Windows;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
