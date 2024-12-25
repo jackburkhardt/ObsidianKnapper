@@ -49,7 +49,7 @@ public partial class OAFViewer : TabContentControl, INotifyPropertyChanged
     private void OAFViewer_Loaded(object sender, RoutedEventArgs e)
     {
         var oafFiles = Database.CurrentProject.GameAssets.Where(x => x.AssetType == GameRummager.OAFExt);
-        bundleList.ItemsSource = oafFiles.Select(x => Path.GetFileName(x.GamePath));
+        bundleList.Paths = oafFiles.Select(x => Path.GetFileName(x.GamePath));
     }
 
     private async void BundleList_OnPathSelected(string filename)
@@ -60,7 +60,7 @@ public partial class OAFViewer : TabContentControl, INotifyPropertyChanged
         
         SelectedFile = oafData;
         SelectedEntry = null;
-        containedFiles.ItemsSource = oafData.Items.Select(item => item.Name);
+        containedFiles.Paths = oafData.Items.Select(item => item.Name);
     }
     
     private async void ContainedFiles_OnPathSelected(string fullpath)

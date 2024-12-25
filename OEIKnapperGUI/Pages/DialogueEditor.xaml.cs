@@ -17,7 +17,7 @@ public partial class DialogueEditor : TabContentControl
         {
             nodeInspector.RelatedEditor = this;
             convoBrowser.OnPathSelected += UpdateViewedConvo;
-            convoBrowser.ItemsSource = Database.ConvoLookup.Select(c => c.Filename);
+            convoBrowser.Paths = Database.ConvoLookup.Select(c => c.Filename);
         };
     }
 

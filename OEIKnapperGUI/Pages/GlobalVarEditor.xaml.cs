@@ -24,7 +24,7 @@ public partial class GlobalVarEditor : TabContentControl
         Loaded += (sender, args) =>
         {
             variableList.OnPathSelected += UpdateViewedVariable; 
-            variableList.ItemsSource = Database.GlobalVariables.Select(v => v.Tag);
+            variableList.Paths = Database.GlobalVariables.Select(v => v.Tag);
         };
     }
 
@@ -60,7 +60,7 @@ public partial class GlobalVarEditor : TabContentControl
             InitialValue = ""
         };
         Database.GlobalVariables.Insert(0, newVar);
-        variableList.ItemsSource = Database.GlobalVariables.Select(v => v.Tag);
+        variableList.Paths = Database.GlobalVariables.Select(v => v.Tag);
     }
     
 }

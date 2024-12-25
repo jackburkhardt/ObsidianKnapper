@@ -21,7 +21,7 @@ public partial class StringTableEditor : TabContentControl
 
     public void OnLoad(object source, RoutedEventArgs e)
     {
-        dataTree.ItemsSource = Database.StringTable.Keys;
+        dataTree.Paths = Database.StringTable.Keys;
         AvailableLocales.Clear();
         foreach (var locale in Database.GetAvailableLocales())
         {

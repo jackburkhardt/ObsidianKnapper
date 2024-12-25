@@ -9,18 +9,16 @@ public partial class DataTree : UserControl
     public delegate void PathDelegate(string fullPath);
     public event PathDelegate? OnPathSelected;
     
-    public IEnumerable<string> ItemsSource
+    private IEnumerable<string> _paths = [];
+    public IEnumerable<string> Paths
     {
-        get => (IEnumerable<string>)GetValue(ItemsSourceProperty);
+        get => _paths;
         set
         {
-            SetValue(ItemsSourceProperty, value);
-            GetItems(value);
+            _paths = value;
+            BuildTree(value);
         }
     }
-
-    public static DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
-        "ItemsSource", typeof(IEnumerable<string>), typeof(DataTree), new PropertyMetadata(default(ObservableCollection<string>)));
     
     public char Seperator
     {
@@ -70,7 +68,7 @@ public partial class DataTree : UserControl
         
     }
 
-    public void GetItems(IEnumerable<string> paths)
+    public void BuildTree(IEnumerable<string> paths)
     {
         var rootNodes = new List<TreeViewItem>();
        
@@ -82,10 +80,11 @@ public partial class DataTree : UserControl
             {
                 if (i == 0)
                 {
-                    var existing = rootNodes.FirstOrDefault(x => (string)x.Header == parts[i]);
-                    if (existing != null)
+                    // see if we have a root node with the same name
+                    var existingRoot = rootNodes.FirstOrDefault(x => (string)x.Header == parts[i]);
+                    if (existingRoot != null)
                     {
-                        current = existing;
+                        current = existingRoot;
                         continue;
                     }
                     var tag = i == parts.Length - 1 ? "file" : "folder";
