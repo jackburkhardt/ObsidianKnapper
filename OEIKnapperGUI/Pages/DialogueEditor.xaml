@@ -102,12 +102,30 @@
                     
                     
                     <DataTemplate DataType="{x:Type pages:TalkNodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Pink">
+                        <nodify:Node>
+                            <nodify:Node.Header>
+                                <Grid Background="Purple">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding ID, StringFormat='Talk Node {0}'}"></TextBlock>
+                                    <DockPanel Grid.Row="1" HorizontalAlignment="Left" LastChildFill="True" Background="Purple">
+                                        <Image Source="../Images/speech-256x213-white.png" Width="18" Height="16" Margin="4,0"/>
+                                        <TextBlock Text="{Binding Speaker}"/>
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="2" HorizontalAlignment="Left" LastChildFill="True" Background="Purple">
+                                        <Image Source="../Images/ear-185x256-white.png" Width="16" Height="18" Margin="5,0"/>
+                                        <TextBlock Text="{Binding Listener}"/>
+                                    </DockPanel>
+                                </Grid>
+                            </nodify:Node.Header>
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
                                     <TextBox Text="{Binding Content, Mode=TwoWay}" 
-                                             Width="100" Height="100" 
+                                             Width="150" Height="100" 
                                              TextWrapping="Wrap"/>
                                     <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
@@ -116,12 +134,15 @@
                         
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type pages:PlayerResponseNodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Goldenrod" HorizontalContentAlignment="Stretch">
+                        <nodify:Node>
+                            <nodify:Node.Header>
+                                <TextBlock Text="{Binding ID, StringFormat='Player Response {0}'}" HorizontalAlignment="Stretch" Background="DarkGoldenrod"/>
+                            </nodify:Node.Header>
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>
                                     <TextBox Text="{Binding Content, Mode=TwoWay}" 
-                                             Width="100" Height="100" 
+                                             Width="175" Height="100" 
                                              TextWrapping="Wrap"/>
                                     <ContentPresenter Content="{Binding OutConnector}" ContentTemplate="{StaticResource OutputTemplate}"/>
                                 </StackPanel>
@@ -130,7 +151,10 @@
                     </DataTemplate>
                     
                     <DataTemplate DataType="{x:Type pages:ScriptNodeViewModel}">
-                        <nodify:Node Header="{Binding ID}"  Background="Green">
+                        <nodify:Node>
+                            <nodify:Node.Header>
+                                <TextBlock Text="{Binding ID, StringFormat='Script {0}'}"  Background="Green" HorizontalAlignment="Stretch"/>
+                            </nodify:Node.Header>
                             <nodify:Node.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter Content="{Binding InConnector}" ContentTemplate="{StaticResource InputTemplate}"/>

@@ -26,7 +26,7 @@
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
         <StackPanel Grid.Column="2">
             <pt:PropertyGrid x:Name="propertyEditor"  SelectedObject="{Binding CurrentVar, UpdateSourceTrigger=Explicit}" TabVisibility="VisibleIfMoreThanOne"/>
-            <Button Width="50" HorizontalAlignment="Left" Click="SaveButton_OnClick">Save</Button>
+            <!-- <Button Width="50" HorizontalAlignment="Left" Click="SaveButton_OnClick">Save</Button> -->
         </StackPanel>
     </Grid>
 </windows:TabContentControl>

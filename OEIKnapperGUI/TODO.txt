@@ -1,5 +1,3 @@
 - layout nodes to move left -> right properly and spacing
-- node datatemplates for each node type
-- node icon footer for at-a-glance info
 - unpack + test with Outer Worlds
 - unpack + test with Grounded

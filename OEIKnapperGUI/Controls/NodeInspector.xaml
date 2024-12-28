@@ -20,7 +20,7 @@
             <ListView x:Key="ConnectorIcons" d:DataContext="{d:DesignInstance pages:ConnectionViewModel}" BorderThickness="0" HorizontalContentAlignment="Right">
                 <ListView.Items>
                     <ListViewItem x:Name="condItem" Visibility="{Binding IsConditional, Converter={StaticResource BoolVisConverter}}">
-                        <Image Source="../Images/EventPrivate_16x.png" ToolTip="{Binding Conditional, Converter={StaticResource ConditionalConverter}}"></Image>
+                        <Image Source="../Images/Key_16x.png" ToolTip="{Binding Conditional, Converter={StaticResource ConditionalConverter}}"></Image>
                     </ListViewItem>
                 </ListView.Items>
             </ListView>

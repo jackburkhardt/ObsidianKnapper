@@ -115,6 +115,19 @@
       <Resource Include="Images\GoToNextComment_32x.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Images\speech-256x213-white.png" />
+      <Resource Include="Images\speech-256x213-white.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\ear-185x256-white.png" />
+      <Resource Include="Images\ear-185x256-white.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Images\Key_32x.png" />
+      <None Remove="Images\Key_16x.png" />
+      <Resource Include="Images\Key_16x.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>
