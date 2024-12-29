@@ -23,7 +23,7 @@ public partial class StringTableEditor : TabContentControl
     {
         dataTree.Paths = Database.StringTable.Keys;
         AvailableLocales.Clear();
-        foreach (var locale in Database.GetAvailableLocales())
+        foreach (var locale in Database.CurrentProject.AvailableLocales)
         {
             AvailableLocales.Add(locale);
         }
@@ -74,7 +74,7 @@ public partial class StringTableEditor : TabContentControl
         }
     }
 
-    private async void SwitchLocale_OnClick(object sender, RoutedEventArgs e)
+   private async void SwitchLocale_OnClick(object sender, RoutedEventArgs e)
     {
        if (e.OriginalSource is not RibbonMenuItem item) return;
        if (item.Header is not string locale) return;

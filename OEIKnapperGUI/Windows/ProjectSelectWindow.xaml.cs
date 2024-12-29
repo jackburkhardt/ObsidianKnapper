@@ -47,7 +47,9 @@ public partial class ProjectSelectWindow : Window
         var progress = new Progress<Database.ProgressReport>();
         var progressWindow = new TaskProgress(progress);
         progressWindow.Show();
-        await Database.LoadProjectAsync(project.Path, progress);
+        var gameDir = System.IO.Path.GetDirectoryName(project.Path);
+        await Database.FindOrCreateProjectAsync(gameDir, project.Path);
+        await Database.LoadProjectAsync(gameDir, progress);
         
         var mainWindow = new MainWindow
         {

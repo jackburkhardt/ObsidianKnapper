@@ -48,7 +48,7 @@ public partial class OAFViewer : TabContentControl, INotifyPropertyChanged
     
     private void OAFViewer_Loaded(object sender, RoutedEventArgs e)
     {
-        var oafFiles = Database.CurrentProject.GameAssets.Where(x => x.AssetType == GameRummager.OAFExt);
+        var oafFiles = Database.CurrentProject.GameAssets.Where(x => x.AssetType == GameConfig.Current.OAFExtension);
         bundleList.Paths = oafFiles.Select(x => Path.GetFileName(x.GamePath));
     }
 

@@ -1,3 +1,5 @@
+using System.Xml;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -15,14 +17,32 @@ public class StringTableReader : FileReader
         try
         {
             var fileText = await File.ReadAllTextAsync(_path);
-            var json = JObject.Parse(fileText);
+            bool isJson = fileText.StartsWith('{');
             var tables = new List<StringTable>();
 
-            foreach (var tableJson in json["StringTables"])
+            if (isJson)
             {
-                tables.Add(StringTable.TryParse(tableJson));
+                var json = JObject.Parse(fileText);
+                if (json["StringTables"] != null)
+                {
+                    foreach (var table in json["StringTables"])
+                    {
+                        tables.Add(StringTable.TryParse(table));
+                    }
+                }
             }
-
+            else
+            {
+                if (!fileText.StartsWith('<'))
+                {
+                    throw new ArgumentException("StringTable file is not in a recognized format (JSON or XML): " + _path);
+                }
+                var xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(fileText);
+                var tabelXml = XElement.Parse(xmlDoc.InnerXml); 
+                tables.Add(StringTable.TryParseXML(tabelXml));
+            }
+            
             return tables;
         }
         catch (Exception e)

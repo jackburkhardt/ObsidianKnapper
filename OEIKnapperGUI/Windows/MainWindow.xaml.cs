@@ -97,6 +97,7 @@ public partial class MainWindow : Window
         var progress = new Progress<Database.ProgressReport>();
         var progressWindow = new TaskProgress(progress);
         progressWindow.Show();
+        Database.CurrentProject.SearchForGameAssets();
         await Database.LoadProjectAsync(Database.CurrentProject.GamePath, progress);
     }
 }

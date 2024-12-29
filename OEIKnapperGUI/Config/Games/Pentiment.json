@@ -1,0 +1,9 @@
+﻿{
+  "StringTableExtension": "stringtablebundle",
+  "DefaultLocale": "enus",
+  "ConversationManifestExtension": "conversationbundle",
+  "ConversationExtension": "conversationasset",
+  "QuestExtension": "questbundle",
+  "GlobalVariableExtension": "globalvariablesbundle",
+  "OAFExtension": "oaf"
+}

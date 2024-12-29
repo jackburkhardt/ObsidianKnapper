@@ -23,50 +23,45 @@ public static class Database
     public static Bundle<Speaker> Speakers { get; private set; } = [];
     public static Dictionary<string, StringTable> StringTable { get; private set; } = new();
 
-    public static async Task<KnapperProject> FindOrCreateProjectAsync(string gamePath)
+    public static async Task FindOrCreateProjectAsync(string gameContainingPath, string gameExePath)
     {
-        if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\KnapperProjects"))
+        var gameName = Path.GetFileNameWithoutExtension(gameExePath);
+        GameConfig.LoadConfig(gameName);
+        
+        if (File.Exists($@"{gameContainingPath}\KnapperProject.cfg"))
         {
-            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\KnapperProjects");
+            return;
+           //await LoadProjectAsync($"{gameContainingPath}\\KnapperProject.cfg", new Progress<ProgressReport>());
         }
         
-        KnapperProject project = new KnapperProject 
+        var newProject = new KnapperProject
         {
-            Name = Path.GetFileNameWithoutExtension(gamePath),
-            GamePath = gamePath,
-            SelectedLocale = "enus"
+            Name = gameName,
+            Path = gameContainingPath,
+            GamePath = gameExePath,
+            UsesGameConfig = gameName
         };
-        project.Path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $@"\KnapperProjects\{project.Name}";
-        if (!Directory.Exists(project.Path))
-        {
-            Directory.CreateDirectory(project.Path);
-        }
         
-        if (File.Exists($@"{project.Path}\project.config"))
-        {
-            var fileText = await File.ReadAllTextAsync($@"{project.Path}\project.config");
-            var parsedProject = JsonConvert.DeserializeObject<KnapperProject>(fileText);
-            if (parsedProject != null)
-            {
-                project = parsedProject;
-            }
-        }
-
-        
-        GameRummager.RummageForGameFiles(ref project);
-        
-        var projectText = JsonConvert.SerializeObject(project, Formatting.Indented);
-        await File.WriteAllTextAsync($@"{project.Path}\project.config", projectText);
-        
-        return project;
+        newProject.SearchForGameAssets();
     }
     
-    public static async Task LoadProjectAsync(string gamePath, IProgress<ProgressReport> progress)
+    public static async Task LoadProjectAsync(string gameContainingPath, IProgress<ProgressReport> progress)
     {
         var projectLoadTasks = new List<(string path, Task task)>();
-        
-        CurrentProject = await FindOrCreateProjectAsync(gamePath);
 
+        var loadedProjectText = await File.ReadAllTextAsync(gameContainingPath + "\\KnapperProject.cfg");
+        var loadedProjectFile = JsonConvert.DeserializeObject<KnapperProject>(loadedProjectText);
+        if (loadedProjectFile == null)
+        {
+            throw new Exception("Database: Failed to load project file");
+        }
+        
+        CurrentProject = loadedProjectFile;
+        if (CurrentProject.AlwaysSearchOnLoad)
+        {
+            CurrentProject.SearchForGameAssets();
+        }
+        
         if (CurrentProject.SupportedFeatures.Contains(KnapperFeature.StringTableEditor))
         {
             projectLoadTasks.Add(($"StringTable ({CurrentProject.SelectedLocale})",
@@ -75,17 +70,18 @@ public static class Database
 
         foreach (var asset in CurrentProject.GameAssets)
         {
-            switch (asset.AssetType)
+            string assetType = asset.AssetType;
+            if (assetType == GameConfig.Current.GlobalVariableExtension)
             {
-                case GameRummager.GlobalVariableExt:
-                    projectLoadTasks.Add((asset.GamePath, LoadGlobalVariablesAsync(asset.GamePath)));
-                    break;
-                case GameRummager.QuestExt:
-                    projectLoadTasks.Add((asset.GamePath, LoadProjectQuestsAsync(asset.GamePath)));
-                    break;
-                case GameRummager.ConversationBundleExt:
-                    projectLoadTasks.Add((asset.GamePath, LoadConvoBundleAsync(asset.GamePath)));
-                    break;
+                projectLoadTasks.Add((asset.GamePath, LoadGlobalVariablesAsync(asset.GamePath)));
+            }
+            else if (assetType == GameConfig.Current.QuestExtension)
+            {
+                projectLoadTasks.Add((asset.GamePath, LoadProjectQuestsAsync(asset.GamePath)));
+            }
+            else if (assetType == GameConfig.Current.ConversationManifestExtension)
+            {
+                projectLoadTasks.Add((asset.GamePath, LoadConvoBundleAsync(asset.GamePath)));
             }
         }
         
@@ -114,6 +110,7 @@ public static class Database
 
     private static async Task LoadProjectQuestsAsync(string path)
     {
+        return;
         var reader = new QuestBundleReader(path);
         var quests = await reader.Read();
         await Task.Delay(100);
@@ -145,29 +142,15 @@ public static class Database
     
     public static async Task SetLocaleAsync(string locale)
     {
-        var foundFile = CurrentProject.GameAssets.FirstOrDefault(f => f.GamePath.Contains($"text_{locale}.{GameRummager.StringTableExt}"));
-        if (foundFile == null)
+        var stringTablesInLocale = CurrentProject.GameAssets.Where(x => x.AssetType == GameConfig.Current.StringTableExtension && x.GamePath.Contains($@"\{locale}\text"));
+        foreach (var table in stringTablesInLocale)
         {
-            throw new Exception($"Database: Could not find string table for locale {locale}");
-            return;
+            var reader = new StringTableReader(table.GamePath);
+            var tables = await reader.Read();
+            foreach (var stringTable in tables)
+            {
+                StringTable[stringTable.Name] = stringTable;
+            }
         }
-        
-        var stringTableReader = new StringTableReader(foundFile.GamePath);
-        var tables = await stringTableReader.Read();
-        
-        StringTable.Clear();
-        foreach (var table in tables)
-        {
-            StringTable.Add(table.Name, table);
-        }
-        CurrentProject.SelectedLocale = locale;
-    }
-
-    public static IList<string> GetAvailableLocales()
-    {
-        return CurrentProject.GameAssets
-            .Where(f => f.GamePath.Contains(GameRummager.StringTableExt))
-            .Select(f => Path.GetFileNameWithoutExtension(f.GamePath).Split('_')[1])
-            .ToList();
     }
 }
