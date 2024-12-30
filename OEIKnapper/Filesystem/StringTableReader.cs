@@ -39,8 +39,7 @@ public class StringTableReader : FileReader
                 }
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(fileText);
-                var tabelXml = XElement.Parse(xmlDoc.InnerXml); 
-                tables.Add(StringTable.TryParseXML(tabelXml));
+                tables.Add(StringTable.TryParseXML(xmlDoc));
             }
             
             return tables;

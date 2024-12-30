@@ -31,7 +31,6 @@ public static class Database
         if (File.Exists($@"{gameContainingPath}\KnapperProject.cfg"))
         {
             return;
-           //await LoadProjectAsync($"{gameContainingPath}\\KnapperProject.cfg", new Progress<ProgressReport>());
         }
         
         var newProject = new KnapperProject
@@ -39,7 +38,8 @@ public static class Database
             Name = gameName,
             Path = gameContainingPath,
             GamePath = gameExePath,
-            UsesGameConfig = gameName
+            UsesGameConfig = gameName,
+            SelectedLocale = GameConfig.Current.DefaultLocale,
         };
         
         newProject.SearchForGameAssets();

@@ -11,7 +11,7 @@ public class KnapperProject
     public string Path { get; set; }
     public string GamePath { get; set; }
     public string UsesGameConfig { get; set; } = "DEFAULT";
-    public string SelectedLocale { get; set; } = "enus";
+    public string SelectedLocale { get; set; }
     public bool AlwaysSearchOnLoad { get; set; }
     public string[] AvailableLocales { get; set; } = [];
     public List<KnapperFeature> SupportedFeatures { get; set; }

@@ -17,16 +17,28 @@ public class ConvoBundleReader : FileReader
             var json = JObject.Parse(fileText);
             var speakers = new List<Speaker>();
 
-            foreach (var tableJson in json["Speakers"] as JArray)
+            if (json["Speakers"] != null)
             {
-                speakers.Add(Speaker.TryParse(tableJson));
+                foreach (var tableJson in json["Speakers"] as JArray)
+                {
+                    speakers.Add(Speaker.TryParse(tableJson));
+                }
             }
-            
+
             var conversations = new List<ConversationNameLookup>();
             
-            foreach (var tableJson in json["ConversationNameLookup"] as JArray)
+            if (json["ConversationNameLookup"] != null)
             {
-                conversations.Add(ConversationNameLookup.TryParse(tableJson));
+                foreach (var tableJson in json["ConversationNameLookup"] as JArray)
+                {
+                    conversations.Add(ConversationNameLookup.TryParse(tableJson));
+                }
+            } else if (json["Entries"] != null)
+            {
+                foreach (var tableJson in json["Entries"] as JArray)
+                {
+                    conversations.Add(ConversationNameLookup.TryParse(tableJson));
+                }
             }
             
             var result = (speakers, conversations);

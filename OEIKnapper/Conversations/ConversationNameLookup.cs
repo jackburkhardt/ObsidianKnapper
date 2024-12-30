@@ -18,11 +18,13 @@ public class ConversationNameLookup : IBundleItem
     {
         try
         {
+            var filename = json["Filename"].Value<string>();
+            var name = json["Name"] != null ? json["Name"].Value<string>() : Path.GetFileName(filename);
             return new ConversationNameLookup
             {
                 ID = json["ID"].ToObject<Guid>(),
-                Tag = json["Name"].Value<string>(),
-                Filename = json["Filename"].Value<string>()
+                Tag = name,
+                Filename = filename
             };
         }
         catch (Exception)

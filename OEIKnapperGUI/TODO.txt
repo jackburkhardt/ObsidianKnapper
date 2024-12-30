@@ -1,6 +1,5 @@
 - layout nodes to move left -> right properly and spacing
 - unpack + test with Outer Worlds
 - unpack + test with Grounded
-- add POE2 support for conversations.manifest
 - quest editor (essentially a copy-paste of convo editor...provided quest parsing works)
 - better error handling/logging

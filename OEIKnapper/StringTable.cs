@@ -1,7 +1,8 @@
+using System.Xml;
 using System.Xml.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OEIKnapper.Conversations;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace OEIKnapper;
 
@@ -27,17 +28,22 @@ public class StringTable
         };
     }
     
-    public static StringTable TryParseXML(XElement xml)
+    public static StringTable TryParseXML(XmlNode xml)
     {
-        if (xml.Name != "StringTableFile")
-        {
-            throw new ArgumentException("Unable to parse StringTable from: " + xml.ToString());
-        }
+
+        var name = xml.SelectSingleNode("//StringTableFile/Name").InnerText.Replace('\\', '/');
+        var stringNodes = xml.SelectNodes("//StringTableFile/Entries/Entry");
         
+        var strings = new List<String>();
+        foreach (XmlNode node in stringNodes)
+        {
+            strings.Add(String.TryParseXML(node));
+        }
+
         return new StringTable
         {
-            Name = xml.Attribute("Name")?.Value ?? "DEFAULT",
-            Strings = xml.Elements("Entry").Select(String.TryParseXML).ToList()
+            Name = name,
+            Strings = strings
         };
     }
 
@@ -80,7 +86,7 @@ public class String
         };
     }
     
-    public static String TryParseXML(XElement xml)
+    public static String TryParseXML(XmlNode xml)
     {
         if (xml.Name != "Entry")
         {
@@ -89,8 +95,8 @@ public class String
         
         return new String
         {
-            ID = int.Parse(xml.Attribute("ID")?.Value ?? "-1"),
-            DefaultText = xml.Attribute("DefaultText")?.Value ?? ""
+            ID = int.Parse(xml.SelectSingleNode("ID")?.InnerText ?? "-1"),
+            DefaultText = xml.SelectSingleNode("DefaultText")?.InnerText ?? ""
         };
     }
 }
